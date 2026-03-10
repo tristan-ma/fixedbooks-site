@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagnostic Report Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #090909;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      padding: 40px 20px;
+    }
+
+    .report {
+      background: #f5f0e8;
+      width: 100%;
+      max-width: 680px;
+      padding: 48px 56px;
+      position: relative;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    }
+
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #090909;
+    }
+
+    .report-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #090909;
+      letter-spacing: 0.02em;
+    }
+
+    .report-brand span {
+      color: #c9a84c;
+    }
+
+    .report-meta {
+      text-align: right;
+      font-size: 0.75rem;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    .report-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #090909;
+      margin-bottom: 6px;
+    }
+
+    .report-subtitle {
+      font-size: 0.82rem;
+      color: #777;
+      margin-bottom: 40px;
+    }
+
+    .client-box {
+      background: #090909;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .client-field label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #c9a84c;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .client-field value {
+      font-size: 0.88rem;
+      color: #f5f0e8;
+      font-weight: 400;
+    }
+
+    .section-header {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #090909;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #090909;
+    }
+
+    .findings { margin-bottom: 36px; }
+
+    .finding-item {
+      display: grid;
+      grid-template-columns: 20px 1fr auto;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      align-items: start;
+    }
+
+    .finding-severity {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .severity-high { background: #c0392b; }
+    .severity-med { background: #e67e22; }
+    .severity-low { background: #c9a84c; }
+
+    .finding-content {}
+
+    .finding-title {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #090909;
+      margin-bottom: 3px;
+    }
+
+    .finding-desc {
+      font-size: 0.78rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .finding-impact {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #c0392b;
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .summary-box {
+      background: #090909;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .summary-box.gold { background: #c9a84c; }
+
+    .summary-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #f5f0e8;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .summary-box.gold .summary-num { color: #090909; }
+
+    .summary-label {
+      font-size: 0.7rem;
+      color: rgba(245,240,232,0.6);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .summary-box.gold .summary-label { color: rgba(9,9,9,0.6); }
+
+    .recommendations { margin-bottom: 36px; }
+
+    .rec-item {
+      display: flex;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      align-items: flex-start;
+    }
+
+    .rec-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #c9a84c;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+
+    .rec-text {
+      font-size: 0.82rem;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .rec-text strong { color: #090909; font-weight: 500; }
+
+    .next-steps {
+      background: #090909;
+      padding: 28px 32px;
+      margin-bottom: 36px;
+    }
+
+    .next-steps .section-header {
+      color: #c9a84c;
+      border-bottom-color: rgba(201,168,76,0.3);
+      margin-bottom: 16px;
+    }
+
+    .next-steps p {
+      font-size: 0.85rem;
+      color: #f5f0e8;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .next-steps .price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #c9a84c;
+    }
+
+    .next-steps .price-note {
+      font-size: 0.75rem;
+      color: rgba(245,240,232,0.5);
+      margin-top: 4px;
+    }
+
+    .report-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,0.15);
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #090909;
+    }
+
+    .footer-brand span { color: #c9a84c; }
+
+    .footer-note {
+      font-size: 0.7rem;
+      color: #999;
+    }
+
+    .redacted {
+      background: #090909;
+      color: transparent;
+      border-radius: 2px;
+      user-select: none;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      margin-left: 8px;
+    }
+
+    .badge-high { background: rgba(192,57,43,0.1); color: #c0392b; }
+    .badge-med { background: rgba(230,126,34,0.1); color: #e67e22; }
+  </style>
+</head>
+<body>
+  <div class="report">
+
+    <div class="report-header">
+      <div>
+        <div class="report-brand">Fixed<span>Books</span></div>
+        <div style="font-size:0.7rem; color:#999; margin-top:4px; letter-spacing:0.06em; text-transform:uppercase;">Bookkeeping Diagnostic Report</div>
+      </div>
+      <div class="report-meta">
+        <div>Report Date: March 10, 2026</div>
+        <div>Diagnostic ID: FBD-0047</div>
+        <div>Delivered within 48 hours</div>
+      </div>
+    </div>
+
+    <div class="report-title">Books Diagnostic: Craig's Plumbing LLC</div>
+    <div class="report-subtitle">Review period: January 2024 to March 2026 · QuickBooks Online · Simple Start</div>
+
+    <div class="client-box">
+      <div class="client-field">
+        <label>Business</label>
+        <value>Craig's Plumbing LLC</value>
+      </div>
+      <div class="client-field">
+        <label>Owner</label>
+        <value><span class="redacted">Craig ███████</span></value>
+      </div>
+      <div class="client-field">
+        <label>Review Period</label>
+        <value>Jan 2024 to Mar 2026</value>
+      </div>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-box">
+        <div class="summary-num">7</div>
+        <div class="summary-label">Total Findings</div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-num">3</div>
+        <div class="summary-label">High Priority</div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-num">$4,800</div>
+        <div class="summary-label">Bank Discrepancy</div>
+      </div>
+      <div class="summary-box gold">
+        <div class="summary-num">$3,200+</div>
+        <div class="summary-label">Est. Recoverable</div>
+      </div>
+    </div>
+
+    <div class="findings">
+      <div class="section-header">Findings</div>
+
+      <div class="finding-item">
+        <div class="finding-severity severity-high"></div>
+        <div class="finding-content">
+          <div class="finding-title">Bank reconciliation not completed <span class="badge badge-high">High</span></div>
+          <div class="finding-desc">Checking account shows a $4,800 discrepancy between bank balance and QuickBooks balance. Books have not been reconciled since October 2024. Your P&L is unreliable until this is resolved.</div>
+        </div>
+        <div class="finding-impact">$4,800 gap</div>
+      </div>
+
+      <div class="finding-item">
+        <div class="finding-severity severity-high"></div>
+        <div class="finding-content">
+          <div class="finding-title">47 uncategorized transactions <span class="badge badge-high">High</span></div>
+          <div class="finding-desc">47 expenses are sitting in "Uncategorized Expense" with no category assigned. These are invisible to your accountant and cannot be used for tax deductions in their current state.</div>
+        </div>
+        <div class="finding-impact">Est. $2,100</div>
+      </div>
+
+      <div class="finding-item">
+        <div class="finding-severity severity-high"></div>
+        <div class="finding-content">
+          <div class="finding-title">Personal expenses mixed into business account <span class="badge badge-high">High</span></div>
+          <div class="finding-desc">14 transactions identified as likely personal (car washes, restaurants, retail) are recorded as business expenses. This inflates your expenses and is a liability if audited.</div>
+        </div>
+        <div class="finding-impact">Est. $890</div>
+      </div>
+
+      <div class="finding-item">
+        <div class="finding-severity severity-med"></div>
+        <div class="finding-content">
+          <div class="finding-title">Duplicate vendor payments detected <span class="badge badge-med">Medium</span></div>
+          <div class="finding-desc">3 vendors show duplicate entries on the same date for the same amount. Requires verification to confirm whether these are double payments or data entry errors.</div>
+        </div>
+        <div class="finding-impact">$534 at risk</div>
+      </div>
+
+      <div class="finding-item">
+        <div class="finding-severity severity-med"></div>
+        <div class="finding-content">
+          <div class="finding-title">Accounts receivable aged over 90 days</div>
+          <div class="finding-desc">$1,240 in outstanding invoices has not been followed up on in over 90 days. Two invoices from Q3 2024 appear to have been forgotten entirely.</div>
+        </div>
+        <div class="finding-impact">$1,240 outstanding</div>
+      </div>
+
+      <div class="finding-item">
+        <div class="finding-severity severity-low"></div>
+        <div class="finding-content">
+          <div class="finding-title">Chart of accounts not set up for job costing</div>
+          <div class="finding-desc">No job costing categories exist. You cannot see profitability per job. This makes it impossible to know which types of work are worth taking on.</div>
+        </div>
+        <div class="finding-impact">Operational</div>
+      </div>
+
+      <div class="finding-item">
+        <div class="finding-severity severity-low"></div>
+        <div class="finding-content">
+          <div class="finding-title">Vehicle expenses not separated by asset</div>
+          <div class="finding-desc">All vehicle expenses are lumped into one category. For a business with multiple vehicles, this makes mileage tracking and depreciation claims harder to support.</div>
+        </div>
+        <div class="finding-impact">Tax exposure</div>
+      </div>
+    </div>
+
+    <div class="recommendations">
+      <div class="section-header">Recommendations</div>
+      <div class="rec-item">
+        <div class="rec-num">1</div>
+        <div class="rec-text"><strong>Reconcile all accounts back to October 2024.</strong> Start with checking, then credit cards. This is the foundation — nothing else is reliable until reconciliation is complete.</div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num">2</div>
+        <div class="rec-text"><strong>Categorize all 47 uncategorized transactions.</strong> Many of these are likely deductible. Leaving them uncategorized means your accountant can't use them and you overpay.</div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num">3</div>
+        <div class="rec-text"><strong>Review and remove personal expenses.</strong> Each one needs to be either reclassified as a legitimate business expense with a note, or removed entirely.</div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num">4</div>
+        <div class="rec-text"><strong>Verify duplicate payments with vendors.</strong> Confirm whether these were actual double payments and pursue refunds where applicable.</div>
+      </div>
+    </div>
+
+    <div class="next-steps">
+      <div class="section-header">Next Steps</div>
+      <p>This diagnostic identified 7 issues including a $4,800 bank discrepancy and an estimated $3,200 in recoverable deductions and errors. Your current books cannot be used reliably for tax prep or business decisions.</p>
+      <p>A full cleanup will reconcile all accounts, categorize all transactions, remove personal expenses, and hand back a clean P&L ready for your accountant.</p>
+      <div class="price">Cleanup Quote: $[X]</div>
+      <div class="price-note">The $97 diagnostic fee is credited toward this total. Financing available via Affirm.</div>
+    </div>
+
+    <div class="report-footer">
+      <div class="footer-brand">Fixed<span>Books</span> · fixedbooks.co</div>
+      <div class="footer-note">Confidential · Prepared for Craig's Plumbing LLC</div>
+    </div>
+
+  </div>
+</body>
+</html>
