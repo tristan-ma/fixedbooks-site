@@ -6,16 +6,16 @@
 :root {
 
   /* ─── COLOR ─────────────────────────────────────────── */
-  --bg:            #090909;
-  --bg-2:          #101010;
-  --bg-3:          #161616;
-  --border:        rgba(255, 255, 255, 0.07);
-  --gold:          #c9a84c;
-  --gold-dim:      rgba(201, 168, 76, 0.15);
-  --gold-border:   rgba(201, 168, 76, 0.25);
-  --text:          #e8e2d9;
-  --muted:         #7a7570;
-  --white:         #f5f0e8;
+  --bg:            #E4DDD4;
+  --bg-2:          #DAD2C8;
+  --bg-3:          #CFC6BB;
+  --border:        rgba(0, 0, 0, 0.08);
+  --gold:          #8B6914;
+  --gold-dim:      rgba(139, 105, 20, 0.1);
+  --gold-border:   rgba(139, 105, 20, 0.22);
+  --text:          #2A2420;
+  --muted:         #6B5F56;
+  --white:         #1A1410;
 
   /* ─── SPACING ───────────────────────────────────────── */
   --space-xs:      8px;
@@ -39,7 +39,7 @@
   --font-serif:    'Cormorant Garamond', serif;
   --font-sans:     'DM Sans', sans-serif;
 
-  /* ─── BORDERS & RADIUS ───────────────────────────────── */
+  /* ─── BORDERS ────────────────────────────────────────── */
   --radius-sm:     2px;
   --radius-md:     4px;
 

@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FixedBooks | Bookkeeping Diagnostics for Service Businesses</title>
+  <title>FixedBooks | Bookkeeping Diagnostics for Professional Service Businesses</title>
   <meta name="description" content="Most service businesses recover $3,000+ in their first diagnostic. Find what your books are hiding. $97. 48 hours." />
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
 
-  <!-- CSS — load order matters, do not reorder -->
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/typography.css">
@@ -17,42 +15,197 @@
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/mobile.css">
+
+  <style>
+    /* Light scheme overrides not yet in component files */
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .nav {
+      background: rgba(228, 221, 212, 0.92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav--scrolled {
+      background: rgba(228, 221, 212, 0.98);
+    }
+
+    .hero::before {
+      background: radial-gradient(circle, rgba(139,105,20,0.07) 0%, transparent 70%);
+    }
+
+    .section--dark {
+      background: var(--bg-2);
+    }
+
+    .offer-box {
+      background: var(--bg-3);
+    }
+
+    .offer-box::before {
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .form-input {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: #7A5C10;
+    }
+
+    .announcement-bar {
+      background: var(--gold-dim);
+      border-bottom: 1px solid var(--gold-border);
+      color: var(--gold);
+    }
+
+    .faq-q {
+      color: var(--white);
+    }
+
+    .faq-a {
+      color: var(--muted);
+    }
+
+    .stat-num {
+      color: var(--gold);
+    }
+
+    .pain-icon {
+      color: var(--gold);
+    }
+
+    .step-num {
+      color: var(--gold);
+    }
+
+    .badge {
+      background: var(--gold-dim);
+      border-color: var(--gold-border);
+      color: var(--gold);
+    }
+
+    .badge-dot {
+      background: var(--gold);
+    }
+
+    .eyebrow,
+    .section-label {
+      color: var(--gold);
+    }
+
+    h1, h2, h3 {
+      color: var(--white);
+    }
+
+    em {
+      color: var(--gold);
+    }
+
+    .glow-top::before {
+      background: radial-gradient(circle, rgba(139,105,20,0.06) 0%, transparent 70%);
+    }
+
+    .glow-bottom::after {
+      background: radial-gradient(circle, rgba(139,105,20,0.05) 0%, transparent 70%);
+    }
+
+    .final-cta::before {
+      background: radial-gradient(circle, rgba(139,105,20,0.05) 0%, transparent 70%);
+    }
+
+    .offer-price { color: var(--gold); }
+    .offer-price-note { color: var(--muted); }
+    .affirm-note { color: var(--muted); }
+    .offer-bullet { color: var(--text); }
+    .offer-bullet__check { color: var(--gold); }
+    .pain-text { color: var(--text); }
+    .step-body { color: var(--muted); }
+    .step-title { color: var(--white); }
+    .hero-sub { color: var(--muted); }
+    .stat-label { color: var(--muted); }
+    .section-body { color: var(--muted); }
+  </style>
+  .btn-ghost {
+      display: inline-block;
+      background: transparent;
+      color: var(--gold);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border: 1px solid var(--gold-border);
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background var(--transition-fast);
+    }
+
+    .btn-ghost:hover {
+      background: var(--gold-dim);
+    }
+
+  </style>  ← this closing tag is already there, paste above it
 </head>
 <body>
 
-  <!-- ─── ANNOUNCEMENT BAR ─────────────────────────────────── -->
+  <!-- ─── ANNOUNCEMENT BAR ──────────────────────────────────── -->
   <div class="announcement-bar" id="announcementBar" style="display:none;">
     <span class="announcement-bar__text">
-      48-hour diagnostic. Most service businesses recover 30x the cost. &nbsp;
+      The average professional service business overpays $11,000+ in taxes annually due to messy books.
+      &nbsp;
       <a href="#offer" style="color:var(--gold); text-decoration:underline; font-weight:500;">
-        Get started →
+        Find out what yours is hiding →
       </a>
     </span>
     <button class="announcement-bar__dismiss" id="announcementDismiss" aria-label="Dismiss">✕</button>
   </div>
 
 
-  <!-- ─── NAV ──────────────────────────────────────────────── -->
+  <!-- ─── NAV ───────────────────────────────────────────────── -->
   <nav class="nav" id="nav">
-    <a href="/" class="nav__logo">
-      <img
-        src="assets/icons/logo-wordmark.svg"
-        alt="FixedBooks"
-        class="logo-wordmark"
-        style="height: 36px; width: auto;"
-      />
+    <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+      <!-- Book mark: inline SVG so fonts render correctly -->
+      <svg width="28" height="34" viewBox="0 0 28 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 2 L2 7 L5 32 L14 27 Z" fill="#8B6914" opacity="0.65"/>
+        <path d="M14 2 L26 7 L23 32 L14 27 Z" fill="#8B6914"/>
+        <line x1="14" y1="2" x2="14" y2="27" stroke="#E4DDD4" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="2" y1="7" x2="26" y2="7" stroke="#A07C1A" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+      <!-- Wordmark -->
+      <span style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; letter-spacing:0.02em; color:#1A1410;">
+        Fixed<span style="color:#8B6914;">Books</span>
+      </span>
     </a>
-    <a href="#offer" class="btn-primary nav__cta">Get Diagnostic</a>
+
+    <div style="display:flex; align-items:center; gap:24px;">
+  <a href="pages/research.html" class="btn-ghost nav__cta">Research</a>
+  <a href="#offer" class="btn-primary nav__cta">Get Diagnostic</a>
+</div>
   </nav>
 
 
-  <!-- ─── HERO ─────────────────────────────────────────────── -->
+  <!-- ─── HERO ──────────────────────────────────────────────── -->
   <section class="hero glow-top">
     <div class="container">
 
       <div class="badge anim-1">
         <span class="badge-dot"></span>
-        For Service Businesses
+        For Professional Service Businesses
       </div>
 
       <h1 class="anim-2">
@@ -63,58 +216,27 @@
 
       <p class="hero-sub anim-3">
         Miscategorized expenses, unreconciled accounts, missed deductions.
-        We find exactly what your books are hiding — in 48 hours, for $97.
+        We find exactly what your books are hiding. In 48 hours, for $97.
       </p>
 
       <div class="stat-bar anim-4">
         <div class="stat-item">
-          <span class="stat-num">82%</span>
-          <span class="stat-label">of small business failures tied to cash flow problems</span>
+          <span class="stat-num">40%</span>
+          <span class="stat-label">of professional service owners don't trust their own financial data</span>
         </div>
         <div class="stat-item">
-          <span class="stat-num">93%</span>
-          <span class="stat-label">of SME owners overpay taxes due to missed deductions</span>
+          <span class="stat-num">$11k+</span>
+          <span class="stat-label">overpaid in taxes annually due to missed deductions</span>
         </div>
         <div class="stat-item">
-          <span class="stat-num">230hrs</span>
-          <span class="stat-label">per year lost to bookkeeping that could be reclaimed</span>
+          <span class="stat-num">20x</span>
+          <span class="stat-label">average return on a professional bookkeeping cleanup</span>
         </div>
       </div>
 
       <a href="#offer" class="btn-primary anim-5" style="max-width:320px; display:block;">
         Get My Diagnostic — $97
       </a>
-
-    </div>
-  </section>
-
-
-  <!-- ─── DIAGNOSTIC DEMO ───────────────────────────────────── -->
-  <section class="section section--dark section--bordered">
-    <div class="container">
-
-      <div class="reveal">
-        <p class="section-label">Sample Deliverable</p>
-        <h2 class="section-title">This is what you get</h2>
-        <p class="section-body">
-          A full diagnostic report documenting every finding, what it costs you,
-          and what needs to happen next. Delivered within 48 hours.
-        </p>
-        <a href="pages/demo.html" target="_blank" class="btn-ghost" style="display:inline-block; margin-bottom: 32px; width:auto;">
-          View Full Demo Report →
-        </a>
-      </div>
-
-      <div class="reveal" style="border:1px solid var(--border); overflow:hidden;">
-        <iframe
-          src="pages/demo.html"
-          width="100%"
-          height="600px"
-          style="border:none; display:block; pointer-events:none;"
-          title="Sample diagnostic report"
-          loading="lazy"
-        ></iframe>
-      </div>
 
     </div>
   </section>
@@ -144,7 +266,7 @@
           <span class="pain-icon">→</span>
           <p class="pain-text">
             <strong>Tax season is a panic every year.</strong>
-            You're scrambling for receipts, your accountant is frustrated,
+            Scrambling for receipts, your accountant is frustrated,
             and you're probably overpaying because nothing's clean.
           </p>
         </div>
@@ -161,9 +283,8 @@
         <div class="pain-item reveal">
           <span class="pain-icon">→</span>
           <p class="pain-text">
-            <strong>40% of business owners say this is the worst part of the job.</strong>
-            You started a service business, not a bookkeeping business.
-            This shouldn't be your problem.
+            <strong>43% of business loan applications get rejected</strong> due to
+            poor financial documentation. Not bad credit. Bad books.
           </p>
         </div>
 
@@ -180,7 +301,7 @@
         <p class="section-label">How It Works</p>
         <h2 class="section-title">Three steps. No surprises.</h2>
         <p class="section-body">
-          You don't need a call. You don't need to explain everything. Just get started.
+          No calls. No explaining everything from scratch. Just get started.
         </p>
       </div>
 
@@ -191,9 +312,9 @@
           <div>
             <p class="step-title">Book your diagnostic. $97.</p>
             <p class="step-body">
-              We get access to your books and produce a full written report of every
-              finding — errors, missing categories, red flags, and what it's likely
-              costing you. Delivered within 48 hours.
+              We get read access to your books and produce a full written report
+              of every finding: errors, missing categories, red flags, and what
+              it is likely costing you. Delivered within 48 hours.
             </p>
           </div>
         </div>
@@ -203,8 +324,8 @@
           <div>
             <p class="step-title">Review the findings</p>
             <p class="step-body">
-              You get a clear, plain-English breakdown of the problems. No jargon.
-              If cleanup makes sense, we quote you a flat rate.
+              A clear, plain-English breakdown of the problems. No jargon.
+              If cleanup makes sense, we quote a flat rate.
               The $97 is credited toward it.
             </p>
           </div>
@@ -215,7 +336,7 @@
           <div>
             <p class="step-title">We clean everything up</p>
             <p class="step-body">
-              Fully categorized transactions, reconciled accounts, clean P&amp;L.
+              Fully categorized transactions, reconciled accounts, clean P and L.
               Done remotely and handed back ready for your accountant
               or your own decisions.
             </p>
@@ -246,7 +367,7 @@
 
         <div class="offer-price">$97</div>
         <p class="offer-price-note">
-          Paid diagnostic · Credited toward cleanup if you move forward
+          Paid diagnostic. Credited toward cleanup if you move forward.
         </p>
 
         <div class="offer-bullets">
@@ -268,7 +389,7 @@
           </div>
           <div class="offer-bullet">
             <span class="offer-bullet__check">✓</span>
-            Built for service businesses. Remote. No calls needed.
+            Built for professional service businesses. Remote. No calls needed.
           </div>
         </div>
 
@@ -312,7 +433,7 @@
             We review your QuickBooks or bookkeeping software and identify
             miscategorized transactions, missing accounts, reconciliation errors,
             and red flags. You get a full written report of every finding in plain
-            English — not a PDF of vague suggestions.
+            English. Not a PDF of vague suggestions.
           </p>
         </div>
 
@@ -334,9 +455,9 @@
             <span class="faq-arrow">+</span>
           </div>
           <p class="faq-a">
-            If you move forward with a cleanup package, you can split the cost
-            into monthly payments through Affirm. It takes 60 seconds to apply
-            at checkout. We quote you a flat rate with no hourly billing that balloons.
+            If you move forward with a cleanup, you can split the cost into
+            monthly payments through Affirm. Sixty seconds to apply at checkout.
+            Flat rate quoted upfront. No hourly billing that grows.
           </p>
         </div>
 
@@ -346,9 +467,10 @@
             <span class="faq-arrow">+</span>
           </div>
           <p class="faq-a">
-            Any service business with low inventory — HVAC, plumbing, roofing,
-            landscaping, consulting, cleaning, and more. If your revenue comes
-            from labor and expertise rather than product sales, we're built for you.
+            Law firms, dental practices, med spas, aesthetic clinics, financial
+            advisors, chiropractors, optometrists, and similar professional service
+            providers. If your revenue comes from expertise rather than product
+            sales, we are built for you.
           </p>
         </div>
 
@@ -359,9 +481,8 @@
           </div>
           <p class="faq-a">
             Depends on how far back things need to go and how messy they are.
-            We'll be specific in the diagnostic quote. Most cleanups are done
-            within 1 to 2 weeks. Everything is remote — you don't need to be
-            involved once we have access.
+            We are specific in the diagnostic quote. Most cleanups are done
+            within one to two weeks. Everything is remote.
           </p>
         </div>
 
@@ -391,7 +512,6 @@
   </section>
 
 
-  <!-- ─── JS — deferred, load order matters ─────────────────── -->
   <script src="js/announcement.js" defer></script>
   <script src="js/reveal.js"       defer></script>
   <script src="js/faq.js"          defer></script>
