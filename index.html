@@ -4,224 +4,672 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FixedBooks | Bookkeeping Diagnostics for Professional Service Businesses</title>
-  <meta name="description" content="Most service businesses recover $3,000+ in their first diagnostic. Find what your books are hiding. $97. 48 hours." />
+  <meta name="description" content="Most professional service businesses recover $3,200+ in their first diagnostic. Find what your books are hiding. $97. 48 hours." />
 
-  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
-
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/typography.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="css/mobile.css">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    /* Light scheme overrides not yet in component files */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #E8E2D9;
+      --bg-2:     #DDD7CD;
+      --bg-3:     #D1CAC0;
+      --border:   rgba(0,0,0,0.12);
+      --black:    #000000;
+      --off:      #111111;
+      --muted:    #666666;
+      --gold:     #8B6914;
+      --font-serif: 'Cormorant Garamond', serif;
+      --font-sans:  'DM Sans', sans-serif;
+    }
+
+    html {
+      background: #000;
+      scroll-behavior: smooth;
+    }
 
     body {
       background: var(--bg);
-      color: var(--text);
+      color: var(--black);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    .nav {
-      background: rgba(228, 221, 212, 0.92);
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ── FIXED HEADER ────────────────────────────────────── */
+    #header-stack {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 200;
+    }
+
+    /* ── ANNOUNCEMENT BAR ────────────────────────────────── */
+    #announcementBar {
+      width: 100%;
+      background: #000;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 9px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: height 0.3s ease, opacity 0.3s ease;
+    }
+
+    .bar__text {
+      font-size: 0.76rem;
+      font-weight: 400;
+      color: rgba(232,226,217,0.65);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+
+    .bar__text a {
+      color: rgba(232,226,217,0.9);
+      text-decoration: underline;
+      font-weight: 500;
+      text-underline-offset: 2px;
+      transition: color 0.15s;
+    }
+
+    .bar__text a:hover { color: #fff; }
+
+    .bar__dismiss {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.25);
+      cursor: pointer;
+      font-size: 0.85rem;
+      line-height: 1;
+      padding: 4px 8px;
+      transition: color 0.15s;
+    }
+
+    .bar__dismiss:hover { color: rgba(255,255,255,0.7); }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    #nav {
+      width: 100%;
+      background: rgba(232,226,217,0.97);
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 62px;
+      transition: box-shadow 0.3s ease;
     }
 
-    .nav--scrolled {
-      background: rgba(228, 221, 212, 0.98);
+    #nav.scrolled {
+      box-shadow: 0 1px 24px rgba(0,0,0,0.08);
     }
 
-    .hero::before {
-      background: radial-gradient(circle, rgba(139,105,20,0.07) 0%, transparent 70%);
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
     }
 
-    .section--dark {
+    .nav__wordmark {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: 0.02em;
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav__link {
+      font-family: var(--font-sans);
+      font-size: 0.76rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 14px;
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+
+    .nav__link:hover { color: #000; }
+
+    .nav__btn {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+      border: none;
+    }
+
+    .nav__btn--ghost {
+      border: 1px solid rgba(0,0,0,0.25);
+      color: #000;
+      background: transparent;
+    }
+
+    .nav__btn--ghost:hover {
+      background: rgba(0,0,0,0.06);
+    }
+
+    .nav__btn--filled {
+      background: #000;
+      color: var(--bg);
+      border: 1px solid #000;
+    }
+
+    .nav__btn--filled:hover { background: #222; }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(0,0,0,0.18);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 7px 14px;
+      margin-bottom: 28px;
+      width: fit-content;
+    }
+
+    .hero__eyebrow__dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.8rem, 7vw, 4.6rem);
+      font-weight: 600;
+      line-height: 1.06;
+      color: #000;
+      margin-bottom: 24px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero__sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 44px;
+      line-height: 1.8;
+    }
+
+    /* ── STAT BAR ────────────────────────────────────────── */
+    .stat-bar {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .stat-item { display: flex; flex-direction: column; gap: 5px; }
+
+    .stat-num {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 700;
+      color: #000;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.74rem;
+      color: var(--muted);
+      max-width: 130px;
+      line-height: 1.4;
+    }
+
+    /* ── BUTTONS ─────────────────────────────────────────── */
+    .btn-primary {
+      display: inline-block;
+      background: #000;
+      color: var(--bg);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      text-decoration: none;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      width: 100%;
+    }
+
+    .btn-primary:hover { background: #222; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* ── SECTIONS ────────────────────────────────────────── */
+    .section { padding: 80px 0; }
+
+    .section--alt {
       background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 600;
+      color: #000;
+      line-height: 1.18;
+      margin-bottom: 16px;
+    }
+
+    .section-body {
+      font-size: 0.93rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+
+    /* ── PAIN ────────────────────────────────────────────── */
+    .pain-list { display: flex; flex-direction: column; margin-top: 40px; }
+
+    .pain-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pain-item:first-child { border-top: 1px solid var(--border); }
+
+    .pain-icon {
+      color: #000;
+      font-size: 0.95rem;
+      padding-top: 4px;
+      flex-shrink: 0;
+    }
+
+    .pain-text { font-size: 0.93rem; color: #333; line-height: 1.75; }
+    .pain-text strong { color: #000; font-weight: 500; }
+
+    /* ── PROCESS ─────────────────────────────────────────── */
+    .process-steps { display: flex; flex-direction: column; margin-top: 48px; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 24px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .step:first-child { border-top: 1px solid var(--border); }
+
+    .step-num {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #000;
+      line-height: 1;
+    }
+
+    .step-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 8px;
+    }
+
+    .step-body { font-size: 0.9rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── OFFER ───────────────────────────────────────────── */
     .offer-box {
       background: var(--bg-3);
+      border: 1px solid var(--border);
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
     }
 
     .offer-box::before {
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: #000;
     }
+
+    .offer-price {
+      font-family: var(--font-serif);
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: #000;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .offer-price-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .offer-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin-bottom: 32px;
+    }
+
+    .offer-bullet {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .offer-bullet__check { color: #000; flex-shrink: 0; font-weight: 500; }
+
+    .affirm-note {
+      font-size: 0.74rem;
+      color: var(--muted);
+      margin-top: 16px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    /* ── FORM ────────────────────────────────────────────── */
+    .form-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
 
     .form-input {
       background: var(--bg);
-      color: var(--text);
+      border: 1px solid rgba(0,0,0,0.18);
+      color: #000;
+      font-family: var(--font-sans);
+      font-weight: 300;
+      font-size: 0.93rem;
+      padding: 14px 18px;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
     }
 
-    .btn-primary {
-      background: var(--gold);
-      color: var(--bg);
+    .form-input::placeholder { color: var(--muted); }
+    .form-input:focus { border-color: #000; }
+
+    .form-msg {
+      display: none;
+      text-align: center;
+      margin-top: 14px;
+      color: #000;
+      font-size: 0.88rem;
     }
 
-    .btn-primary:hover {
-      background: #7A5C10;
-    }
-
-    .announcement-bar {
-      background: var(--gold-dim);
-      border-bottom: 1px solid var(--gold-border);
-      color: var(--gold);
-    }
+    /* ── FAQ ─────────────────────────────────────────────── */
+    .faq-list { display: flex; flex-direction: column; margin-top: 40px; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
 
     .faq-q {
-      color: var(--white);
+      padding: 22px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 0.93rem;
+      color: #000;
+      gap: 16px;
+      user-select: none;
+    }
+
+    .faq-arrow {
+      color: #000;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      transition: transform 0.25s ease;
+      font-weight: 300;
     }
 
     .faq-a {
+      font-size: 0.88rem;
       color: var(--muted);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding-bottom 0.35s ease;
+      line-height: 1.8;
     }
 
-    .stat-num {
-      color: var(--gold);
-    }
+    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 22px; }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
 
-    .pain-icon {
-      color: var(--gold);
-    }
-
-    .step-num {
-      color: var(--gold);
-    }
-
-    .badge {
-      background: var(--gold-dim);
-      border-color: var(--gold-border);
-      color: var(--gold);
-    }
-
-    .badge-dot {
-      background: var(--gold);
-    }
-
-    .eyebrow,
-    .section-label {
-      color: var(--gold);
-    }
-
-    h1, h2, h3 {
-      color: var(--white);
-    }
-
-    em {
-      color: var(--gold);
-    }
-
-    .glow-top::before {
-      background: radial-gradient(circle, rgba(139,105,20,0.06) 0%, transparent 70%);
-    }
-
-    .glow-bottom::after {
-      background: radial-gradient(circle, rgba(139,105,20,0.05) 0%, transparent 70%);
-    }
-
-    .final-cta::before {
-      background: radial-gradient(circle, rgba(139,105,20,0.05) 0%, transparent 70%);
-    }
-
-    .offer-price { color: var(--gold); }
-    .offer-price-note { color: var(--muted); }
-    .affirm-note { color: var(--muted); }
-    .offer-bullet { color: var(--text); }
-    .offer-bullet__check { color: var(--gold); }
-    .pain-text { color: var(--text); }
-    .step-body { color: var(--muted); }
-    .step-title { color: var(--white); }
-    .hero-sub { color: var(--muted); }
-    .stat-label { color: var(--muted); }
-    .section-body { color: var(--muted); }
-  </style>
-  .btn-ghost {
-      display: inline-block;
-      background: transparent;
-      color: var(--gold);
-      font-family: var(--font-sans);
-      font-weight: 500;
-      font-size: 0.8rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 10px 20px;
-      border: 1px solid var(--gold-border);
+    /* ── FINAL CTA ───────────────────────────────────────── */
+    .final-cta {
+      padding: 100px 0;
       text-align: center;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background var(--transition-fast);
+      background: #000;
     }
 
-    .btn-ghost:hover {
-      background: var(--gold-dim);
+    .final-cta .section-label { color: rgba(255,255,255,0.35); }
+    .final-cta .section-title { color: #fff; }
+    .final-cta .section-body { color: rgba(255,255,255,0.45); margin: 0 auto 40px; }
+
+    .final-cta .btn-primary {
+      background: #fff;
+      color: #000;
     }
 
-  </style>  ← this closing tag is already there, paste above it
+    .final-cta .btn-primary:hover { background: #e0e0e0; }
+
+    /* ── REVEAL ANIMATIONS ───────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── HERO ENTRANCE ───────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(22px);
+      animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .delay-1 { animation-delay: 0.05s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.35s; }
+    .delay-4 { animation-delay: 0.5s; }
+    .delay-5 { animation-delay: 0.65s; }
+
+    /* ── COUNTER ANIMATION ───────────────────────────────── */
+    .stat-num { transition: all 0.3s ease; }
+
+    /* ── LINE DRAW ───────────────────────────────────────── */
+    .line-draw {
+      width: 0;
+      height: 1px;
+      background: #000;
+      transition: width 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .line-draw.visible { width: 100%; }
+
+    /* ── HOVER LIFT ──────────────────────────────────────── */
+    .hover-lift {
+      transition: transform 0.2s ease;
+    }
+
+    .hover-lift:hover { transform: translateY(-2px); }
+
+    /* ── MOBILE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      #nav { padding: 0 24px; }
+    }
+
+    @media (max-width: 660px) {
+      #nav { padding: 0 16px; height: 54px; }
+      .nav__link { display: none; }
+      .nav__btn--ghost { display: none; }
+      .nav__wordmark { font-size: 1.15rem; }
+      .hero { padding: 80px 0 60px; }
+      h1 { font-size: 2.4rem; line-height: 1.1; }
+      .stat-bar { gap: 20px; }
+      .stat-num { font-size: 1.6rem; }
+      .step { grid-template-columns: 36px 1fr; gap: 16px; }
+      .offer-box { padding: 28px 20px; }
+      .offer-price { font-size: 2.4rem; }
+      .form-input { font-size: 16px; }
+      #announcementBar { padding: 8px 36px 8px 16px; }
+      .bar__text { font-size: 0.7rem; }
+    }
+
+    @media (max-width: 400px) {
+      h1 { font-size: 2rem; }
+      .stat-bar { flex-direction: column; gap: 16px; }
+    }
+
+  </style>
 </head>
 <body>
 
-  <!-- ─── ANNOUNCEMENT BAR ──────────────────────────────────── -->
-  <div class="announcement-bar" id="announcementBar" style="display:none;">
-    <span class="announcement-bar__text">
-      The average professional service business overpays $11,000+ in taxes annually due to messy books.
-      &nbsp;
-      <a href="#offer" style="color:var(--gold); text-decoration:underline; font-weight:500;">
-        Find out what yours is hiding →
+  <!-- ─── HEADER STACK ──────────────────────────────────────── -->
+  <div id="header-stack">
+
+    <div id="announcementBar">
+      <span class="bar__text">
+        The average practice overpays $11,000+ in taxes every year due to messy books.
+        &nbsp;
+        <a href="#offer">Find out what yours is hiding →</a>
+      </span>
+      <button class="bar__dismiss" id="barDismiss" aria-label="Dismiss">✕</button>
+    </div>
+
+    <nav id="nav">
+      <a href="/" class="nav__logo">
+        <svg width="22" height="28" viewBox="0 0 28 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2 L2 7 L5 32 L14 27 Z" fill="#8B6914" opacity="0.65"/>
+          <path d="M14 2 L26 7 L23 32 L14 27 Z" fill="#8B6914"/>
+          <line x1="14" y1="2" x2="14" y2="27" stroke="#E8E2D9" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="2" y1="7" x2="26" y2="7" stroke="#A07C1A" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+        <span class="nav__wordmark">FixedBooks</span>
       </a>
-    </span>
-    <button class="announcement-bar__dismiss" id="announcementDismiss" aria-label="Dismiss">✕</button>
+      <div class="nav__links">
+        <a href="pages/research.html" class="nav__link">Research</a>
+        <a href="pages/demo.html" class="nav__btn nav__btn--ghost">Sample Report</a>
+        <a href="#offer" class="nav__btn nav__btn--filled">Get Diagnostic</a>
+      </div>
+    </nav>
+
   </div>
 
 
-  <!-- ─── NAV ───────────────────────────────────────────────── -->
-  <nav class="nav" id="nav">
-    <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
-      <!-- Book mark: inline SVG so fonts render correctly -->
-      <svg width="28" height="34" viewBox="0 0 28 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M14 2 L2 7 L5 32 L14 27 Z" fill="#8B6914" opacity="0.65"/>
-        <path d="M14 2 L26 7 L23 32 L14 27 Z" fill="#8B6914"/>
-        <line x1="14" y1="2" x2="14" y2="27" stroke="#E4DDD4" stroke-width="1.4" stroke-linecap="round"/>
-        <line x1="2" y1="7" x2="26" y2="7" stroke="#A07C1A" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
-      </svg>
-      <!-- Wordmark -->
-      <span style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; letter-spacing:0.02em; color:#1A1410;">
-        Fixed<span style="color:#8B6914;">Books</span>
-      </span>
-    </a>
-
-    <div style="display:flex; align-items:center; gap:24px;">
-  <a href="pages/research.html" class="btn-ghost nav__cta">Research</a>
-  <a href="#offer" class="btn-primary nav__cta">Get Diagnostic</a>
-</div>
-  </nav>
-
-
   <!-- ─── HERO ──────────────────────────────────────────────── -->
-  <section class="hero glow-top">
+  <section class="hero">
     <div class="container">
 
-      <div class="badge anim-1">
-        <span class="badge-dot"></span>
+      <div class="hero__eyebrow fade-up delay-1">
+        <span class="hero__eyebrow__dot"></span>
         For Professional Service Businesses
       </div>
 
-      <h1 class="anim-2">
+      <h1 class="fade-up delay-2">
         Most service businesses<br>
         recover <em>$3,200+</em><br>
         in their first diagnostic.
       </h1>
 
-      <p class="hero-sub anim-3">
+      <p class="hero__sub fade-up delay-3">
         Miscategorized expenses, unreconciled accounts, missed deductions.
         We find exactly what your books are hiding. In 48 hours, for $97.
       </p>
 
-      <div class="stat-bar anim-4">
+      <div class="stat-bar fade-up delay-4">
         <div class="stat-item">
-          <span class="stat-num">40%</span>
+          <span class="stat-num" data-target="40" data-suffix="%">40%</span>
           <span class="stat-label">of professional service owners don't trust their own financial data</span>
         </div>
         <div class="stat-item">
@@ -229,12 +677,12 @@
           <span class="stat-label">overpaid in taxes annually due to missed deductions</span>
         </div>
         <div class="stat-item">
-          <span class="stat-num">20x</span>
+          <span class="stat-num" data-target="20" data-suffix="x">20x</span>
           <span class="stat-label">average return on a professional bookkeeping cleanup</span>
         </div>
       </div>
 
-      <a href="#offer" class="btn-primary anim-5" style="max-width:320px; display:block;">
+      <a href="#offer" class="btn-primary fade-up delay-5" style="max-width:320px; display:block;">
         Get My Diagnostic — $97
       </a>
 
@@ -243,17 +691,17 @@
 
 
   <!-- ─── PAIN ──────────────────────────────────────────────── -->
-  <section class="section section--dark section--bordered">
+  <section class="section section--alt">
     <div class="container">
 
       <div class="reveal">
-        <p class="section-label">Sound Familiar?</p>
+        <span class="section-label">Sound Familiar?</span>
         <h2 class="section-title">This is what messy books actually cost you</h2>
       </div>
 
       <div class="pain-list">
 
-        <div class="pain-item reveal">
+        <div class="pain-item reveal reveal-delay-1">
           <span class="pain-icon">→</span>
           <p class="pain-text">
             <strong>You can't see your real profit.</strong>
@@ -262,21 +710,21 @@
           </p>
         </div>
 
-        <div class="pain-item reveal">
+        <div class="pain-item reveal reveal-delay-2">
           <span class="pain-icon">→</span>
           <p class="pain-text">
             <strong>Tax season is a panic every year.</strong>
-            Scrambling for receipts, your accountant is frustrated,
-            and you're probably overpaying because nothing's clean.
+            Scrambling for receipts, your accountant is frustrated, and you're
+            probably overpaying because nothing's clean.
           </p>
         </div>
 
-        <div class="pain-item reveal">
+        <div class="pain-item reveal reveal-delay-3">
           <span class="pain-icon">→</span>
           <p class="pain-text">
             <strong>You're making decisions in the dark.</strong>
-            Should you hire? Buy equipment? Expand? You don't actually know
-            because your numbers don't tell you.
+            Should you hire? Buy equipment? Expand? You don't know because
+            your numbers don't tell you.
           </p>
         </div>
 
@@ -298,7 +746,7 @@
     <div class="container">
 
       <div class="reveal">
-        <p class="section-label">How It Works</p>
+        <span class="section-label">How It Works</span>
         <h2 class="section-title">Three steps. No surprises.</h2>
         <p class="section-body">
           No calls. No explaining everything from scratch. Just get started.
@@ -314,7 +762,7 @@
             <p class="step-body">
               We get read access to your books and produce a full written report
               of every finding: errors, missing categories, red flags, and what
-              it is likely costing you. Delivered within 48 hours.
+              it is costing you. Delivered within 48 hours.
             </p>
           </div>
         </div>
@@ -349,11 +797,11 @@
 
 
   <!-- ─── OFFER + FORM ──────────────────────────────────────── -->
-  <section class="section" id="offer">
+  <section class="section section--alt" id="offer">
     <div class="container">
 
       <div class="reveal">
-        <p class="section-label">The Offer</p>
+        <span class="section-label">The Offer</span>
         <h2 class="section-title">
           Start with a $97 diagnostic.<br>
           Know exactly what you're dealing with.
@@ -395,9 +843,9 @@
 
         <form id="leadForm">
           <div class="form-group">
-            <input class="form-input" type="text"  name="name"     placeholder="Your name"      required />
-            <input class="form-input" type="text"  name="business" placeholder="Business name"  required />
-            <input class="form-input" type="email" name="email"    placeholder="Email address"  required />
+            <input class="form-input" type="text"  name="name"     placeholder="Your name"     required />
+            <input class="form-input" type="text"  name="business" placeholder="Business name" required />
+            <input class="form-input" type="email" name="email"    placeholder="Email address" required />
           </div>
           <button type="submit" class="btn-primary">Book My Diagnostic</button>
           <p class="form-msg" id="formMsg"></p>
@@ -414,11 +862,11 @@
 
 
   <!-- ─── FAQ ──────────────────────────────────────────────── -->
-  <section class="section section--dark section--bordered">
+  <section class="section">
     <div class="container">
 
       <div class="reveal">
-        <p class="section-label">Questions</p>
+        <span class="section-label">Questions</span>
         <h2 class="section-title">Straight answers.</h2>
       </div>
 
@@ -433,7 +881,7 @@
             We review your QuickBooks or bookkeeping software and identify
             miscategorized transactions, missing accounts, reconciliation errors,
             and red flags. You get a full written report of every finding in plain
-            English. Not a PDF of vague suggestions.
+            English. Not vague suggestions.
           </p>
         </div>
 
@@ -492,14 +940,14 @@
 
 
   <!-- ─── FINAL CTA ─────────────────────────────────────────── -->
-  <section class="final-cta glow-bottom">
+  <section class="final-cta">
     <div class="container">
       <div class="reveal">
-        <p class="section-label text-center">Ready?</p>
-        <h2 class="section-title text-center">
+        <span class="section-label">Ready?</span>
+        <h2 class="section-title">
           Find out exactly what your books are costing you.
         </h2>
-        <p class="section-body text-center" style="margin: 0 auto 40px;">
+        <p class="section-body">
           $97. 48 hours. No fluff.
         </p>
         <div style="display:flex; justify-content:center;">
@@ -512,10 +960,209 @@
   </section>
 
 
-  <script src="js/announcement.js" defer></script>
-  <script src="js/reveal.js"       defer></script>
-  <script src="js/faq.js"          defer></script>
-  <script src="js/form.js"         defer></script>
+  <!-- ─── JS ───────────────────────────────────────────────── -->
+  <script>
+
+    // ── HEADER HEIGHT → body padding ──────────────────────────
+    function setBodyPad() {
+      const h = document.getElementById('header-stack');
+      document.body.style.paddingTop = h.offsetHeight + 'px';
+    }
+    setBodyPad();
+    window.addEventListener('resize', setBodyPad);
+
+
+    // ── ANNOUNCEMENT BAR DISMISS ───────────────────────────────
+    (function() {
+      const bar  = document.getElementById('announcementBar');
+      const btn  = document.getElementById('barDismiss');
+      const KEY  = 'fb_bar_dismissed';
+
+      if (sessionStorage.getItem(KEY)) {
+        bar.style.display = 'none';
+        setBodyPad();
+        return;
+      }
+
+      btn.addEventListener('click', function() {
+        bar.style.transition = 'opacity 0.25s ease, max-height 0.3s ease, padding 0.3s ease';
+        bar.style.opacity    = '0';
+        bar.style.maxHeight  = bar.offsetHeight + 'px';
+
+        requestAnimationFrame(function() {
+          bar.style.maxHeight  = '0';
+          bar.style.padding    = '0';
+          bar.style.overflow   = 'hidden';
+        });
+
+        setTimeout(function() {
+          bar.style.display = 'none';
+          setBodyPad();
+        }, 320);
+
+        sessionStorage.setItem(KEY, 'true');
+      });
+    })();
+
+
+    // ── NAV SCROLL SHADOW ──────────────────────────────────────
+    (function() {
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', function() {
+        nav.classList.toggle('scrolled', window.scrollY > 20);
+      }, { passive: true });
+    })();
+
+
+    // ── SCROLL REVEAL ──────────────────────────────────────────
+    (function() {
+      const els = document.querySelectorAll('.reveal');
+
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function(el) { el.classList.add('visible'); });
+        return;
+      }
+
+      const io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      els.forEach(function(el) { io.observe(el); });
+    })();
+
+
+    // ── STAT COUNTER ANIMATION ─────────────────────────────────
+    (function() {
+      const counters = document.querySelectorAll('.stat-num[data-target]');
+
+      if (!counters.length) return;
+
+      const io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) return;
+
+          const el     = entry.target;
+          const target = parseInt(el.dataset.target, 10);
+          const suffix = el.dataset.suffix || '';
+          const dur    = 1200;
+          const start  = performance.now();
+
+          function tick(now) {
+            const progress = Math.min((now - start) / dur, 1);
+            const ease     = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(ease * target) + suffix;
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+
+          requestAnimationFrame(tick);
+          io.unobserve(el);
+        });
+      }, { threshold: 0.5 });
+
+      counters.forEach(function(el) { io.observe(el); });
+    })();
+
+
+    // ── FAQ ACCORDION ──────────────────────────────────────────
+    (function() {
+      document.querySelectorAll('.faq-q').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+          const item   = trigger.parentElement;
+          const isOpen = item.classList.contains('open');
+
+          document.querySelectorAll('.faq-item').forEach(function(i) {
+            i.classList.remove('open');
+          });
+
+          if (!isOpen) item.classList.add('open');
+        });
+      });
+    })();
+
+
+    // ── FORM SUBMIT ────────────────────────────────────────────
+    (function() {
+      const form     = document.getElementById('leadForm');
+      const msg      = document.getElementById('formMsg');
+      const ENDPOINT = 'https://formspree.io/f/mdaweopa';
+
+      if (!form) return;
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+
+        try {
+          const res = await fetch(ENDPOINT, {
+            method:  'POST',
+            body:    new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok) {
+            form.style.display = 'none';
+            msg.style.display  = 'block';
+            msg.textContent    = "Got it. We'll be in touch within 24 hours to get you set up.";
+          } else {
+            throw new Error();
+          }
+        } catch(err) {
+          if (btn) { btn.disabled = false; btn.textContent = 'Book My Diagnostic'; }
+          msg.style.display = 'block';
+          msg.textContent   = 'Something went wrong. Please try again.';
+          msg.style.color   = '#c00';
+        }
+      });
+    })();
+
+
+    // ── PAIN ITEM STAGGER ON REVEAL ────────────────────────────
+    (function() {
+      const items = document.querySelectorAll('.pain-item.reveal');
+
+      const io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            const index = Array.from(items).indexOf(entry.target);
+            setTimeout(function() {
+              entry.target.classList.add('visible');
+            }, index * 80);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+
+      items.forEach(function(el) { io.observe(el); });
+    })();
+
+
+    // ── STEP STAGGER ON REVEAL ─────────────────────────────────
+    (function() {
+      const steps = document.querySelectorAll('.step.reveal');
+
+      const io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            const index = Array.from(steps).indexOf(entry.target);
+            setTimeout(function() {
+              entry.target.classList.add('visible');
+            }, index * 100);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+
+      steps.forEach(function(el) { io.observe(el); });
+    })();
+
+  </script>
 
 </body>
 </html>
