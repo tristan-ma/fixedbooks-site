@@ -1223,6 +1223,18 @@
       .stat-bar { flex-direction: column; gap: 14px; }
     }
 
+
+    /* ── MOBILE HERO PREVIEW ─────────────────────────────── */
+    .hero__mobile-preview {
+      display: none;
+      padding: 0 20px 48px;
+    }
+
+    @media (max-width: 960px) {
+      .hero__mobile-preview {
+        display: block;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1299,6 +1311,31 @@
         Get My Diagnostic — $97
       </a>
 
+    </div>
+    <div class="hero__mobile-preview">
+      <div class="rp" style="opacity:0.92;">
+        <div class="rp__header">
+          <div class="rp__brand">Fixed<span>Books</span></div>
+          <div class="rp__meta"><div>Diagnostic ID: FBD-0091</div><div>Delivered within 48 hours</div></div>
+        </div>
+        <div class="rp__title">Books Diagnostic: Lumina Aesthetics &amp; Wellness</div>
+        <div class="rp__grid">
+          <div class="rp__box"><div class="rp__box-num">9</div><div class="rp__box-label">Findings</div></div>
+          <div class="rp__box"><div class="rp__box-num">4</div><div class="rp__box-label">High Priority</div></div>
+          <div class="rp__box"><div class="rp__box-num">$6,240</div><div class="rp__box-label">Unreconciled</div></div>
+          <div class="rp__box gold"><div class="rp__box-num">$4,800+</div><div class="rp__box-label">Recoverable</div></div>
+        </div>
+        <div class="rp__section-title">Books Health Score</div>
+        <div class="rp__score-row"><span class="rp__score-label">Reconciliation</span><div class="rp__score-bar"><div class="rp__score-fill low" style="width:18%"></div></div><span class="rp__score-val">18%</span></div>
+        <div class="rp__score-row"><span class="rp__score-label">Transaction Categorization</span><div class="rp__score-bar"><div class="rp__score-fill low" style="width:34%"></div></div><span class="rp__score-val">34%</span></div>
+        <div class="rp__score-row"><span class="rp__score-label">Accounts Receivable</span><div class="rp__score-bar"><div class="rp__score-fill mid" style="width:52%"></div></div><span class="rp__score-val">52%</span></div>
+        <div class="rp__score-row"><span class="rp__score-label">Expense Separation</span><div class="rp__score-bar"><div class="rp__score-fill low" style="width:28%"></div></div><span class="rp__score-val">28%</span></div>
+        <div class="rp__section-title" style="margin-top:12px;">Findings</div>
+        <div class="rp__finding"><div class="rp__dot high"></div><div><div class="rp__finding-title">Bank reconciliation not completed since September 2024 <span class="rp__badge high">High</span></div><div class="rp__finding-desc">$6,240 discrepancy between bank and QuickBooks.</div></div><div class="rp__finding-impact">$6,240 gap</div></div>
+        <div class="rp__finding"><div class="rp__dot high"></div><div><div class="rp__finding-title">63 uncategorized transactions <span class="rp__badge high">High</span></div><div class="rp__finding-desc">None usable for deductions in current state.</div></div><div class="rp__finding-impact">Est. $3,800</div></div>
+        <div class="rp__finding"><div class="rp__dot high"></div><div><div class="rp__finding-title">Personal expenses in business accounts <span class="rp__badge high">High</span></div><div class="rp__finding-desc">19 transactions flagged. Direct audit liability.</div></div><div class="rp__finding-impact">$1,340</div></div>
+        <div class="rp__next"><div class="rp__next-title">Next Steps</div><p class="rp__next-text">9 issues identified. $4,800 in recoverable deductions and overpayments. Full cleanup will reconcile all accounts and hand back a clean P and L.</p><div class="rp__next-price">Cleanup Quote: $[X]</div><div class="rp__next-note">$97 diagnostic credited toward this total.</div></div>
+      </div>
     </div>
 
     <!-- RIGHT: live scrolling report preview -->
