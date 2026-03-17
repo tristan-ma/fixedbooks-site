@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FixedBooks | Sample Diagnostic Report</title>
+  <meta name="description" content="See exactly what a FixedBooks diagnostic report looks like before you buy." />
+
   <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,31 +16,36 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:          #090909;
-      --bg-2:        #101010;
-      --bg-3:        #161616;
-      --border:      rgba(255,255,255,0.07);
-      --gold:        #c9a84c;
-      --gold-dim:    rgba(201,168,76,0.12);
-      --gold-border: rgba(201,168,76,0.25);
-      --text:        #e8e2d9;
-      --muted:       #7a7570;
-      --cream:       #f5f0e8;
-      --red:         #c0392b;
-      --orange:      #d4751a;
+      --bg:          #8C7B5E;
+      --bg-2:        #7D6E53;
+      --bg-3:        #6E6049;
+      --border:      rgba(0,0,0,0.14);
+      --text:        #000000;
+      --muted:       #2A2015;
+      --muted-2:     rgba(0,0,0,0.45);
+      --mark:        #F0EBE0;
       --font-serif:  'Cormorant Garamond', serif;
       --font-sans:   'DM Sans', sans-serif;
+
+      /* Report internal palette — cream paper feel */
+      --r-bg:        #F5F0E8;
+      --r-dark:      #090909;
+      --r-gold:      #8B6914;
+      --r-muted:     #666666;
+      --r-border:    rgba(0,0,0,0.1);
+      --r-red:       #B83232;
+      --r-orange:    #C4650A;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
+      color: var(--text);
       font-family: var(--font-sans);
       font-weight: 300;
       font-size: 16px;
       line-height: 1.7;
-      color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
 
@@ -52,10 +59,9 @@
       z-index: 200;
     }
 
-    /* ── ANNOUNCEMENT BAR ────────────────────────────────── */
     #announcementBar {
       width: 100%;
-      background: #000;
+      background: #1A1208;
       padding: 8px 32px;
       display: flex;
       align-items: center;
@@ -65,25 +71,25 @@
     .bar__text {
       font-size: 0.72rem;
       font-weight: 400;
-      color: rgba(232,226,217,0.6);
+      color: rgba(240,235,224,0.55);
       text-align: center;
       letter-spacing: 0.03em;
     }
 
     .bar__text a {
-      color: rgba(232,226,217,0.85);
+      color: rgba(240,235,224,0.85);
       text-decoration: underline;
       font-weight: 500;
       text-underline-offset: 2px;
       transition: color 0.15s;
     }
 
-    .bar__text a:hover { color: #fff; }
+    .bar__text a:hover { color: var(--mark); }
 
     /* ── NAV ─────────────────────────────────────────────── */
     #nav {
       width: 100%;
-      background: rgba(9,9,9,0.96);
+      background: rgba(140,123,94,0.97);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -95,9 +101,7 @@
       transition: box-shadow 0.3s ease;
     }
 
-    #nav.scrolled {
-      box-shadow: 0 1px 20px rgba(0,0,0,0.4);
-    }
+    #nav.scrolled { box-shadow: 0 1px 24px rgba(0,0,0,0.18); }
 
     .nav__logo {
       display: flex;
@@ -111,7 +115,7 @@
       font-family: var(--font-serif);
       font-size: 1.3rem;
       font-weight: 700;
-      color: var(--cream);
+      color: var(--mark);
       letter-spacing: 0.02em;
     }
 
@@ -126,7 +130,7 @@
       font-size: 0.73rem;
       font-weight: 400;
       letter-spacing: 0.03em;
-      color: var(--muted);
+      color: rgba(240,235,224,0.55);
       text-decoration: none;
       padding: 6px 12px;
       background: none;
@@ -136,341 +140,397 @@
       white-space: nowrap;
     }
 
-    .nav__link:hover { color: var(--cream); }
+    .nav__link:hover { color: var(--mark); }
 
-    /* ── PAGE BODY OFFSET ────────────────────────────────── */
+    /* ── PAGE WRAPPER ────────────────────────────────────── */
     .page-body {
-      padding: 48px 20px 80px;
+      padding: 48px 24px 80px;
     }
+
+    /* ── INTRO STRIP ─────────────────────────────────────── */
+    .intro-strip {
+      max-width: 720px;
+      margin: 0 auto 32px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .intro-strip__left {}
+
+    .intro-strip__label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .intro-strip__title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .intro-strip__sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 440px;
+    }
+
+    .intro-strip__btn {
+      display: inline-block;
+      background: var(--text);
+      color: var(--bg);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 11px 24px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      align-self: center;
+      transition: background 0.15s;
+    }
+
+    .intro-strip__btn:hover { background: #222; }
 
     /* ── REPORT WRAPPER ──────────────────────────────────── */
     .report {
-      background: var(--cream);
+      background: var(--r-bg);
       width: 100%;
       max-width: 720px;
       margin: 0 auto;
       padding: 56px 64px;
       position: relative;
-      box-shadow: 0 48px 96px rgba(0,0,0,0.7);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.3);
     }
 
-    /* ── HEADER ──────────────────────────────────────────── */
+    /* ── REPORT HEADER ───────────────────────────────────── */
     .report-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 40px;
       padding-bottom: 24px;
-      border-bottom: 2px solid var(--bg);
+      border-bottom: 2px solid var(--r-dark);
     }
 
-    .brand {
+    .r-brand {
       font-family: var(--font-serif);
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      color: var(--bg);
+      color: var(--r-dark);
       letter-spacing: 0.02em;
     }
 
-    .brand span { color: var(--gold); }
+    .r-brand span { color: var(--r-gold); }
 
-    .report-meta {
+    .r-meta {
       text-align: right;
-      font-size: 0.72rem;
-      color: #666;
+      font-size: 0.7rem;
+      color: var(--r-muted);
       line-height: 2;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
     }
 
-    /* ── TITLE ───────────────────────────────────────────── */
-    .report-title {
+    /* ── REPORT TITLE ────────────────────────────────────── */
+    .r-title {
       font-family: var(--font-serif);
-      font-size: 1.9rem;
+      font-size: 1.8rem;
       font-weight: 600;
-      color: var(--bg);
+      color: var(--r-dark);
       margin-bottom: 6px;
       line-height: 1.2;
     }
 
-    .report-subtitle {
-      font-size: 0.8rem;
-      color: #888;
-      margin-bottom: 36px;
+    .r-subtitle {
+      font-size: 0.78rem;
+      color: var(--r-muted);
+      margin-bottom: 32px;
       letter-spacing: 0.02em;
     }
 
     /* ── CLIENT BOX ──────────────────────────────────────── */
     .client-box {
-      background: var(--bg);
-      padding: 22px 28px;
-      margin-bottom: 36px;
+      background: var(--r-dark);
+      padding: 20px 26px;
+      margin-bottom: 32px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 24px;
+      gap: 20px;
     }
 
     .client-field label {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--r-gold);
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
     .client-field value {
-      font-size: 0.86rem;
-      color: var(--cream);
+      font-size: 0.84rem;
+      color: var(--r-bg);
       font-weight: 400;
-    }
-
-    /* ── SECTION HEADER ──────────────────────────────────── */
-    .section-header {
-      font-family: var(--font-serif);
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--bg);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--bg);
     }
 
     /* ── SUMMARY GRID ────────────────────────────────────── */
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 36px;
+      gap: 10px;
+      margin-bottom: 32px;
     }
 
     .summary-box {
-      background: var(--bg);
-      padding: 20px 14px;
+      background: var(--r-dark);
+      padding: 18px 12px;
       text-align: center;
     }
 
-    .summary-box.accent { background: var(--gold); }
+    .summary-box.accent { background: var(--r-gold); }
 
     .summary-num {
       font-family: var(--font-serif);
-      font-size: 1.9rem;
+      font-size: 1.7rem;
       font-weight: 700;
-      color: var(--cream);
+      color: var(--r-bg);
       line-height: 1;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
-    .summary-box.accent .summary-num { color: var(--bg); }
+    .summary-box.accent .summary-num { color: var(--r-dark); }
 
     .summary-label {
-      font-size: 0.62rem;
-      color: rgba(245,240,232,0.55);
-      letter-spacing: 0.07em;
+      font-size: 0.6rem;
+      color: rgba(245,240,232,0.5);
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       line-height: 1.4;
     }
 
-    .summary-box.accent .summary-label { color: rgba(9,9,9,0.55); }
+    .summary-box.accent .summary-label { color: rgba(9,9,9,0.5); }
 
-    /* ── SCORE BAR ───────────────────────────────────────── */
-    .score-section { margin-bottom: 36px; }
+    /* ── SECTION HEADER ──────────────────────────────────── */
+    .r-section-header {
+      font-family: var(--font-serif);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--r-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--r-dark);
+    }
+
+    /* ── BENCHMARK CALLOUT ───────────────────────────────── */
+    .benchmark {
+      background: var(--r-dark);
+      border-left: 3px solid var(--r-gold);
+      padding: 14px 18px;
+      margin-bottom: 28px;
+    }
+
+    .benchmark p {
+      font-size: 0.8rem;
+      color: var(--r-bg);
+      line-height: 1.7;
+    }
+
+    .benchmark strong { color: var(--r-gold); font-weight: 500; }
+
+    /* ── SCORE BARS ──────────────────────────────────────── */
+    .score-section { margin-bottom: 32px; }
 
     .score-row {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: 10px;
     }
 
     .score-label {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: #444;
-      width: 160px;
+      width: 155px;
       flex-shrink: 0;
     }
 
     .score-bar-wrap {
       flex: 1;
-      background: #e0dbd2;
-      height: 6px;
+      background: #DDD8CF;
+      height: 5px;
       border-radius: 3px;
       overflow: hidden;
     }
 
     .score-bar-fill { height: 100%; border-radius: 3px; }
-    .score-bar-fill.low  { background: var(--red); }
-    .score-bar-fill.mid  { background: var(--orange); }
-    .score-bar-fill.high { background: #2e7d32; }
+    .score-bar-fill.low  { background: var(--r-red); }
+    .score-bar-fill.mid  { background: var(--r-orange); }
+    .score-bar-fill.high { background: #2E7D32; }
 
     .score-val {
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 500;
       color: #333;
-      width: 36px;
+      width: 32px;
       text-align: right;
       flex-shrink: 0;
     }
 
-    /* ── BENCHMARK CALLOUT ───────────────────────────────── */
-    .benchmark-callout {
-      background: var(--bg);
-      border-left: 3px solid var(--gold);
-      padding: 16px 20px;
-      margin-bottom: 36px;
-    }
-
-    .benchmark-callout p {
-      font-size: 0.82rem;
-      color: var(--cream);
-      line-height: 1.7;
-    }
-
-    .benchmark-callout strong { color: var(--gold); font-weight: 500; }
-
     /* ── FINDINGS ────────────────────────────────────────── */
-    .findings { margin-bottom: 36px; }
+    .findings { margin-bottom: 32px; }
 
     .finding-item {
       display: grid;
-      grid-template-columns: 12px 1fr auto;
-      gap: 14px;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      grid-template-columns: 10px 1fr auto;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--r-border);
       align-items: start;
     }
 
-    .finding-item:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+    .finding-item:first-child { border-top: 1px solid var(--r-border); }
 
     .dot {
-      width: 10px; height: 10px;
+      width: 9px; height: 9px;
       border-radius: 50%;
       margin-top: 4px;
       flex-shrink: 0;
     }
 
-    .dot.high   { background: var(--red); }
-    .dot.medium { background: var(--orange); }
-    .dot.low    { background: var(--gold); }
+    .dot.high   { background: var(--r-red); }
+    .dot.medium { background: var(--r-orange); }
+    .dot.low    { background: var(--r-gold); }
 
     .finding-title {
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 500;
-      color: var(--bg);
-      margin-bottom: 4px;
+      color: var(--r-dark);
+      margin-bottom: 3px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       flex-wrap: wrap;
     }
 
     .finding-desc {
-      font-size: 0.76rem;
-      color: #666;
+      font-size: 0.74rem;
+      color: #555;
       line-height: 1.6;
     }
 
     .finding-data {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: #aaa;
       font-style: italic;
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     .finding-impact {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 500;
-      color: var(--red);
+      color: var(--r-red);
       white-space: nowrap;
       padding-top: 3px;
     }
 
-    .badge {
+    .r-badge {
       display: inline-block;
-      padding: 2px 8px;
-      font-size: 0.6rem;
+      padding: 2px 7px;
+      font-size: 0.58rem;
       font-weight: 500;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       border-radius: 2px;
     }
 
-    .badge.high   { background: rgba(192,57,43,0.1);  color: var(--red); }
-    .badge.medium { background: rgba(212,117,26,0.1); color: var(--orange); }
-    .badge.low    { background: rgba(201,168,76,0.12); color: #8a6f2a; }
+    .r-badge.high   { background: rgba(184,50,50,0.1);  color: var(--r-red); }
+    .r-badge.medium { background: rgba(196,101,10,0.1); color: var(--r-orange); }
+    .r-badge.low    { background: rgba(139,105,20,0.1); color: var(--r-gold); }
 
-    /* ── OPPORTUNITY TABLE ───────────────────────────────── */
+    /* ── OPP TABLE ───────────────────────────────────────── */
     .opp-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 36px;
-      font-size: 0.78rem;
+      margin-bottom: 32px;
+      font-size: 0.76rem;
     }
 
     .opp-table th {
-      background: var(--bg);
-      color: var(--gold);
-      font-size: 0.62rem;
+      background: var(--r-dark);
+      color: var(--r-gold);
+      font-size: 0.6rem;
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 10px 14px;
+      padding: 9px 13px;
       text-align: left;
     }
 
     .opp-table td {
-      padding: 11px 14px;
-      border-bottom: 1px solid rgba(0,0,0,0.07);
+      padding: 10px 13px;
+      border-bottom: 1px solid var(--r-border);
       color: #444;
       vertical-align: top;
       line-height: 1.5;
     }
 
     .opp-table tr:last-child td { border-bottom: none; }
-    .opp-table td:first-child { color: var(--bg); font-weight: 500; }
-    .opp-table td.lift { color: #2e7d32; font-weight: 500; }
+    .opp-table td:first-child { color: var(--r-dark); font-weight: 500; }
+    .opp-table td.lift { color: #2E7D32; font-weight: 500; }
 
     /* ── RECOMMENDATIONS ─────────────────────────────────── */
-    .recommendations { margin-bottom: 36px; }
+    .recommendations { margin-bottom: 32px; }
 
     .rec-item {
       display: flex;
-      gap: 16px;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--r-border);
       align-items: flex-start;
     }
 
     .rec-num {
       font-family: var(--font-serif);
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 700;
-      color: var(--gold);
+      color: var(--r-gold);
       flex-shrink: 0;
       line-height: 1.2;
-      min-width: 24px;
+      min-width: 22px;
     }
 
     .rec-title {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 500;
-      color: var(--bg);
+      color: var(--r-dark);
       margin-bottom: 3px;
     }
 
     .rec-text {
-      font-size: 0.76rem;
-      color: #666;
+      font-size: 0.74rem;
+      color: #555;
       line-height: 1.6;
     }
 
     /* ── NEXT STEPS ──────────────────────────────────────── */
     .next-steps {
-      background: var(--bg);
-      padding: 30px 36px;
-      margin-bottom: 36px;
+      background: var(--r-dark);
+      padding: 28px 32px;
+      margin-bottom: 32px;
       position: relative;
       overflow: hidden;
     }
@@ -480,57 +540,56 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      background: linear-gradient(90deg, transparent, var(--r-gold), transparent);
     }
 
-    .next-steps .section-header {
-      color: var(--gold);
-      border-bottom-color: rgba(201,168,76,0.25);
+    .next-steps .r-section-header {
+      color: var(--r-gold);
+      border-bottom-color: rgba(139,105,20,0.25);
     }
 
     .next-steps p {
-      font-size: 0.84rem;
-      color: var(--cream);
+      font-size: 0.82rem;
+      color: var(--r-bg);
       line-height: 1.8;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .next-steps-price {
       font-family: var(--font-serif);
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       font-weight: 700;
-      color: var(--gold);
+      color: var(--r-gold);
       line-height: 1;
       margin-bottom: 4px;
     }
 
     .next-steps-note {
-      font-size: 0.72rem;
-      color: rgba(245,240,232,0.45);
+      font-size: 0.7rem;
+      color: rgba(245,240,232,0.4);
     }
 
-    /* ── FOOTER ──────────────────────────────────────────── */
+    /* ── REPORT FOOTER ───────────────────────────────────── */
     .report-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 20px;
-      border-top: 1px solid rgba(0,0,0,0.12);
+      padding-top: 18px;
+      border-top: 1px solid var(--r-border);
     }
 
     .footer-brand {
       font-family: var(--font-serif);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
-      color: var(--bg);
+      color: var(--r-dark);
     }
 
-    .footer-brand span { color: var(--gold); }
-
-    .footer-note { font-size: 0.68rem; color: #aaa; }
+    .footer-brand span { color: var(--r-gold); }
+    .footer-note { font-size: 0.66rem; color: #aaa; }
 
     .redacted {
-      background: var(--bg);
+      background: var(--r-dark);
       color: transparent;
       border-radius: 2px;
       user-select: none;
@@ -539,45 +598,46 @@
     /* ── CTA STRIP ───────────────────────────────────────── */
     .demo-cta {
       max-width: 720px;
-      margin: 32px auto 0;
+      margin: 28px auto 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      padding: 28px 32px;
-      background: #111;
-      border: 1px solid rgba(255,255,255,0.07);
+      padding: 26px 32px;
+      background: #1A1208;
+      border: 1px solid rgba(240,235,224,0.06);
     }
 
     .demo-cta__text {
-      font-size: 0.88rem;
-      color: rgba(245,240,232,0.6);
+      font-size: 0.86rem;
+      color: rgba(240,235,224,0.5);
       line-height: 1.6;
     }
 
     .demo-cta__text strong {
-      color: var(--cream);
+      color: var(--mark);
       font-weight: 500;
       display: block;
       margin-bottom: 3px;
+      font-size: 0.92rem;
     }
 
     .demo-cta__btn {
       display: inline-block;
-      background: var(--cream);
-      color: #000;
+      background: var(--mark);
+      color: #1A1208;
       font-family: var(--font-sans);
       font-weight: 500;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 12px 24px;
+      padding: 11px 24px;
       white-space: nowrap;
-      transition: background 0.15s;
       flex-shrink: 0;
+      transition: background 0.15s;
     }
 
-    .demo-cta__btn:hover { background: #ddd; }
+    .demo-cta__btn:hover { background: #ddd8cc; }
 
     /* ── MOBILE ──────────────────────────────────────────── */
     @media (max-width: 900px) {
@@ -586,14 +646,16 @@
 
     @media (max-width: 760px) {
       .page-body { padding: 36px 0 60px; }
-      .report { padding: 36px 24px; box-shadow: none; }
+      .intro-strip { padding: 0 20px; flex-direction: column; gap: 16px; }
+      .intro-strip__btn { align-self: flex-start; }
+      .report { padding: 32px 20px; box-shadow: none; }
       .report-header { flex-direction: column; gap: 12px; }
-      .report-meta { text-align: left; }
-      .client-box { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .r-meta { text-align: left; }
+      .client-box { grid-template-columns: 1fr 1fr; gap: 14px; padding: 16px; }
       .summary-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .score-label { width: 120px; }
-      .next-steps { padding: 24px 20px; }
-      .demo-cta { flex-direction: column; align-items: flex-start; padding: 24px 20px; }
+      .score-label { width: 110px; }
+      .next-steps { padding: 22px 18px; }
+      .demo-cta { flex-direction: column; align-items: flex-start; padding: 22px 20px; margin: 20px 0 0; }
     }
 
     @media (max-width: 660px) {
@@ -601,13 +663,14 @@
       .nav__link:nth-child(1),
       .nav__link:nth-child(2) { display: none; }
       .nav__wordmark { font-size: 1.1rem; }
+      #announcementBar { padding: 7px 20px; }
+      .bar__text { font-size: 0.68rem; }
     }
 
     @media (max-width: 480px) {
       .client-box { grid-template-columns: 1fr; }
-      .finding-item { grid-template-columns: 12px 1fr; }
+      .finding-item { grid-template-columns: 10px 1fr; }
       .finding-impact { display: none; }
-      .summary-grid { grid-template-columns: 1fr 1fr; }
     }
 
   </style>
@@ -628,10 +691,10 @@
     <nav id="nav">
       <a href="../index.html" class="nav__logo">
         <svg width="20" height="26" viewBox="0 0 28 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M14 2 L2 7 L5 32 L14 27 Z" fill="#8B6914" opacity="0.65"/>
-          <path d="M14 2 L26 7 L23 32 L14 27 Z" fill="#8B6914"/>
-          <line x1="14" y1="2" x2="14" y2="27" stroke="#090909" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="2" y1="7" x2="26" y2="7" stroke="#A07C1A" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
+          <path d="M14 2 L2 7 L5 32 L14 27 Z" fill="#F0EBE0" opacity="0.65"/>
+          <path d="M14 2 L26 7 L23 32 L14 27 Z" fill="#F0EBE0"/>
+          <line x1="14" y1="2" x2="14" y2="27" stroke="#8C7B5E" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="2" y1="7" x2="26" y2="7" stroke="#F0EBE0" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
         </svg>
         <span class="nav__wordmark">FixedBooks</span>
       </a>
@@ -649,26 +712,41 @@
   <!-- ─── PAGE BODY ─────────────────────────────────────────── -->
   <div class="page-body">
 
+    <!-- INTRO STRIP -->
+    <div class="intro-strip">
+      <div class="intro-strip__left">
+        <span class="intro-strip__label">Sample Deliverable</span>
+        <h1 class="intro-strip__title">This is what your diagnostic looks like.</h1>
+        <p class="intro-strip__sub">
+          Every client receives a report like this within 48 hours.
+          Findings are specific, sourced, and plain-English.
+          No vague suggestions. No upsell pressure.
+        </p>
+      </div>
+      <a href="../index.html#offer" class="intro-strip__btn">Get My Diagnostic — $97</a>
+    </div>
+
+
     <!-- REPORT -->
     <div class="report">
 
       <div class="report-header">
         <div>
-          <div class="brand">Fixed<span>Books</span></div>
-          <div style="font-size:0.68rem; color:#999; margin-top:4px; letter-spacing:0.08em; text-transform:uppercase;">
+          <div class="r-brand">Fixed<span>Books</span></div>
+          <div style="font-size:0.66rem; color:#999; margin-top:4px; letter-spacing:0.08em; text-transform:uppercase;">
             Books Diagnostic Report
           </div>
         </div>
-        <div class="report-meta">
+        <div class="r-meta">
           <div>Report Date: March 14, 2026</div>
           <div>Diagnostic ID: FBD-0091</div>
           <div>Delivered within 48 hours</div>
         </div>
       </div>
 
-      <div class="report-title">Books Diagnostic: Lumina Aesthetics &amp; Wellness</div>
-      <div class="report-subtitle">
-        Review period: January 2024 to March 2026 &nbsp;·&nbsp; QuickBooks Online Plus &nbsp;·&nbsp; Med Spa &amp; Aesthetics
+      <div class="r-title">Books Diagnostic: Lumina Aesthetics &amp; Wellness</div>
+      <div class="r-subtitle">
+        Review period: January 2024 to March 2026 &nbsp;·&nbsp; QuickBooks Online Plus &nbsp;·&nbsp; Med Spa
       </div>
 
       <div class="client-box">
@@ -705,18 +783,17 @@
         </div>
       </div>
 
-      <div class="benchmark-callout">
+      <div class="benchmark">
         <p>
-          Med spas and aesthetic clinics operate on high per-treatment revenue and high client lifetime value.
-          At Lumina's current volume, a <strong>1% improvement in bookkeeping accuracy</strong> translates
-          directly to cleaner tax exposure, better cash flow visibility, and confident decisions on staff,
-          equipment, and expansion. The issues below are costing you more than the diagnostic.
+          At Lumina's current revenue volume, a <strong>1% improvement in bookkeeping accuracy</strong>
+          translates directly to cleaner tax exposure, better cash flow visibility, and confident
+          decisions on staff, equipment, and expansion. The issues below are costing you more
+          than this diagnostic.
         </p>
       </div>
 
       <div class="score-section">
-        <div class="section-header">Books Health Score</div>
-
+        <div class="r-section-header">Books Health Score</div>
         <div class="score-row">
           <span class="score-label">Reconciliation</span>
           <div class="score-bar-wrap"><div class="score-bar-fill low" style="width:18%"></div></div>
@@ -750,20 +827,19 @@
       </div>
 
       <div class="findings">
-        <div class="section-header">Findings</div>
+        <div class="r-section-header">Findings</div>
 
         <div class="finding-item">
           <div class="dot high"></div>
           <div>
             <div class="finding-title">
               Bank reconciliation not completed since September 2024
-              <span class="badge high">High</span>
+              <span class="r-badge high">High</span>
             </div>
             <div class="finding-desc">
               Checking and merchant accounts show a combined $6,240 discrepancy between
-              bank statements and QuickBooks balances. Your profit and loss report is
-              unreliable until this is resolved. Tax prep on unreconciled books carries
-              audit exposure.
+              bank statements and QuickBooks balances. Your P and L is unreliable until
+              this is resolved. Tax prep on unreconciled books carries audit exposure.
             </div>
             <div class="finding-data">Source: QuickBooks reconciliation log, accessed March 2026</div>
           </div>
@@ -775,13 +851,12 @@
           <div>
             <div class="finding-title">
               63 uncategorized transactions across 26 months
-              <span class="badge high">High</span>
+              <span class="r-badge high">High</span>
             </div>
             <div class="finding-desc">
-              63 expenses are sitting in Uncategorized Expense with no category assigned.
-              This includes what appear to be supply purchases, equipment deposits, and
-              continuing education costs. None of these can be used for deductions in
-              their current state.
+              63 expenses sitting in Uncategorized Expense with no category assigned —
+              supply purchases, equipment deposits, continuing education. None of these
+              can be used for deductions in their current state.
             </div>
             <div class="finding-data">Estimated deductible value: $3,100 to $4,200 based on visible descriptions</div>
           </div>
@@ -793,11 +868,11 @@
           <div>
             <div class="finding-title">
               Personal and business expenses mixed across accounts
-              <span class="badge high">High</span>
+              <span class="r-badge high">High</span>
             </div>
             <div class="finding-desc">
               19 transactions identified as likely personal recorded as business expenses.
-              This inflates your expense total and is a direct liability in an audit.
+              This inflates your expense total and is a direct audit liability.
               Each needs to be reviewed and either reclassified or removed.
             </div>
             <div class="finding-data">Combined value of flagged transactions: $1,340</div>
@@ -810,12 +885,12 @@
           <div>
             <div class="finding-title">
               Treatment revenue not tracked by service line
-              <span class="badge high">High</span>
+              <span class="r-badge high">High</span>
             </div>
             <div class="finding-desc">
-              All revenue is recorded under a single income account. You cannot see which
-              treatments generate the most profit. This makes pricing decisions and staff
-              allocation guesswork.
+              All revenue recorded under a single income account. You cannot see which
+              treatments generate the most profit. Pricing decisions and staff allocation
+              are operating on guesswork.
             </div>
             <div class="finding-data">Operational impact: prevents margin analysis by service type</div>
           </div>
@@ -827,7 +902,7 @@
           <div>
             <div class="finding-title">
               Duplicate vendor payments detected
-              <span class="badge medium">Medium</span>
+              <span class="r-badge medium">Medium</span>
             </div>
             <div class="finding-desc">
               4 vendors show duplicate entries on the same date for identical amounts.
@@ -843,10 +918,10 @@
           <div>
             <div class="finding-title">
               Accounts receivable aged over 90 days
-              <span class="badge medium">Medium</span>
+              <span class="r-badge medium">Medium</span>
             </div>
             <div class="finding-desc">
-              $1,620 in outstanding balances has not been followed up in over 90 days.
+              $1,620 in outstanding balances not followed up in over 90 days.
               Three invoices from Q2 2024 appear to have been abandoned entirely.
             </div>
             <div class="finding-data">$1,620 outstanding across 3 clients</div>
@@ -859,10 +934,10 @@
           <div>
             <div class="finding-title">
               Medical supply costs not separated from general operating expenses
-              <span class="badge medium">Medium</span>
+              <span class="r-badge medium">Medium</span>
             </div>
             <div class="finding-desc">
-              Injectable and consumable supply costs are categorized under general supplies.
+              Injectable and consumable supply costs categorized under general supplies.
               Your accountant cannot build a proper P and L without this separation.
             </div>
           </div>
@@ -874,12 +949,11 @@
           <div>
             <div class="finding-title">
               Equipment depreciation not recorded
-              <span class="badge low">Low</span>
+              <span class="r-badge low">Low</span>
             </div>
             <div class="finding-desc">
               Laser and aesthetic equipment purchases appear to have been expensed in full
-              rather than depreciated. This may need to be corrected and could affect
-              prior year filings.
+              rather than depreciated. May need correction and could affect prior year filings.
             </div>
           </div>
           <div class="finding-impact">Review needed</div>
@@ -890,12 +964,12 @@
           <div>
             <div class="finding-title">
               Membership revenue not deferred correctly
-              <span class="badge low">Low</span>
+              <span class="r-badge low">Low</span>
             </div>
             <div class="finding-desc">
-              Monthly membership payments appear to be recorded as income in full at the
-              time of charge rather than deferred across the service period. This may
-              overstate revenue in some months and understate it in others.
+              Monthly membership payments recorded as income in full at time of charge
+              rather than deferred across the service period. May overstate revenue
+              in some months and understate it in others.
             </div>
           </div>
           <div class="finding-impact">Reporting risk</div>
@@ -903,8 +977,8 @@
 
       </div>
 
-      <div style="margin-bottom:36px;">
-        <div class="section-header">Recovery Opportunity Summary</div>
+      <div style="margin-bottom:32px;">
+        <div class="r-section-header">Recovery Opportunity Summary</div>
         <table class="opp-table">
           <thead>
             <tr>
@@ -950,7 +1024,7 @@
       </div>
 
       <div class="recommendations">
-        <div class="section-header">Recommendations</div>
+        <div class="r-section-header">Recommendations</div>
 
         <div class="rec-item">
           <div class="rec-num">1</div>
@@ -968,9 +1042,8 @@
           <div>
             <div class="rec-title">Categorize all 63 uncategorized transactions.</div>
             <div class="rec-text">
-              Many of these are deductible. Supply purchases, equipment deposits, and
-              continuing education costs sitting in uncategorized are invisible to your
-              accountant. You are overpaying taxes because of this.
+              Many of these are deductible. Sitting in uncategorized they are invisible
+              to your accountant. You are overpaying taxes because of this.
             </div>
           </div>
         </div>
@@ -1012,7 +1085,7 @@
       </div>
 
       <div class="next-steps">
-        <div class="section-header">Next Steps</div>
+        <div class="r-section-header">Next Steps</div>
         <p>
           This diagnostic identified 9 issues including a $6,240 bank discrepancy, an estimated
           $4,800 in recoverable deductions and overpayments, and structural gaps in how Lumina
@@ -1021,8 +1094,8 @@
         </p>
         <p>
           A full cleanup will reconcile all accounts, categorize all transactions, remove
-          personal expenses, rebuild the chart of accounts for a med spa, and hand back
-          a clean P and L ready for your accountant and your own decisions.
+          personal expenses, rebuild the chart of accounts for a med spa, and hand back a
+          clean P and L ready for your accountant and your own decisions.
         </p>
         <div class="next-steps-price">Cleanup Quote: $[X]</div>
         <div class="next-steps-note">
@@ -1037,7 +1110,8 @@
 
     </div>
 
-    <!-- CTA STRIP BELOW REPORT -->
+
+    <!-- CTA STRIP -->
     <div class="demo-cta">
       <div class="demo-cta__text">
         <strong>This is what your diagnostic looks like.</strong>
