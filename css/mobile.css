@@ -1,0 +1,202 @@
+/*
+ * mobile.css — ALL RESPONSIVE OVERRIDES
+ * This is the only file allowed to contain @media queries.
+ * Never write breakpoints in any other CSS file.
+ * Load order: always last in <head>.
+ */
+
+/* ─────────────────────────────────────────────────────────
+   TABLET  max-width: 900px
+───────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+
+  /* Layout */
+  .container {
+    padding: 0 20px;
+  }
+
+  .nav {
+    padding: var(--space-sm) 20px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 100px 0 60px;
+  }
+
+  /* Offer */
+  .offer-box {
+    padding: 40px 32px;
+  }
+
+  /* Steps */
+  .step {
+    grid-template-columns: 42px 1fr;
+    gap: 20px;
+  }
+
+  /* Summary grid */
+  .summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+   MOBILE  max-width: 600px
+───────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+
+  /* Type scale */
+  h1 {
+    font-size: 2.4rem;
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .offer-price {
+    font-size: 2.4rem;
+  }
+
+  /* Layout */
+  .container {
+    padding: 0 16px;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .hero {
+    padding: 120px 0 60px;
+    min-height: 100svh;
+  }
+
+  /* Stat bar */
+  .stat-bar {
+    gap: 20px;
+  }
+
+  .stat-num {
+    font-size: 1.6rem;
+  }
+
+  /* Steps */
+  .step {
+    grid-template-columns: 36px 1fr;
+    gap: 16px;
+    padding: 20px 0;
+  }
+
+  .step-num {
+    font-size: 1.8rem;
+  }
+
+  /* Offer */
+  .offer-box {
+    padding: 28px 20px;
+  }
+
+  /* Nav */
+  .nav__cta {
+    display: none;
+  }
+
+  .nav__logo {
+    font-size: 1.3rem;
+  }
+
+  .logo-mark {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* Pain */
+  .pain-item {
+    gap: 14px;
+  }
+
+  /* FAQ */
+  .faq-q {
+    font-size: 0.9rem;
+    padding: 20px 0;
+  }
+
+  /* Announcement */
+  .announcement-bar {
+    font-size: 0.75rem;
+    padding: 10px 40px 10px 16px;
+    text-align: center;
+  }
+
+  /* Summary grid */
+  .summary-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Form */
+  .form-input {
+    font-size: 16px; /* prevents iOS zoom on focus */
+  }
+
+  /* Buttons */
+  .btn-primary {
+    padding: 16px 24px;
+    font-size: 0.85rem;
+  }
+
+  /* Final CTA */
+  .final-cta {
+    padding: 80px 0;
+  }
+
+  /* Glow — reduce on mobile for perf */
+  .glow-top::before,
+  .glow-bottom::after {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+   SMALL  max-width: 400px
+───────────────────────────────────────────────────────── */
+@media (max-width: 400px) {
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .stat-bar {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .stat-label {
+    max-width: 100%;
+  }
+
+  .offer-box {
+    padding: 24px 16px;
+  }
+
+  .offer-price {
+    font-size: 2rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .badge {
+    font-size: 0.65rem;
+    padding: 6px 12px;
+  }
+}

@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FixedBooks | Sample Diagnostic Report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* ── TOKENS ───────────────────────────────────────────── */
+    :root {
+      --bg:          #090909;
+      --bg-2:        #101010;
+      --bg-3:        #161616;
+      --border:      rgba(255,255,255,0.07);
+      --gold:        #c9a84c;
+      --gold-dim:    rgba(201,168,76,0.12);
+      --gold-border: rgba(201,168,76,0.25);
+      --text:        #e8e2d9;
+      --muted:       #7a7570;
+      --white:       #f5f0e8;
+      --cream:       #f5f0e8;
+      --red:         #c0392b;
+      --orange:      #d4751a;
+      --font-serif:  'Cormorant Garamond', serif;
+      --font-sans:   'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      padding: 48px 20px;
+    }
+
+    /* ── REPORT WRAPPER ───────────────────────────────────── */
+    .report {
+      background: var(--cream);
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 64px;
+      position: relative;
+      box-shadow: 0 48px 96px rgba(0,0,0,0.7);
+    }
+
+    /* ── HEADER ───────────────────────────────────────────── */
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .brand {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--bg);
+      letter-spacing: 0.02em;
+    }
+
+    .brand span { color: var(--gold); }
+
+    .report-meta {
+      text-align: right;
+      font-size: 0.72rem;
+      color: #666;
+      line-height: 2;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── TITLE ────────────────────────────────────────────── */
+    .report-title {
+      font-family: var(--font-serif);
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: var(--bg);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .report-subtitle {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 36px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── CLIENT BOX ───────────────────────────────────────── */
+    .client-box {
+      background: var(--bg);
+      padding: 22px 28px;
+      margin-bottom: 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    .client-field label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .client-field value {
+      font-size: 0.86rem;
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    /* ── SECTION HEADER ───────────────────────────────────── */
+    .section-header {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--bg);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--bg);
+    }
+
+    /* ── SUMMARY GRID ─────────────────────────────────────── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .summary-box {
+      background: var(--bg);
+      padding: 20px 14px;
+      text-align: center;
+    }
+
+    .summary-box.accent {
+      background: var(--gold);
+    }
+
+    .summary-num {
+      font-family: var(--font-serif);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .summary-box.accent .summary-num {
+      color: var(--bg);
+    }
+
+    .summary-label {
+      font-size: 0.62rem;
+      color: rgba(245,240,232,0.55);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    .summary-box.accent .summary-label {
+      color: rgba(9,9,9,0.55);
+    }
+
+    /* ── SCORE BAR ────────────────────────────────────────── */
+    .score-section {
+      margin-bottom: 36px;
+    }
+
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .score-label {
+      font-size: 0.78rem;
+      color: #444;
+      width: 160px;
+      flex-shrink: 0;
+    }
+
+    .score-bar-wrap {
+      flex: 1;
+      background: #e0dbd2;
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .score-bar-fill.low    { background: var(--red); }
+    .score-bar-fill.mid    { background: var(--orange); }
+    .score-bar-fill.high   { background: #2e7d32; }
+
+    .score-val {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #333;
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ── BENCHMARK CALLOUT ────────────────────────────────── */
+    .benchmark-callout {
+      background: var(--bg);
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin-bottom: 36px;
+    }
+
+    .benchmark-callout p {
+      font-size: 0.82rem;
+      color: var(--cream);
+      line-height: 1.7;
+    }
+
+    .benchmark-callout strong {
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    /* ── FINDINGS ─────────────────────────────────────────── */
+    .findings {
+      margin-bottom: 36px;
+    }
+
+    .finding-item {
+      display: grid;
+      grid-template-columns: 12px 1fr auto;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      align-items: start;
+    }
+
+    .finding-item:first-child {
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    .dot.high   { background: var(--red); }
+    .dot.medium { background: var(--orange); }
+    .dot.low    { background: var(--gold); }
+
+    .finding-title {
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--bg);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .finding-desc {
+      font-size: 0.76rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .finding-data {
+      font-size: 0.72rem;
+      color: #aaa;
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    .finding-impact {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--red);
+      white-space: nowrap;
+      padding-top: 3px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      border-radius: 2px;
+    }
+
+    .badge.high   { background: rgba(192,57,43,0.1); color: var(--red); }
+    .badge.medium { background: rgba(212,117,26,0.1); color: var(--orange); }
+    .badge.low    { background: rgba(201,168,76,0.12); color: #8a6f2a; }
+
+    /* ── OPPORTUNITY TABLE ────────────────────────────────── */
+    .opp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 36px;
+      font-size: 0.78rem;
+    }
+
+    .opp-table th {
+      background: var(--bg);
+      color: var(--gold);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .opp-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      color: #444;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .opp-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .opp-table td:first-child {
+      color: var(--bg);
+      font-weight: 500;
+    }
+
+    .opp-table td.lift {
+      color: #2e7d32;
+      font-weight: 500;
+    }
+
+    /* ── RECOMMENDATIONS ──────────────────────────────────── */
+    .recommendations {
+      margin-bottom: 36px;
+    }
+
+    .rec-item {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      align-items: flex-start;
+    }
+
+    .rec-num {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold);
+      flex-shrink: 0;
+      line-height: 1.2;
+      min-width: 24px;
+    }
+
+    .rec-body {}
+
+    .rec-title {
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--bg);
+      margin-bottom: 3px;
+    }
+
+    .rec-text {
+      font-size: 0.76rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .rec-source {
+      font-size: 0.68rem;
+      color: #aaa;
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    /* ── NEXT STEPS ───────────────────────────────────────── */
+    .next-steps {
+      background: var(--bg);
+      padding: 30px 36px;
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .next-steps::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .next-steps .section-header {
+      color: var(--gold);
+      border-bottom-color: rgba(201,168,76,0.25);
+    }
+
+    .next-steps p {
+      font-size: 0.84rem;
+      color: var(--cream);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .next-steps-price {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .next-steps-note {
+      font-size: 0.72rem;
+      color: rgba(245,240,232,0.45);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    .report-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .footer-brand {
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--bg);
+    }
+
+    .footer-brand span { color: var(--gold); }
+
+    .footer-note {
+      font-size: 0.68rem;
+      color: #aaa;
+    }
+
+    /* ── REDACTED ─────────────────────────────────────────── */
+    .redacted {
+      background: var(--bg);
+      color: transparent;
+      border-radius: 2px;
+      user-select: none;
+    }
+
+    /* ── MOBILE ───────────────────────────────────────────── */
+    @media (max-width: 760px) {
+      body { padding: 0; }
+
+      .report {
+        padding: 36px 24px;
+        box-shadow: none;
+      }
+
+      .report-header {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .report-meta { text-align: left; }
+
+      .client-box {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .score-label { width: 120px; }
+
+      .opp-table { font-size: 0.72rem; }
+      .opp-table th,
+      .opp-table td { padding: 8px 10px; }
+
+      .next-steps { padding: 24px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .client-box { grid-template-columns: 1fr; }
+      .finding-item { grid-template-columns: 12px 1fr; }
+      .finding-impact { display: none; }
+    }
+
+  </style>
+</head>
+<body>
+<div class="report">
+
+  <!-- HEADER -->
+  <div class="report-header">
+    <div>
+      <div class="brand">Fixed<span>Books</span></div>
+      <div style="font-size:0.68rem; color:#999; margin-top:4px; letter-spacing:0.08em; text-transform:uppercase;">
+        Books Diagnostic Report
+      </div>
+    </div>
+    <div class="report-meta">
+      <div>Report Date: March 14, 2026</div>
+      <div>Diagnostic ID: FBD-0091</div>
+      <div>Delivered within 48 hours</div>
+    </div>
+  </div>
+
+  <!-- TITLE -->
+  <div class="report-title">Books Diagnostic: Lumina Aesthetics &amp; Wellness</div>
+  <div class="report-subtitle">
+    Review period: January 2024 to March 2026 &nbsp;·&nbsp; QuickBooks Online Plus &nbsp;·&nbsp; Med Spa &amp; Aesthetics
+  </div>
+
+  <!-- CLIENT BOX -->
+  <div class="client-box">
+    <div class="client-field">
+      <label>Business</label>
+      <value>Lumina Aesthetics &amp; Wellness LLC</value>
+    </div>
+    <div class="client-field">
+      <label>Owner</label>
+      <value><span class="redacted">Dr. Sarah ████████</span></value>
+    </div>
+    <div class="client-field">
+      <label>Review Period</label>
+      <value>Jan 2024 to Mar 2026</value>
+    </div>
+  </div>
+
+  <!-- SUMMARY GRID -->
+  <div class="summary-grid">
+    <div class="summary-box">
+      <div class="summary-num">9</div>
+      <div class="summary-label">Total Findings</div>
+    </div>
+    <div class="summary-box">
+      <div class="summary-num">4</div>
+      <div class="summary-label">High Priority</div>
+    </div>
+    <div class="summary-box">
+      <div class="summary-num">$6,240</div>
+      <div class="summary-label">Unreconciled Gap</div>
+    </div>
+    <div class="summary-box accent">
+      <div class="summary-num">$4,800+</div>
+      <div class="summary-label">Est. Recoverable</div>
+    </div>
+  </div>
+
+  <!-- BENCHMARK CALLOUT -->
+  <div class="benchmark-callout">
+    <p>
+      Med spas and aesthetic clinics operate on high per-treatment revenue and high client lifetime value.
+      At Lumina's current volume, a <strong>1% improvement in bookkeeping accuracy</strong> translates
+      directly to cleaner tax exposure, better cash flow visibility, and confident decisions on staff,
+      equipment, and expansion. The issues below are costing you more than the diagnostic.
+    </p>
+  </div>
+
+  <!-- HEALTH SCORES -->
+  <div class="score-section">
+    <div class="section-header">Books Health Score</div>
+
+    <div class="score-row">
+      <span class="score-label">Reconciliation</span>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill low" style="width:18%"></div>
+      </div>
+      <span class="score-val">18%</span>
+    </div>
+
+    <div class="score-row">
+      <span class="score-label">Transaction Categorization</span>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill low" style="width:34%"></div>
+      </div>
+      <span class="score-val">34%</span>
+    </div>
+
+    <div class="score-row">
+      <span class="score-label">Accounts Receivable</span>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill mid" style="width:52%"></div>
+      </div>
+      <span class="score-val">52%</span>
+    </div>
+
+    <div class="score-row">
+      <span class="score-label">Expense Separation</span>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill low" style="width:28%"></div>
+      </div>
+      <span class="score-val">28%</span>
+    </div>
+
+    <div class="score-row">
+      <span class="score-label">Chart of Accounts Setup</span>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill mid" style="width:45%"></div>
+      </div>
+      <span class="score-val">45%</span>
+    </div>
+
+    <div class="score-row">
+      <span class="score-label">Vendor Payment Accuracy</span>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill high" style="width:78%"></div>
+      </div>
+      <span class="score-val">78%</span>
+    </div>
+
+  </div>
+
+  <!-- FINDINGS -->
+  <div class="findings">
+    <div class="section-header">Findings</div>
+
+    <div class="finding-item">
+      <div class="dot high"></div>
+      <div>
+        <div class="finding-title">
+          Bank reconciliation not completed since September 2024
+          <span class="badge high">High</span>
+        </div>
+        <div class="finding-desc">
+          Checking and merchant accounts show a combined $6,240 discrepancy between
+          bank statements and QuickBooks balances. Your profit and loss report is
+          unreliable until this is resolved. Tax prep on unreconciled books carries
+          audit exposure.
+        </div>
+        <div class="finding-data">Primary source: QuickBooks reconciliation log, accessed March 2026</div>
+      </div>
+      <div class="finding-impact">$6,240 gap</div>
+    </div>
+
+    <div class="finding-item">
+      <div class="dot high"></div>
+      <div>
+        <div class="finding-title">
+          63 uncategorized transactions across 26 months
+          <span class="badge high">High</span>
+        </div>
+        <div class="finding-desc">
+          63 expenses are sitting in Uncategorized Expense with no category assigned.
+          This includes what appear to be supply purchases, equipment deposits, and
+          continuing education costs. None of these can be used for deductions in
+          their current state.
+        </div>
+        <div class="finding-data">Estimated deductible value: $3,100 to $4,200 based on visible descriptions</div>
+      </div>
+      <div class="finding-impact">Est. $3,800</div>
+    </div>
+
+    <div class="finding-item">
+      <div class="dot high"></div>
+      <div>
+        <div class="finding-title">
+          Personal and business expenses mixed across accounts
+          <span class="badge high">High</span>
+        </div>
+        <div class="finding-desc">
+          19 transactions identified as likely personal — spa retail, personal dining,
+          clothing purchases — recorded as business expenses. This inflates your expense
+          total and is a direct liability in an audit. Each needs to be reviewed and
+          either reclassified or removed.
+        </div>
+        <div class="finding-data">Combined value of flagged transactions: $1,340</div>
+      </div>
+      <div class="finding-impact">$1,340 exposure</div>
+    </div>
+
+    <div class="finding-item">
+      <div class="dot high"></div>
+      <div>
+        <div class="finding-title">
+          Treatment revenue not tracked by service line
+          <span class="badge high">High</span>
+        </div>
+        <div class="finding-desc">
+          All revenue is recorded under a single income account. You cannot see which
+          treatments generate the most profit — Botox, filler, laser, or memberships.
+          This makes pricing decisions and staff allocation guesswork.
+        </div>
+        <div class="finding-data">Operational impact: prevents margin analysis by service type</div>
+      </div>
+      <div class="finding-impact">Operational</div>
+    </div>
+
+    <div class="finding-item">
+      <div class="dot medium"></div>
+      <div>
+        <div class="finding-title">
+          Duplicate vendor payments detected
+          <span class="badge medium">Medium</span>
+        </div>
+        <div class="finding-desc">
+          4 vendors show duplicate entries on the same date for identical amounts.
+          Requires confirmation to determine whether these are double payments or
+          data entry errors. Two vendors have not been contacted about potential refunds.
+        </div>
+        <div class="finding-data">At-risk total: $780 across 4 vendors</div>
+      </div>
+      <div class="finding-impact">$780 at risk</div>
+    </div>
+
+    <div class="finding-item">
+      <div class="dot medium"></div>
+      <div>
+        <div class="finding-title">
+          Accounts receivable aged over 90 days
+          <span class="badge medium">Medium</span>
+        </div>
+        <div class="finding-desc">
+          $1,620 in outstanding balances has not been followed up in over 90 days.
+          Three invoices from Q2 2024 appear to have been abandoned entirely.
+          At the 90-day mark, recovery rates drop significantly.
+        </div>
+        <div class="finding-data">$1,620 outstanding across 3 clients</div>
+      </div>
+      <div class="finding-impact">$1,620 outstanding</div>
+    </div>
+
+    <div class="finding-item">
+      <div class="dot medium"></div>
+      <div>
+        <div class="finding-title">
+          Medical supply costs not separated from general operating expenses
+          <span class="badge medium">Medium</span>
+        </div>
+        <div class="finding-desc">
+          Injectable and consumable supply costs are categorized under general supplies.
+          For a med spa, tracking COGS per treatment line is essential for accurate
+          margin reporting and pricing strategy. Your accountant cannot build a proper
+          P and L without this separation.
+        </div>
+      </div>
+      <div class="finding-impact">Tax exposure</div>
+    </div>
+
+    <div class="finding-item">
+      <div class="dot low"></div>
+      <div>
+        <div class="finding-title">
+          Equipment depreciation not recorded
+          <span class="badge low">Low</span>
+        </div>
+        <div class="finding-desc">
+          Laser and aesthetic equipment purchases appear to have been expensed in full
+          in the year of purchase rather than depreciated. Depending on cost basis,
+          this may need to be corrected and could affect prior year filings.
+        </div>
+      </div>
+      <div class="finding-impact">Review needed</div>
+    </div>
+
+    <div class="finding-item">
+      <div class="dot low"></div>
+      <div>
+        <div class="finding-title">
+          Membership revenue not deferred correctly
+          <span class="badge low">Low</span>
+        </div>
+        <div class="finding-desc">
+          Monthly membership payments appear to be recorded as income in full at
+          the time of charge rather than deferred across the service period.
+          This may overstate revenue in some months and understate it in others.
+        </div>
+      </div>
+      <div class="finding-impact">Reporting risk</div>
+    </div>
+
+  </div>
+
+  <!-- OPPORTUNITY TABLE -->
+  <div style="margin-bottom:36px;">
+    <div class="section-header">Recovery Opportunity Summary</div>
+    <table class="opp-table">
+      <thead>
+        <tr>
+          <th>Issue</th>
+          <th>Estimated Value</th>
+          <th>Priority</th>
+          <th>Recoverable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Uncategorized deductible expenses</td>
+          <td>$3,100 to $4,200</td>
+          <td>High</td>
+          <td class="lift">Yes, with cleanup</td>
+        </tr>
+        <tr>
+          <td>Duplicate vendor payments</td>
+          <td>$780</td>
+          <td>Medium</td>
+          <td class="lift">Likely, pending verification</td>
+        </tr>
+        <tr>
+          <td>Aged accounts receivable</td>
+          <td>$1,620</td>
+          <td>Medium</td>
+          <td class="lift">Partial, time sensitive</td>
+        </tr>
+        <tr>
+          <td>Personal expenses in business accounts</td>
+          <td>$1,340</td>
+          <td>High</td>
+          <td>Audit risk reduction</td>
+        </tr>
+        <tr>
+          <td>Bank reconciliation gap</td>
+          <td>$6,240</td>
+          <td>High</td>
+          <td>Requires full reconciliation</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <div class="recommendations">
+    <div class="section-header">Recommendations</div>
+
+    <div class="rec-item">
+      <div class="rec-num">1</div>
+      <div class="rec-body">
+        <div class="rec-title">Reconcile all accounts back to September 2024.</div>
+        <div class="rec-text">
+          Start with the primary checking account, then the merchant processing account.
+          Nothing else is reliable until reconciliation is complete. This is the
+          foundation of every other fix.
+        </div>
+      </div>
+    </div>
+
+    <div class="rec-item">
+      <div class="rec-num">2</div>
+      <div class="rec-body">
+        <div class="rec-title">Categorize all 63 uncategorized transactions.</div>
+        <div class="rec-text">
+          Many of these are deductible. Supply purchases, equipment deposits, and
+          continuing education costs sitting in uncategorized are invisible to your
+          accountant. You are overpaying taxes because of this.
+        </div>
+      </div>
+    </div>
+
+    <div class="rec-item">
+      <div class="rec-num">3</div>
+      <div class="rec-body">
+        <div class="rec-title">Remove and reclassify personal expenses.</div>
+        <div class="rec-text">
+          Each of the 19 flagged transactions needs a clear business purpose note
+          if legitimate, or full removal if personal. Mixed expenses are the most
+          common audit trigger for small medical practices.
+        </div>
+      </div>
+    </div>
+
+    <div class="rec-item">
+      <div class="rec-num">4</div>
+      <div class="rec-body">
+        <div class="rec-title">Rebuild the chart of accounts for a med spa.</div>
+        <div class="rec-text">
+          Separate income accounts by treatment line. Separate COGS by consumable
+          category. This unlocks margin visibility you currently do not have and
+          makes every future business decision faster and more accurate.
+        </div>
+      </div>
+    </div>
+
+    <div class="rec-item">
+      <div class="rec-num">5</div>
+      <div class="rec-body">
+        <div class="rec-title">Contact vendors regarding potential duplicate payments.</div>
+        <div class="rec-text">
+          Verify whether the 4 flagged duplicate entries represent actual double
+          payments. If confirmed, pursue refunds immediately. At $780 total, this
+          is a straightforward recovery.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="next-steps">
+    <div class="section-header">Next Steps</div>
+    <p>
+      This diagnostic identified 9 issues including a $6,240 bank discrepancy, an estimated
+      $4,800 in recoverable deductions and overpayments, and structural gaps in how Lumina
+      tracks revenue and costs. Your current books cannot be used reliably for tax prep,
+      margin analysis, or growth decisions.
+    </p>
+    <p>
+      A full cleanup will reconcile all accounts, categorize all transactions, remove
+      personal expenses, rebuild the chart of accounts for a med spa, and hand back
+      a clean P and L ready for your accountant and your own decisions.
+    </p>
+    <div class="next-steps-price">Cleanup Quote: $[X]</div>
+    <div class="next-steps-note">
+      The $97 diagnostic fee is credited toward this total. Financing available via Affirm.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="report-footer">
+    <div class="footer-brand">Fixed<span>Books</span> &nbsp;·&nbsp; fixedbooks.co</div>
+    <div class="footer-note">Confidential &nbsp;·&nbsp; Prepared for Lumina Aesthetics &amp; Wellness LLC</div>
+  </div>
+
+</div>
+</body>
+</html>

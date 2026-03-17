@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FixedBooks | The Cost of Messy Books</title>
+  <meta name="description" content="Data on what poor bookkeeping actually costs professional service businesses. Sources cited." />
+
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/mobile.css">
+
+  <style>
+
+    /* ── PAGE NAV OFFSET ──────────────────────────────────── */
+    body {
+      padding-top: 64px;
+    }
+
+    /* ── RESEARCH HERO ────────────────────────────────────── */
+    .research-hero {
+      padding: 80px 0 64px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .research-hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .research-hero .kicker {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .research-hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      max-width: 600px;
+    }
+
+    .research-hero p {
+      color: var(--muted);
+      font-size: var(--text-base);
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+
+    .source-note {
+      font-size: var(--text-xs);
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      max-width: 560px;
+    }
+
+    /* ── STAT CARDS ───────────────────────────────────────── */
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+
+    .stat-card {
+      background: var(--bg-2);
+      padding: 36px 28px;
+    }
+
+    .stat-card__num {
+      font-family: var(--font-serif);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .stat-card__label {
+      font-size: var(--text-sm);
+      color: var(--white);
+      font-weight: 400;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .stat-card__source {
+      font-size: var(--text-xs);
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────────────────── */
+    .research-section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .research-section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-intro {
+      margin-bottom: 40px;
+    }
+
+    /* ── DATA TABLE ───────────────────────────────────────── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+
+    .data-table thead tr {
+      background: var(--bg-3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .data-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+
+    .data-table td:first-child {
+      color: var(--white);
+      font-weight: 400;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table__highlight {
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    /* ── FINDING BLOCKS ───────────────────────────────────── */
+    .finding-blocks {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .finding-block {
+      background: var(--bg-2);
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .finding-block__label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding-top: 3px;
+    }
+
+    .finding-block__content {}
+
+    .finding-block__stat {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .finding-block__text {
+      font-size: var(--text-sm);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .finding-block__source {
+      font-size: var(--text-xs);
+      color: var(--muted);
+      opacity: 0.6;
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    /* ── CALLOUT BOX ──────────────────────────────────────── */
+    .callout {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      padding: 28px 32px;
+      margin: 40px 0;
+    }
+
+    .callout__label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .callout__text {
+      font-size: var(--text-base);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .callout__text strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    /* ── COST SUMMARY ─────────────────────────────────────── */
+    .cost-summary {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cost-summary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .cost-summary__header {
+      background: var(--bg);
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cost-summary__header p {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .cost-summary__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cost-summary__row:last-child {
+      border-bottom: none;
+    }
+
+    .cost-summary__row.total {
+      background: var(--bg);
+    }
+
+    .cost-summary__item {
+      font-size: var(--text-sm);
+      color: var(--muted);
+    }
+
+    .cost-summary__value {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .cost-summary__row.total .cost-summary__item {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .cost-summary__row.total .cost-summary__value {
+      color: var(--gold);
+      font-size: 1.6rem;
+    }
+
+    /* ── CASE STUDY ───────────────────────────────────────── */
+    .case-study {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      padding: 40px;
+    }
+
+    .case-study__label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .case-study__stat {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 20px 0;
+    }
+
+    .case-study__stat-item {}
+
+    .case-study__stat-num {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .case-study__stat-label {
+      font-size: var(--text-xs);
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    .case-study__text {
+      font-size: var(--text-sm);
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .case-study__source {
+      font-size: var(--text-xs);
+      color: var(--muted);
+      opacity: 0.6;
+      font-style: italic;
+      margin-top: 16px;
+    }
+
+    /* ── BOTTOM CTA ───────────────────────────────────────── */
+    .research-cta {
+      padding: 80px 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .research-cta::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── MOBILE ───────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .stat-cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .finding-block {
+        grid-template-columns: 140px 1fr;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body { padding-top: 56px; }
+
+      .research-hero { padding: 60px 0 48px; }
+
+      .stat-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .finding-block {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 24px 20px;
+      }
+
+      .finding-block__label {
+        padding-top: 0;
+      }
+
+      .case-study {
+        padding: 28px 20px;
+      }
+
+      .case-study__stat {
+        gap: 24px;
+      }
+
+      .cost-summary__row {
+        padding: 16px 20px;
+      }
+
+      .cost-summary__header {
+        padding: 16px 20px;
+      }
+
+      .data-table {
+        font-size: 0.72rem;
+      }
+
+      .data-table th,
+      .data-table td {
+        padding: 12px 12px;
+      }
+
+      .callout {
+        padding: 20px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ──────────────────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <a href="/" class="nav__logo">
+      <img
+        src="../assets/icons/logo-wordmark.svg"
+        alt="FixedBooks"
+        style="height:36px; width:auto;"
+      />
+    </a>
+    <a href="/#offer" class="btn-primary nav__cta">Get Diagnostic</a>
+  </nav>
+
+
+  <!-- ─── HERO ──────────────────────────────────────────────── -->
+  <section class="research-hero">
+    <div class="container">
+      <span class="kicker anim-1">Research</span>
+      <h1 class="anim-2">The cost of messy books for professional service businesses</h1>
+      <p class="anim-3">
+        Most professional service owners know their books are behind. Few know
+        what it is actually costing them. This is the data.
+      </p>
+      <p class="source-note anim-4">
+        Sources include Atidiv, Gartner, Clio Legal Trends 2025, IRS published data,
+        MGMA, Federal Reserve small business studies, BKCProHub, and Pyramid Financial.
+        Each finding is sourced inline. Broadly cited but poorly sourced statistics are flagged.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ─── TOP STATS ─────────────────────────────────────────── -->
+  <section style="padding: 64px 0;">
+    <div class="container">
+
+      <div class="stat-cards reveal">
+
+        <div class="stat-card">
+          <div class="stat-card__num">40%</div>
+          <div class="stat-card__label">
+            of professional service owners do not fully trust the accuracy
+            of their own financial data
+          </div>
+          <div class="stat-card__source">Atidiv / Gartner, 2026</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card__num">64%</div>
+          <div class="stat-card__label">
+            of small service firms now hire external help specifically
+            for historical bookkeeping cleanup
+          </div>
+          <div class="stat-card__source">Market Reports World, 2025</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card__num">59%</div>
+          <div class="stat-card__label">
+            of service businesses make several financial errors
+            per month. 18% make errors daily.
+          </div>
+          <div class="stat-card__source">Atidiv 2026 State of Errors Report</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── TAX OVERPAYMENT ───────────────────────────────────── -->
+  <section class="research-section">
+    <div class="container">
+
+      <div class="section-intro reveal">
+        <p class="section-label">01 &nbsp; Tax Overpayment</p>
+        <h2 class="section-title">Most professional service firms overpay taxes every year</h2>
+        <p class="section-body">
+          Not because of fraud or bad advice. Because their books cannot support
+          the deductions they are legally entitled to.
+        </p>
+      </div>
+
+      <div class="finding-blocks reveal">
+
+        <div class="finding-block">
+          <div class="finding-block__label">Dental Practices</div>
+          <div class="finding-block__content">
+            <div class="finding-block__stat">$20,000 to $60,000</div>
+            <div class="finding-block__text">
+              The average dental practice overpays annually in taxes due to missed
+              deductions on equipment maintenance, restorative materials, and patient
+              experience costs. The deductions exist. The documentation does not.
+            </div>
+            <div class="finding-block__source">Pyramid Financial, 2025</div>
+          </div>
+        </div>
+
+        <div class="finding-block">
+          <div class="finding-block__label">General Professional Services</div>
+          <div class="finding-block__content">
+            <div class="finding-block__stat">$3,000 to $10,000</div>
+            <div class="finding-block__text">
+              Firms with unorganized records pay this much more in taxes than necessary
+              simply because their documentation cannot support legitimate deductions
+              during a review. Deductions are not denied — they are never claimed.
+            </div>
+            <div class="finding-block__source">BKCProHub / IRS data</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── MISTAKES BY NICHE ─────────────────────────────────── -->
+  <section class="research-section">
+    <div class="container">
+
+      <div class="section-intro reveal">
+        <p class="section-label">02 &nbsp; Common Mistakes by Industry</p>
+        <h2 class="section-title">The errors vary by niche. The cost does not.</h2>
+        <p class="section-body">
+          Each professional service category has a primary financial leak.
+          Most owners are unaware it exists until a diagnostic or an audit surfaces it.
+        </p>
+      </div>
+
+      <div class="reveal" style="border: 1px solid var(--border); overflow: hidden;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Industry</th>
+              <th>Primary Financial Leak</th>
+              <th>Impact Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Law Firms</td>
+              <td>
+                IOLTA and trust account commingling. Failure to perform three-way
+                reconciliation between bank, trust ledger, and client sub-ledgers.
+              </td>
+              <td class="data-table__highlight">High — License Risk</td>
+            </tr>
+            <tr>
+              <td>Medical and Aesthetic Clinics</td>
+              <td>
+                Uncollected patient balances. Poor tracking of co-pays and insurance
+                denials averages 15 to 20% of total revenue left uncollected.
+              </td>
+              <td class="data-table__highlight">High — Direct Revenue</td>
+            </tr>
+            <tr>
+              <td>Consulting and Financial Advisors</td>
+              <td>
+                Unbilled time. Disorganized tracking results in 10 to 15% of billable
+                hours never reaching an invoice.
+              </td>
+              <td class="data-table__highlight">High — Direct Revenue</td>
+            </tr>
+            <tr>
+              <td>General Professional Services</td>
+              <td>
+                Miscategorized assets coded as supplies rather than depreciable equipment.
+                Section 179 deductions are missed entirely.
+              </td>
+              <td class="data-table__highlight">Moderate — Tax Exposure</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── OWNER TIME ────────────────────────────────────────── -->
+  <section class="research-section">
+    <div class="container">
+
+      <div class="section-intro reveal">
+        <p class="section-label">03 &nbsp; Owner Time</p>
+        <h2 class="section-title">The hours have a dollar value. It is larger than the bookkeeping bill.</h2>
+      </div>
+
+      <div class="finding-blocks reveal">
+
+        <div class="finding-block">
+          <div class="finding-block__label">Productivity Loss</div>
+          <div class="finding-block__content">
+            <div class="finding-block__stat">$12,000 to $36,000</div>
+            <div class="finding-block__text">
+              Lost annually for a business owner valued at $100 per hour who handles
+              their own bookkeeping. This is not the cost of the software or the
+              accountant. This is the cost of the owner's time alone.
+            </div>
+            <div class="finding-block__source">BKCProHub, 2025</div>
+          </div>
+        </div>
+
+        <div class="finding-block">
+          <div class="finding-block__label">Legal Sector Specifics</div>
+          <div class="finding-block__content">
+            <div class="finding-block__stat">2.6 hours</div>
+            <div class="finding-block__text">
+              The average attorney bills only 2.6 hours of an 8-hour workday. The
+              remaining 67% is consumed by unbilled administrative tasks — a large
+              portion of which is financial and bookkeeping related.
+            </div>
+            <div class="finding-block__source">Clio Legal Trends Report, 2025 and 2026</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── BUSINESS FAILURE ──────────────────────────────────── -->
+  <section class="research-section">
+    <div class="container">
+
+      <div class="section-intro reveal">
+        <p class="section-label">04 &nbsp; Business Distress</p>
+        <h2 class="section-title">By the time most owners see the problem, it is 30 to 60 days too late</h2>
+      </div>
+
+      <div class="callout reveal">
+        <div class="callout__label">Root Cause Finding</div>
+        <p class="callout__text">
+          The widely cited 82% small business failure rate tied to cash flow problems
+          has a more specific origin for professional service firms.
+          <strong>Disorganized financial records prevent owners from seeing a cash crunch
+          until it is already 30 to 60 days critical</strong>, at which point options
+          for response narrow dramatically.
+        </p>
+      </div>
+
+      <div class="finding-blocks reveal">
+
+        <div class="finding-block">
+          <div class="finding-block__label">Loan Rejections</div>
+          <div class="finding-block__content">
+            <div class="finding-block__stat">43%</div>
+            <div class="finding-block__text">
+              Of small business loan applications are rejected. For professional service
+              firms, poor financial documentation is a leading cause — blocking access
+              to expansion capital at the exact moment it is needed most.
+            </div>
+            <div class="finding-block__source">Federal Reserve Small Business Study / BKCProHub</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── AUDIT RISK ────────────────────────────────────────── -->
+  <section class="research-section">
+    <div class="container">
+
+      <div class="section-intro reveal">
+        <p class="section-label">05 &nbsp; IRS Audit Exposure</p>
+        <h2 class="section-title">An audit does not have to find fraud to be expensive</h2>
+        <p class="section-body">
+          Defense costs are incurred regardless of outcome. Bookkeeping errors
+          are among the most common triggers.
+        </p>
+      </div>
+
+      <div class="reveal" style="border: 1px solid var(--border); overflow: hidden;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Audit Type</th>
+              <th>Estimated Defense Cost</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Moderately Complex (Schedule C / S-Corp)</td>
+              <td class="data-table__highlight">$3,000 to $6,000</td>
+              <td>Most common for solo practitioners and small practices</td>
+            </tr>
+            <tr>
+              <td>Complex (Payroll / Multi-entity)</td>
+              <td class="data-table__highlight">$7,500+</td>
+              <td>Common for group practices, firms with associates</td>
+            </tr>
+            <tr>
+              <td>Tax Court</td>
+              <td class="data-table__highlight">$7,500 to $15,000</td>
+              <td>Escalated disputes, typically avoidable with clean records</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout reveal" style="margin-top: 32px;">
+        <div class="callout__label">IRS Trigger Patterns</div>
+        <p class="callout__text">
+          The IRS uses discriminant function scoring to flag returns.
+          <strong>Repeated round numbers in expense fields and zeros in categories
+          where expenses are expected</strong> are primary flags for service businesses.
+          Both are common outputs of guessed or rushed bookkeeping.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── COMPOUNDING NEGLECT ───────────────────────────────── -->
+  <section class="research-section">
+    <div class="container">
+
+      <div class="section-intro reveal">
+        <p class="section-label">06 &nbsp; The Cost of Waiting</p>
+        <h2 class="section-title">Every month behind adds to the cleanup bill</h2>
+        <p class="section-body">
+          Bookkeeping problems do not hold. They compound. A six-month backlog
+          costs significantly more to fix than a two-month backlog, and carries
+          more embedded errors.
+        </p>
+      </div>
+
+      <div class="finding-blocks reveal">
+
+        <div class="finding-block">
+          <div class="finding-block__label">Cleanup Cost by Backlog</div>
+          <div class="finding-block__content">
+            <div class="finding-block__stat">$4,000 to $8,000+</div>
+            <div class="finding-block__text">
+              Typical cleanup cost for a business 6 to 12 months behind on reconciliation.
+              This is the market rate for a professional cleanup — not software, not an
+              accountant's quarterly review. A historical backlog cleanup.
+            </div>
+            <div class="finding-block__source">DBR Bookkeeping, 2026 market rates</div>
+          </div>
+        </div>
+
+        <div class="finding-block">
+          <div class="finding-block__label">2026 Market Rates</div>
+          <div class="finding-block__content">
+            <div class="finding-block__stat">$300 to $1,500 / mo</div>
+            <div class="finding-block__text">
+              Ongoing monthly bookkeeping maintenance for a professional service business,
+              depending on transaction volume. Hourly cleanup rates run $75 to $125 per hour.
+              CFO-level strategic advisory runs $1,500 to $3,000 per month.
+            </div>
+            <div class="finding-block__source">2026 bookkeeping market survey data</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── CASE STUDY ────────────────────────────────────────── -->
+  <section class="research-section">
+    <div class="container">
+
+      <div class="section-intro reveal">
+        <p class="section-label">07 &nbsp; Documented Recovery</p>
+        <h2 class="section-title">What a cleanup actually returns</h2>
+      </div>
+
+      <div class="case-study reveal">
+        <div class="case-study__label">Case Study &nbsp;·&nbsp; Six Month Backlog Cleanup</div>
+
+        <p style="font-size: var(--text-sm); color: var(--muted); line-height: 1.8;">
+          A documented instance of a professional service firm carrying six months of
+          unaddressed bookkeeping errors illustrates the compounding nature of neglect
+          when totaled across missed deductions, penalties, and lost revenue opportunity.
+        </p>
+
+        <div class="case-study__stat">
+          <div class="case-study__stat-item">
+            <div class="case-study__stat-num">$103,040</div>
+            <div class="case-study__stat-label">Total cost of six months of bad bookkeeping</div>
+          </div>
+          <div class="case-study__stat-item">
+            <div class="case-study__stat-num">$5,000</div>
+            <div class="case-study__stat-label">Cost of the cleanup</div>
+          </div>
+          <div class="case-study__stat-item">
+            <div class="case-study__stat-num">20x</div>
+            <div class="case-study__stat-label">Return on cleanup investment</div>
+          </div>
+        </div>
+
+        <div class="case-study__text">
+          The $103,040 figure encompasses missed deductions, IRS penalties, and
+          quantified opportunity costs — including capital that could not be accessed
+          due to inaccurate financials. The cleanup cost of $5,000 identified and
+          recovered the majority of that figure within one filing cycle.
+        </div>
+        <div class="case-study__source">Source: BKCProHub documented case study, 2025</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── COST SUMMARY ──────────────────────────────────────── -->
+  <section style="padding: 64px 0;">
+    <div class="container">
+
+      <div class="reveal" style="margin-bottom: 32px;">
+        <p class="section-label">Annual Cost of Inaction</p>
+        <h2 class="section-title">What doing nothing costs per year</h2>
+        <p class="section-body">
+          These are conservative averages across professional service businesses.
+          High-revenue practices will see multiples of these figures.
+        </p>
+      </div>
+
+      <div class="cost-summary reveal">
+        <div class="cost-summary__header">
+          <p>Annual cost estimates for a professional service business with disorganized books</p>
+        </div>
+
+        <div class="cost-summary__row">
+          <span class="cost-summary__item">Missed tax deductions</span>
+          <span class="cost-summary__value">$11,000+</span>
+        </div>
+        <div class="cost-summary__row">
+          <span class="cost-summary__item">Owner time lost to bookkeeping tasks</span>
+          <span class="cost-summary__value">$36,000+</span>
+        </div>
+        <div class="cost-summary__row">
+          <span class="cost-summary__item">Uncollected revenue (AR at 15% of gross)</span>
+          <span class="cost-summary__value">Varies</span>
+        </div>
+        <div class="cost-summary__row">
+          <span class="cost-summary__item">Audit defense if triggered</span>
+          <span class="cost-summary__value">$5,000+</span>
+        </div>
+        <div class="cost-summary__row total">
+          <span class="cost-summary__item">Conservative annual floor</span>
+          <span class="cost-summary__value">$52,000+</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── BOTTOM CTA ────────────────────────────────────────── -->
+  <section class="research-cta">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label text-center">Ready?</p>
+        <h2 class="section-title text-center" style="max-width: 480px; margin: 0 auto 16px;">
+          Find out what your books are hiding.
+        </h2>
+        <p class="section-body text-center" style="margin: 0 auto 40px;">
+          $97. 48 hours. No calls needed.
+        </p>
+        <div style="display: flex; justify-content: center;">
+          <a href="/#offer" class="btn-primary" style="max-width: 280px;">
+            Get My Diagnostic
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <script src="../js/announcement.js" defer></script>
+  <script src="../js/reveal.js" defer></script>
+
+</body>
+</html>

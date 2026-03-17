@@ -1,0 +1,54 @@
+/*
+ * tokens.css — SINGLE SOURCE OF TRUTH
+ * Never hardcode values in other files. Always reference a token.
+ */
+
+:root {
+
+  /* ─── COLOR ─────────────────────────────────────────── */
+  --bg:            #090909;
+  --bg-2:          #101010;
+  --bg-3:          #161616;
+  --border:        rgba(255, 255, 255, 0.07);
+  --gold:          #c9a84c;
+  --gold-dim:      rgba(201, 168, 76, 0.15);
+  --gold-border:   rgba(201, 168, 76, 0.25);
+  --text:          #e8e2d9;
+  --muted:         #7a7570;
+  --white:         #f5f0e8;
+
+  /* ─── SPACING ───────────────────────────────────────── */
+  --space-xs:      8px;
+  --space-sm:      16px;
+  --space-md:      24px;
+  --space-lg:      48px;
+  --space-xl:      80px;
+  --space-2xl:     120px;
+
+  /* ─── TYPE SCALE ─────────────────────────────────────── */
+  --text-xs:       0.7rem;
+  --text-sm:       0.82rem;
+  --text-base:     0.95rem;
+  --text-md:       1.05rem;
+  --text-lg:       1.3rem;
+  --text-xl:       1.6rem;
+  --text-2xl:      2rem;
+  --text-3xl:      2.6rem;
+
+  /* ─── TYPOGRAPHY ─────────────────────────────────────── */
+  --font-serif:    'Cormorant Garamond', serif;
+  --font-sans:     'DM Sans', sans-serif;
+
+  /* ─── BORDERS & RADIUS ───────────────────────────────── */
+  --radius-sm:     2px;
+  --radius-md:     4px;
+
+  /* ─── TRANSITIONS ────────────────────────────────────── */
+  --transition-fast:   0.15s ease;
+  --transition-base:   0.25s ease;
+  --transition-slow:   0.6s ease;
+
+  /* ─── LAYOUT ─────────────────────────────────────────── */
+  --container-max: 720px;
+  --container-pad: 24px;
+}

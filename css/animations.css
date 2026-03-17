@@ -1,0 +1,127 @@
+/*
+ * animations.css — KEYFRAMES, TRANSITIONS, REVEAL STATES
+ * No layout, no colors beyond what's needed for effects.
+ * All motion lives here.
+ */
+
+/* ─── KEYFRAMES ──────────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ─── HERO STAGGERED ENTRANCE ────────────────────────────── */
+.anim-1 {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.1s;
+}
+
+.anim-2 {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.2s;
+}
+
+.anim-3 {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.35s;
+}
+
+.anim-4 {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.45s;
+}
+
+.anim-5 {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.6s;
+}
+
+/* ─── SCROLL REVEAL ──────────────────────────────────────── */
+/*
+ * Base state: hidden. JS (reveal.js) adds .visible when
+ * the element enters the viewport. Never remove .reveal
+ * from an element manually — let the observer handle it.
+ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── ANNOUNCEMENT BAR ───────────────────────────────────── */
+.announcement-bar {
+  animation: slideDown 0.4s ease forwards;
+}
+
+/* ─── GLOW BACKGROUNDS ───────────────────────────────────── */
+.glow-top::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.glow-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ─── NAV SCROLL STATE ───────────────────────────────────── */
+/*
+ * JS adds .nav--scrolled to <nav> once user scrolls past hero.
+ * Deepens background opacity.
+ */
+.nav--scrolled {
+  background: rgba(9, 9, 9, 0.97);
+  transition: background var(--transition-base);
+}
+
+/* ─── BUTTON ACTIVE STATE ────────────────────────────────── */
+.btn-primary:active {
+  transform: translateY(0);
+  transition: transform 0.05s ease;
+}
