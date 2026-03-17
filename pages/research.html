@@ -16,12 +16,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #E8E2D9;
-      --bg-2:       #DDD7CD;
-      --bg-3:       #D1CAC0;
-      --border:     rgba(0,0,0,0.1);
-      --muted:      #777777;
-      --gold:       #8B6914;
+      --bg:         #8C7B5E;
+      --bg-2:       #7D6E53;
+      --bg-3:       #6E6049;
+      --border:     rgba(0,0,0,0.14);
+      --text:       #000000;
+      --muted:      #2A2015;
+      --muted-2:    rgba(0,0,0,0.45);
+      --mark:       #F0EBE0;
       --font-serif: 'Cormorant Garamond', serif;
       --font-sans:  'DM Sans', sans-serif;
     }
@@ -30,7 +32,7 @@
 
     body {
       background: var(--bg);
-      color: #000;
+      color: var(--text);
       font-family: var(--font-sans);
       font-weight: 300;
       font-size: 16px;
@@ -56,7 +58,7 @@
 
     #announcementBar {
       width: 100%;
-      background: #000;
+      background: #1A1208;
       padding: 8px 32px;
       display: flex;
       align-items: center;
@@ -66,25 +68,25 @@
     .bar__text {
       font-size: 0.72rem;
       font-weight: 400;
-      color: rgba(232,226,217,0.6);
+      color: rgba(240,235,224,0.55);
       text-align: center;
       letter-spacing: 0.03em;
     }
 
     .bar__text a {
-      color: rgba(232,226,217,0.85);
+      color: rgba(240,235,224,0.85);
       text-decoration: underline;
       font-weight: 500;
       text-underline-offset: 2px;
       transition: color 0.15s;
     }
 
-    .bar__text a:hover { color: #fff; }
+    .bar__text a:hover { color: var(--mark); }
 
     /* ── NAV ─────────────────────────────────────────────── */
     #nav {
       width: 100%;
-      background: rgba(232,226,217,0.96);
+      background: rgba(140,123,94,0.97);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -96,7 +98,7 @@
       transition: box-shadow 0.3s ease;
     }
 
-    #nav.scrolled { box-shadow: 0 1px 20px rgba(0,0,0,0.07); }
+    #nav.scrolled { box-shadow: 0 1px 24px rgba(0,0,0,0.18); }
 
     .nav__logo {
       display: flex;
@@ -110,7 +112,7 @@
       font-family: var(--font-serif);
       font-size: 1.3rem;
       font-weight: 700;
-      color: #000;
+      color: var(--mark);
       letter-spacing: 0.02em;
     }
 
@@ -125,7 +127,7 @@
       font-size: 0.73rem;
       font-weight: 400;
       letter-spacing: 0.03em;
-      color: var(--muted);
+      color: rgba(240,235,224,0.55);
       text-decoration: none;
       padding: 6px 12px;
       background: none;
@@ -135,7 +137,7 @@
       white-space: nowrap;
     }
 
-    .nav__link:hover { color: #000; }
+    .nav__link:hover { color: var(--mark); }
 
     /* ── PAPER ───────────────────────────────────────────── */
     .paper {
@@ -150,7 +152,7 @@
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
       margin-bottom: 20px;
       display: block;
     }
@@ -159,7 +161,7 @@
       font-family: var(--font-serif);
       font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 600;
-      color: #000;
+      color: var(--text);
       line-height: 1.12;
       margin-bottom: 12px;
     }
@@ -169,7 +171,7 @@
       font-size: 1.1rem;
       font-weight: 400;
       font-style: italic;
-      color: #444;
+      color: var(--muted);
       margin-bottom: 36px;
       line-height: 1.5;
       max-width: 580px;
@@ -190,20 +192,20 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
       margin-bottom: 4px;
     }
 
     .paper-meta__value {
       font-size: 0.84rem;
-      color: #000;
+      color: var(--text);
       font-weight: 400;
       line-height: 1.5;
     }
 
     /* ── ABSTRACT ────────────────────────────────────────── */
     .abstract {
-      border-left: 2px solid #000;
+      border-left: 2px solid var(--text);
       padding-left: 24px;
       margin-bottom: 56px;
     }
@@ -213,13 +215,13 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
       margin-bottom: 10px;
     }
 
     .abstract__text {
       font-size: 0.93rem;
-      color: #000;
+      color: var(--text);
       line-height: 1.85;
     }
 
@@ -236,7 +238,7 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
       margin-bottom: 16px;
     }
 
@@ -249,9 +251,8 @@
       width: 100%;
       padding: 7px 0;
       font-size: 0.86rem;
-      color: #000;
+      color: var(--text);
       text-decoration: none;
-      border-bottom: 1px solid transparent;
       transition: color 0.15s;
     }
 
@@ -260,7 +261,7 @@
     .toc__num {
       font-family: var(--font-serif);
       font-size: 0.84rem;
-      color: var(--muted);
+      color: var(--muted-2);
       flex-shrink: 0;
       min-width: 20px;
     }
@@ -284,7 +285,7 @@
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
       margin-bottom: 8px;
       display: block;
     }
@@ -293,7 +294,7 @@
       font-family: var(--font-serif);
       font-size: 1.7rem;
       font-weight: 600;
-      color: #000;
+      color: var(--text);
       line-height: 1.18;
       margin-bottom: 20px;
       padding-bottom: 16px;
@@ -302,7 +303,7 @@
 
     .section__body {
       font-size: 0.92rem;
-      color: #000;
+      color: var(--text);
       line-height: 1.85;
       margin-bottom: 16px;
     }
@@ -311,7 +312,7 @@
       display: block;
       font-style: normal;
       font-size: 0.71rem;
-      color: var(--muted);
+      color: var(--muted-2);
       margin-top: 6px;
       letter-spacing: 0.01em;
       line-height: 1.5;
@@ -329,7 +330,7 @@
       font-family: var(--font-serif);
       font-size: 2.4rem;
       font-weight: 700;
-      color: #000;
+      color: var(--text);
       line-height: 1;
       margin-bottom: 6px;
     }
@@ -339,13 +340,13 @@
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
       margin-bottom: 10px;
     }
 
     .finding__text {
       font-size: 0.9rem;
-      color: #000;
+      color: var(--text);
       line-height: 1.8;
       margin-bottom: 4px;
     }
@@ -375,25 +376,24 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
     }
 
     .data-table td {
       padding: 14px 16px;
       border-bottom: 1px solid var(--border);
-      color: #000;
+      color: var(--text);
       vertical-align: top;
       line-height: 1.6;
     }
 
     .data-table tr:last-child td { border-bottom: none; }
-
     .data-table td cite { margin-top: 4px; }
 
     /* ── CALLOUT ─────────────────────────────────────────── */
     .callout {
       border: 1px solid var(--border);
-      border-left: 2px solid #000;
+      border-left: 2px solid var(--text);
       padding: 20px 24px;
       margin: 28px 0;
       background: var(--bg-2);
@@ -404,13 +404,13 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
       margin-bottom: 8px;
     }
 
     .callout__text {
       font-size: 0.9rem;
-      color: #000;
+      color: var(--text);
       line-height: 1.8;
     }
 
@@ -423,14 +423,14 @@
       margin: 24px 0;
     }
 
-    .cost-table thead tr { border-bottom: 2px solid #000; }
+    .cost-table thead tr { border-bottom: 2px solid var(--text); }
 
     .cost-table th {
       font-size: 0.6rem;
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
       padding: 8px 0;
       text-align: left;
     }
@@ -439,7 +439,7 @@
       padding: 14px 0;
       border-bottom: 1px solid var(--border);
       font-size: 0.9rem;
-      color: #000;
+      color: var(--text);
       vertical-align: top;
     }
 
@@ -450,7 +450,7 @@
       font-weight: 600;
     }
 
-    .cost-table tfoot tr { border-top: 2px solid #000; }
+    .cost-table tfoot tr { border-top: 2px solid var(--text); }
 
     .cost-table tfoot td {
       padding-top: 16px;
@@ -473,7 +473,7 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
       margin-bottom: 16px;
     }
 
@@ -491,7 +491,7 @@
       font-family: var(--font-serif);
       font-size: 2.2rem;
       font-weight: 700;
-      color: #000;
+      color: var(--text);
       line-height: 1;
       margin-bottom: 4px;
     }
@@ -507,7 +507,7 @@
     .footnotes {
       margin-top: 80px;
       padding-top: 24px;
-      border-top: 2px solid #000;
+      border-top: 2px solid var(--text);
     }
 
     .footnotes__title {
@@ -515,7 +515,7 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--muted-2);
       margin-bottom: 16px;
     }
 
@@ -532,7 +532,7 @@
     .footnote__num {
       flex-shrink: 0;
       font-weight: 500;
-      color: #000;
+      color: var(--text);
       min-width: 20px;
     }
 
@@ -541,7 +541,7 @@
       margin-top: 80px;
       padding: 48px;
       text-align: center;
-      background: #000;
+      background: #1A1208;
     }
 
     .paper-cta__label {
@@ -549,7 +549,7 @@
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      color: rgba(240,235,224,0.3);
       margin-bottom: 16px;
       display: block;
     }
@@ -558,21 +558,21 @@
       font-family: var(--font-serif);
       font-size: 1.9rem;
       font-weight: 600;
-      color: #fff;
+      color: var(--mark);
       margin-bottom: 10px;
       line-height: 1.15;
     }
 
     .paper-cta__sub {
       font-size: 0.86rem;
-      color: rgba(255,255,255,0.4);
+      color: rgba(240,235,224,0.4);
       margin-bottom: 28px;
     }
 
     .paper-cta__btn {
       display: inline-block;
-      background: #fff;
-      color: #000;
+      background: var(--mark);
+      color: #1A1208;
       font-family: var(--font-sans);
       font-weight: 500;
       font-size: 0.76rem;
@@ -583,7 +583,7 @@
       transition: background 0.15s;
     }
 
-    .paper-cta__btn:hover { background: #e0e0e0; }
+    .paper-cta__btn:hover { background: #ddd8cc; }
 
     /* ── REVEAL ──────────────────────────────────────────── */
     .reveal {
@@ -614,6 +614,8 @@
       .paper-cta { padding: 36px 20px; }
       .paper-meta { gap: 20px; }
       .finding__stat { font-size: 1.8rem; }
+      #announcementBar { padding: 7px 20px; }
+      .bar__text { font-size: 0.68rem; }
     }
 
     @media (max-width: 400px) {
@@ -638,10 +640,10 @@
     <nav id="nav">
       <a href="../index.html" class="nav__logo">
         <svg width="20" height="26" viewBox="0 0 28 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M14 2 L2 7 L5 32 L14 27 Z" fill="#8B6914" opacity="0.65"/>
-          <path d="M14 2 L26 7 L23 32 L14 27 Z" fill="#8B6914"/>
-          <line x1="14" y1="2" x2="14" y2="27" stroke="#E8E2D9" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="2" y1="7" x2="26" y2="7" stroke="#A07C1A" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
+          <path d="M14 2 L2 7 L5 32 L14 27 Z" fill="#F0EBE0" opacity="0.65"/>
+          <path d="M14 2 L26 7 L23 32 L14 27 Z" fill="#F0EBE0"/>
+          <line x1="14" y1="2" x2="14" y2="27" stroke="#8C7B5E" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="2" y1="7" x2="26" y2="7" stroke="#F0EBE0" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
         </svg>
         <span class="nav__wordmark">FixedBooks</span>
       </a>
@@ -717,7 +719,6 @@
     <section class="section reveal" id="prevalence">
       <span class="section__num">Section 1</span>
       <h2 class="section__title">Prevalence of Bookkeeping Errors</h2>
-
       <p class="section__body">
         Bookkeeping failure in professional service firms is not an edge case.
         The 2026 data indicates it is the default state for the majority of small
@@ -765,7 +766,6 @@
     <section class="section reveal" id="tax">
       <span class="section__num">Section 2</span>
       <h2 class="section__title">Tax Overpayment and Lost Deductions</h2>
-
       <p class="section__body">
         The most direct financial consequence of disorganized books is overpayment
         of taxes. Legitimate deductions go unclaimed not because they are unavailable
@@ -811,7 +811,6 @@
     <section class="section reveal" id="niche">
       <span class="section__num">Section 3</span>
       <h2 class="section__title">Common Errors by Industry Niche</h2>
-
       <p class="section__body">
         Each professional service category has a primary financial leak distinct
         to its operational structure.
@@ -869,11 +868,9 @@
     <section class="section reveal" id="time">
       <span class="section__num">Section 4</span>
       <h2 class="section__title">Owner Time and Productivity Loss</h2>
-
       <p class="section__body">
         The time a professional service owner spends on bookkeeping has a direct
-        opportunity cost measured against their billable rate. In most cases,
-        this cost exceeds what a professional bookkeeper would charge.
+        opportunity cost measured against their billable rate.
       </p>
 
       <div class="finding">
@@ -882,7 +879,7 @@
         <p class="finding__text">
           For a business owner valued at $100 per hour, manual bookkeeping tasks
           represent between $12,000 and $36,000 in lost annual productivity.
-          This calculation excludes software costs and accountant fees.
+          This excludes software costs and accountant fees.
           It is the cost of the owner's time alone.
         </p>
         <cite>[10] BKCProHub, 2025 Productivity Analysis</cite>
@@ -893,8 +890,8 @@
         <div class="finding__label">billed per day by the average attorney</div>
         <p class="finding__text">
           The average attorney bills only 2.6 hours of an 8-hour workday. The
-          remaining 67% of working time is consumed by unbilled administrative tasks,
-          a significant portion of which involves financial record management.
+          remaining 67% is consumed by unbilled administrative tasks, a significant
+          portion of which involves financial record management.
         </p>
         <cite>[11] Clio Legal Trends Report, 2025 and 2026</cite>
       </div>
@@ -905,7 +902,6 @@
     <section class="section reveal" id="distress">
       <span class="section__num">Section 5</span>
       <h2 class="section__title">Business Distress and Loan Rejection</h2>
-
       <p class="section__body">
         When a cash flow crisis emerges or a growth opportunity requires capital,
         disorganized records become a structural barrier with no quick fix.
@@ -941,11 +937,9 @@
     <section class="section reveal" id="audit">
       <span class="section__num">Section 6</span>
       <h2 class="section__title">IRS Audit Exposure and Defense Costs</h2>
-
       <p class="section__body">
         An IRS audit does not require fraud to be expensive. Defense costs are
-        incurred regardless of outcome. Bookkeeping errors are among the most
-        reliable audit triggers for service businesses.
+        incurred regardless of outcome.
       </p>
 
       <div class="data-table-wrap">
@@ -995,7 +989,6 @@
     <section class="section reveal" id="compounding">
       <span class="section__num">Section 7</span>
       <h2 class="section__title">Compounding Neglect and Cleanup Costs</h2>
-
       <p class="section__body">
         Bookkeeping problems do not stay contained to the period in which they
         originate. Each unreconciled month adds to the complexity and cost of
@@ -1018,9 +1011,9 @@
         <div class="finding__label">professional bookkeeping cleanup rate, 2026</div>
         <p class="finding__text">
           Current market rates for hourly professional bookkeeping cleanup run $75
-          to $125 per hour. Ongoing monthly maintenance for a professional service
-          firm runs $300 to $1,500 per month depending on transaction volume.
-          CFO-level strategic advisory is $1,500 to $3,000 per month.
+          to $125 per hour. Ongoing monthly maintenance runs $300 to $1,500 per
+          month depending on transaction volume. CFO-level advisory runs $1,500
+          to $3,000 per month.
         </p>
         <cite>[17] 2026 bookkeeping industry market survey</cite>
       </div>
@@ -1031,7 +1024,6 @@
     <section class="section reveal" id="recovery">
       <span class="section__num">Section 8</span>
       <h2 class="section__title">Documented Recovery and ROI</h2>
-
       <p class="section__body">
         The financial return on a professional bookkeeping cleanup is documented
         and consistent across practice types.
@@ -1039,7 +1031,7 @@
 
       <div class="case-study">
         <div class="case-study__label">Case Study &nbsp;·&nbsp; Six Month Backlog, Professional Service Firm</div>
-        <p style="font-size:0.88rem; color:#000; line-height:1.8;">
+        <p style="font-size:0.88rem; color:var(--text); line-height:1.8;">
           A professional service firm carrying six months of unaddressed bookkeeping
           errors engaged a cleanup service after a tax filing discrepancy surfaced.
           The total cost of the accumulated errors spanning missed deductions,
@@ -1060,7 +1052,7 @@
             <div class="case-study__stat-label">Return on cleanup investment within one filing cycle</div>
           </div>
         </div>
-        <p style="font-size:0.88rem; color:#000; line-height:1.8;">
+        <p style="font-size:0.88rem; color:var(--text); line-height:1.8;">
           The $5,000 cleanup identified and recovered the majority of the $103,040
           figure within one tax filing cycle through recovered deductions, penalty
           reversal, and restored access to a credit facility.
@@ -1074,10 +1066,10 @@
     <section class="section reveal" id="summary">
       <span class="section__num">Section 9</span>
       <h2 class="section__title">Annual Cost Summary</h2>
-
       <p class="section__body">
-        The following table consolidates conservative annual cost estimates for
-        a professional service business carrying disorganized books.
+        Conservative annual cost estimates for a professional service business
+        carrying disorganized books. High-revenue practices will see proportionally
+        larger figures across each category.
       </p>
 
       <table class="cost-table">
