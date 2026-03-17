@@ -456,9 +456,9 @@
 
     /* Score bar animation */
     var bars = report.querySelectorAll('.score-bar-fill');
-    bars.forEach(function (bar) {
-      var targetWidth = bar.style.width;
-      bar.style.width = '0%';
+bars.forEach(function (bar) {
+  var targetWidth = bar.dataset.width || bar.style.width;
+  bar.style.width = '0%';
       bar.style.transition = 'width 0.9s cubic-bezier(0.16,1,0.3,1)';
 
       var barObserver = new IntersectionObserver(function (entries) {
