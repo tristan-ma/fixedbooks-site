@@ -21,8 +21,8 @@
       --bg-3:       #6E6049;
       --border:     rgba(0,0,0,0.14);
       --text:       #000000;
-      --muted:      #2A2015;
-      --muted-2:    rgba(0,0,0,0.45);
+      --muted:      #1A1208;
+      --muted-2:    rgba(0,0,0,0.5);
       --mark:       #F0EBE0;
       --font-serif: 'Cormorant Garamond', serif;
       --font-sans:  'DM Sans', sans-serif;
@@ -57,7 +57,6 @@
       z-index: 200;
     }
 
-    /* ── ANNOUNCEMENT BAR ────────────────────────────────── */
     #announcementBar {
       width: 100%;
       background: #1A1208;
@@ -100,9 +99,7 @@
       transition: box-shadow 0.3s ease;
     }
 
-    #nav.scrolled {
-      box-shadow: 0 1px 24px rgba(0,0,0,0.18);
-    }
+    #nav.scrolled { box-shadow: 0 1px 24px rgba(0,0,0,0.18); }
 
     .nav__logo {
       display: flex;
@@ -144,16 +141,342 @@
     .nav__link:hover { color: var(--mark); }
 
     /* ── HERO ────────────────────────────────────────────── */
+    /*
+     * Two-column layout on wide screens.
+     * Left: headline, sub, stats, CTA.
+     * Right: live partial report render, slowly auto-scrolling,
+     *        blurred at top and bottom edges.
+     */
     .hero {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
       min-height: 100svh;
       padding: 0;
       position: relative;
       overflow: hidden;
     }
 
+    .hero__left {
+      padding: 0 32px 0 calc((100vw - 1200px) / 2 + 32px);
+      padding-left: max(32px, calc((100vw - 1200px) / 2 + 32px));
+      z-index: 2;
+    }
+
+    .hero__right {
+      position: relative;
+      height: 100svh;
+      overflow: hidden;
+      border-left: 1px solid var(--border);
+    }
+
+    /* Top and bottom fade masks on the report preview */
+    .hero__right::before,
+    .hero__right::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .hero__right::before {
+      top: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, var(--bg), transparent);
+    }
+
+    .hero__right::after {
+      bottom: 0;
+      height: 200px;
+      background: linear-gradient(to top, var(--bg), transparent);
+    }
+
+    /* The scrolling report container */
+    .hero__report-preview {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 32px 28px;
+      animation: reportScroll 28s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes reportScroll {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    /* Pause on hover */
+    .hero__right:hover .hero__report-preview {
+      animation-play-state: paused;
+    }
+
+    /* Mini report styles — scaled down version of the real report */
+    .rp {
+      background: #F5F0E8;
+      padding: 28px 32px;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      color: #090909;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+    }
+
+    .rp__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid #090909;
+    }
+
+    .rp__brand {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #090909;
+    }
+
+    .rp__brand span { color: #8B6914; }
+
+    .rp__meta {
+      font-size: 0.62rem;
+      color: #999;
+      text-align: right;
+      line-height: 1.8;
+    }
+
+    .rp__title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #090909;
+      margin-bottom: 4px;
+    }
+
+    .rp__sub {
+      font-size: 0.65rem;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .rp__client {
+      background: #090909;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .rp__field-label {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8B6914;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .rp__field-value {
+      font-size: 0.68rem;
+      color: #F5F0E8;
+    }
+
+    .rp__redacted {
+      background: #333;
+      color: transparent;
+      border-radius: 2px;
+      user-select: none;
+    }
+
+    .rp__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .rp__box {
+      background: #090909;
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .rp__box.gold { background: #8B6914; }
+
+    .rp__box-num {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #F5F0E8;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .rp__box.gold .rp__box-num { color: #090909; }
+
+    .rp__box-label {
+      font-size: 0.5rem;
+      color: rgba(245,240,232,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1.3;
+    }
+
+    .rp__box.gold .rp__box-label { color: rgba(9,9,9,0.5); }
+
+    .rp__section-title {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #090909;
+      border-bottom: 1px solid #090909;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    .rp__score-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .rp__score-label {
+      font-size: 0.6rem;
+      color: #555;
+      width: 110px;
+      flex-shrink: 0;
+    }
+
+    .rp__score-bar {
+      flex: 1;
+      height: 4px;
+      background: #DDD8CF;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .rp__score-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    .rp__score-fill.low  { background: #B83232; }
+    .rp__score-fill.mid  { background: #C4650A; }
+    .rp__score-fill.high { background: #2E7D32; }
+
+    .rp__score-val {
+      font-size: 0.6rem;
+      font-weight: 500;
+      color: #333;
+      width: 24px;
+      text-align: right;
+    }
+
+    .rp__finding {
+      display: grid;
+      grid-template-columns: 7px 1fr auto;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .rp__dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .rp__dot.high   { background: #B83232; }
+    .rp__dot.medium { background: #C4650A; }
+    .rp__dot.low    { background: #8B6914; }
+
+    .rp__finding-title {
+      font-size: 0.64rem;
+      font-weight: 500;
+      color: #090909;
+      margin-bottom: 2px;
+    }
+
+    .rp__finding-desc {
+      font-size: 0.58rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .rp__finding-impact {
+      font-size: 0.58rem;
+      font-weight: 500;
+      color: #B83232;
+      white-space: nowrap;
+    }
+
+    .rp__badge {
+      display: inline-block;
+      padding: 1px 5px;
+      font-size: 0.48rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 1px;
+    }
+
+    .rp__badge.high   { background: rgba(184,50,50,0.1); color: #B83232; }
+    .rp__badge.medium { background: rgba(196,101,10,0.1); color: #C4650A; }
+
+    .rp__next {
+      background: #090909;
+      padding: 14px 16px;
+      margin-top: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rp__next::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, #8B6914, transparent);
+    }
+
+    .rp__next-title {
+      font-size: 0.56rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #8B6914;
+      margin-bottom: 6px;
+      border-bottom: 1px solid rgba(139,105,20,0.2);
+      padding-bottom: 4px;
+    }
+
+    .rp__next-text {
+      font-size: 0.6rem;
+      color: #F5F0E8;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .rp__next-price {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #8B6914;
+    }
+
+    .rp__next-note {
+      font-size: 0.54rem;
+      color: rgba(245,240,232,0.35);
+      margin-top: 2px;
+    }
+
+    /* ── HERO LEFT CONTENT ───────────────────────────────── */
     .hero__eyebrow {
       display: inline-flex;
       align-items: center;
@@ -178,30 +501,26 @@
 
     h1 {
       font-family: var(--font-serif);
-      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      font-size: clamp(2.2rem, 3.5vw, 3.4rem);
       font-weight: 600;
       line-height: 1.07;
       color: var(--text);
       margin-bottom: 14px;
     }
 
-    h1 em {
-      font-style: italic;
-      color: var(--text);
-    }
+    h1 em { font-style: italic; color: var(--text); }
 
     .hero__sub {
       font-size: 0.9rem;
       color: var(--muted);
-      max-width: 480px;
+      max-width: 400px;
       margin-bottom: 22px;
       line-height: 1.75;
     }
 
-    /* ── STAT BAR ────────────────────────────────────────── */
     .stat-bar {
       display: flex;
-      gap: 32px;
+      gap: 28px;
       flex-wrap: wrap;
       padding: 16px 0;
       border-top: 1px solid var(--border);
@@ -213,20 +532,19 @@
 
     .stat-num {
       font-family: var(--font-serif);
-      font-size: 1.7rem;
+      font-size: 1.6rem;
       font-weight: 700;
       color: var(--text);
       line-height: 1;
     }
 
     .stat-label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--muted);
-      max-width: 130px;
+      max-width: 120px;
       line-height: 1.4;
     }
 
-    /* ── BUTTONS ─────────────────────────────────────────── */
     .btn-primary {
       display: inline-block;
       background: var(--text);
@@ -250,7 +568,7 @@
 
     /* ── TRUST BAR ───────────────────────────────────────── */
     .trust-bar {
-      padding: 18px 0;
+      padding: 16px 0;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       background: var(--bg-2);
@@ -260,7 +578,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 40px;
+      gap: 36px;
       flex-wrap: wrap;
     }
 
@@ -268,15 +586,11 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       color: var(--muted);
-      letter-spacing: 0.02em;
     }
 
-    .trust-item__icon {
-      font-size: 0.8rem;
-      opacity: 0.6;
-    }
+    .trust-item__icon { opacity: 0.5; font-size: 0.75rem; }
 
     /* ── SECTIONS ────────────────────────────────────────── */
     .section { padding: 80px 0; }
@@ -327,58 +641,55 @@
 
     .pain-item:first-child { border-top: 1px solid var(--border); }
 
-    .pain-icon {
-      color: var(--muted);
-      font-size: 0.85rem;
-      padding-top: 4px;
-      flex-shrink: 0;
-    }
-
+    .pain-icon { color: var(--muted); font-size: 0.85rem; padding-top: 4px; flex-shrink: 0; }
     .pain-text { font-size: 0.92rem; color: var(--muted); line-height: 1.75; }
     .pain-text strong { color: var(--text); font-weight: 500; }
 
-    /* ── RESEARCH CALLOUT ────────────────────────────────── */
-    .research-callout {
-      background: var(--bg-3);
-      border: 1px solid var(--border);
-      padding: 32px 36px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 32px;
+    /* ── GRID BREAK STAT ─────────────────────────────────── */
+    /*
+     * The one moment where the layout breaks.
+     * $103,040 renders at 8rem, overflows the container
+     * bleeding off the right edge intentionally.
+     * The label sits in the left margin at normal size.
+     * This is the "a designer made decisions here" moment.
+     */
+    .break-stat {
+      padding: 80px 0 60px;
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
     }
 
-    .research-callout__left {}
+    .break-stat__inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
 
-    .research-callout__label {
+    
+
+    .break-stat__label {
       font-size: 10px;
       font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted-2);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       display: block;
     }
 
-    .research-callout__stat {
-      font-family: var(--font-serif);
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .research-callout__text {
+    .break-stat__context {
       font-size: 0.84rem;
       color: var(--muted);
-      line-height: 1.7;
-      max-width: 380px;
+      line-height: 1.8;
+      margin-bottom: 20px;
     }
 
-    .research-callout__link {
-      display: inline-block;
-      margin-top: 16px;
+    .break-stat__link {
       font-size: 0.72rem;
       font-weight: 500;
       letter-spacing: 0.06em;
@@ -389,7 +700,187 @@
       transition: opacity 0.15s;
     }
 
-    .research-callout__link:hover { opacity: 0.6; }
+    .break-stat__link:hover { opacity: 0.5; }
+
+    .break-stat__num-col {
+      position: relative;
+    }
+
+    .break-stat__num {
+      font-family: var(--font-serif);
+      font-size: clamp(5rem, 12vw, 9rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 0.9;
+      white-space: nowrap;
+      /* Intentionally overflows right edge */
+      margin-right: -120px;
+      opacity: 0.9;
+    }
+
+    .break-stat__sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 16px;
+      line-height: 1.6;
+      max-width: 340px;
+    }
+
+    /* ── RESEARCH AS PRODUCT ──────────────────────────────── */
+    /*
+     * The research paper treated as a product feature.
+     * Rendered as a physical document object you can click.
+     * Left: the paper "cover" — dark, editorial, numbered.
+     * Right: three pulled stats from the paper.
+     */
+    .research-feature {
+      padding: 80px 0;
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .research-feature__inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* Paper cover object */
+    .research-feature__cover {
+      background: #1A1208;
+      padding: 32px 28px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      display: block;
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
+    }
+
+    .research-feature__cover:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 rgba(0,0,0,0.2);
+    }
+
+    .research-feature__cover::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(240,235,224,0.3), transparent);
+    }
+
+    .cover__label {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(240,235,224,0.35);
+      margin-bottom: 28px;
+      display: block;
+    }
+
+    .cover__title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--mark);
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+
+    .cover__divider {
+      width: 32px;
+      height: 1px;
+      background: rgba(240,235,224,0.2);
+      margin-bottom: 20px;
+    }
+
+    .cover__meta {
+      font-size: 0.62rem;
+      color: rgba(240,235,224,0.3);
+      line-height: 1.8;
+    }
+
+    .cover__cta {
+      display: inline-block;
+      margin-top: 24px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(240,235,224,0.5);
+      border-top: 1px solid rgba(240,235,224,0.1);
+      padding-top: 16px;
+      width: 100%;
+      transition: color 0.15s;
+    }
+
+    .research-feature__cover:hover .cover__cta {
+      color: var(--mark);
+    }
+
+    /* Right side stats */
+    
+
+    .research-feature__intro {
+      margin-bottom: 32px;
+    }
+
+    .research-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .research-stat {
+      background: var(--bg-2);
+      padding: 20px 24px;
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 20px;
+      align-items: start;
+      transition: background 0.15s;
+    }
+
+    .research-stat:hover { background: var(--bg-3); }
+
+    .research-stat__num {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .research-stat__label {
+      font-size: 0.72rem;
+      color: var(--muted-2);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .research-stat__text {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .research-stat__source {
+      font-size: 0.65rem;
+      color: var(--muted-2);
+      font-style: italic;
+      margin-top: 4px;
+    }
 
     /* ── PROCESS ─────────────────────────────────────────── */
     .process-steps { display: flex; flex-direction: column; margin-top: 48px; }
@@ -460,7 +951,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     .offer-bullet {
@@ -473,7 +964,6 @@
 
     .offer-bullet__check { color: var(--text); flex-shrink: 0; font-size: 0.85rem; }
 
-    /* ── RISK REVERSAL ───────────────────────────────────── */
     .risk-reversal {
       border: 1px solid var(--border);
       padding: 16px 20px;
@@ -484,25 +974,10 @@
       background: rgba(0,0,0,0.06);
     }
 
-    .risk-reversal__icon {
-      font-size: 1rem;
-      flex-shrink: 0;
-      opacity: 0.5;
-      padding-top: 2px;
-    }
+    .risk-reversal__icon { font-size: 1rem; flex-shrink: 0; opacity: 0.4; padding-top: 2px; }
 
-    .risk-reversal__text {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .risk-reversal__text strong {
-      color: var(--text);
-      font-weight: 500;
-      display: block;
-      margin-bottom: 2px;
-    }
+    .risk-reversal__text { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+    .risk-reversal__text strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 2px; }
 
     .affirm-note {
       font-size: 0.72rem;
@@ -586,16 +1061,8 @@
       flex-shrink: 0;
     }
 
-    .testimonial__name {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .testimonial__title {
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
+    .testimonial__name { font-size: 0.78rem; font-weight: 500; color: var(--text); }
+    .testimonial__title { font-size: 0.72rem; color: var(--muted); }
 
     .testimonial__result {
       margin-left: auto;
@@ -666,11 +1133,7 @@
     .final-cta .section-title { color: var(--mark); }
     .final-cta .section-body { color: rgba(240,235,224,0.4); margin: 0 auto 36px; text-align: center; }
 
-    .final-cta .btn-primary {
-      background: var(--mark);
-      color: #1A1208;
-    }
-
+    .final-cta .btn-primary { background: var(--mark); color: #1A1208; }
     .final-cta .btn-primary:hover { background: #ddd8cc; }
 
     /* ── REVEAL ──────────────────────────────────────────── */
@@ -686,7 +1149,6 @@
     .reveal-delay-2 { transition-delay: 0.16s; }
     .reveal-delay-3 { transition-delay: 0.24s; }
 
-    /* ── HERO ENTRANCE ───────────────────────────────────── */
     .fade-up {
       opacity: 0;
       transform: translateY(18px);
@@ -704,9 +1166,28 @@
     .delay-5 { animation-delay: 0.60s; }
 
     /* ── MOBILE ──────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: 0;
+      }
+
+      .hero__left {
+        padding: 60px 32px 48px;
+      }
+
+      .hero__right {
+        display: none;
+      }
+    }
+
     @media (max-width: 900px) {
       #nav { padding: 0 24px; }
       .container { padding: 0 24px; }
+      .research-feature__inner { grid-template-columns: 1fr; gap: 32px; }
+      .break-stat__inner { grid-template-columns: 1fr; }
+      .break-stat__num { margin-right: -48px; }
     }
 
     @media (max-width: 660px) {
@@ -715,11 +1196,12 @@
       .nav__link:nth-child(2) { display: none; }
       .nav__wordmark { font-size: 1.1rem; }
       .container { padding: 0 20px; }
+      .hero__left { padding: 48px 20px 40px; }
       h1 { font-size: 2.1rem; }
       .hero__sub { font-size: 0.88rem; }
-      .stat-bar { gap: 18px; }
-      .stat-num { font-size: 1.5rem; }
-      .section { padding: 60px 0; }
+      .stat-bar { gap: 18px; padding: 14px 0; margin-bottom: 20px; }
+      .stat-num { font-size: 1.4rem; }
+      .section { padding: 56px 0; }
       .step { grid-template-columns: 36px 1fr; gap: 16px; }
       .offer-box { padding: 28px 20px; }
       .offer-price { font-size: 2.4rem; }
@@ -727,10 +1209,13 @@
       #announcementBar { padding: 7px 20px; }
       .bar__text { font-size: 0.68rem; }
       .final-cta { padding: 72px 0; }
-      .research-callout { flex-direction: column; padding: 24px 20px; }
-      .testimonial { padding: 22px 20px; }
+      .trust-bar__inner { flex-direction: column; align-items: flex-start; padding: 0 20px; gap: 10px; }
+      .testimonial { padding: 20px; }
       .testimonial__result { display: none; }
-      .trust-bar__inner { gap: 20px; }
+      .break-stat__num { font-size: 4rem; margin-right: -20px; }
+      .research-feature__inner { padding: 0 20px; }
+      .research-stat { grid-template-columns: 70px 1fr; gap: 14px; }
+      .research-stat__num { font-size: 1.4rem; }
     }
 
     @media (max-width: 400px) {
@@ -763,7 +1248,6 @@
         </svg>
         <span class="nav__wordmark">FixedBooks</span>
       </a>
-
       <div class="nav__links">
         <a href="pages/research.html" class="nav__link">Research</a>
         <a href="pages/demo.html" class="nav__link">Sample Report</a>
@@ -776,7 +1260,9 @@
 
   <!-- ─── HERO ──────────────────────────────────────────────── -->
   <section class="hero">
-    <div class="container">
+
+    <!-- LEFT: headline and CTA -->
+    <div class="hero__left">
 
       <div class="hero__eyebrow fade-up delay-1" data-parallax="-0.04">
         <span class="hero__eyebrow__dot"></span>
@@ -797,15 +1283,15 @@
       <div class="stat-bar fade-up delay-4" data-parallax="-0.10">
         <div class="stat-item">
           <span class="stat-num" data-target="40" data-suffix="%">40%</span>
-          <span class="stat-label">of professional service owners don't trust their own financial data</span>
+          <span class="stat-label">of owners don't trust their own financial data</span>
         </div>
         <div class="stat-item">
           <span class="stat-num">$11k+</span>
-          <span class="stat-label">overpaid in taxes annually due to missed deductions</span>
+          <span class="stat-label">overpaid in taxes due to missed deductions</span>
         </div>
         <div class="stat-item">
           <span class="stat-num" data-target="20" data-suffix="x">20x</span>
-          <span class="stat-label">average return on a professional bookkeeping cleanup</span>
+          <span class="stat-label">average return on a bookkeeping cleanup</span>
         </div>
       </div>
 
@@ -814,6 +1300,193 @@
       </a>
 
     </div>
+
+    <!-- RIGHT: live scrolling report preview -->
+    <div class="hero__right">
+      <div class="hero__report-preview">
+
+        <!-- First copy -->
+        <div class="rp">
+          <div class="rp__header">
+            <div class="rp__brand">Fixed<span>Books</span></div>
+            <div class="rp__meta">
+              <div>Report Date: March 14, 2026</div>
+              <div>Diagnostic ID: FBD-0091</div>
+              <div>Delivered within 48 hours</div>
+            </div>
+          </div>
+
+          <div class="rp__title">Books Diagnostic: Lumina Aesthetics &amp; Wellness</div>
+          <div class="rp__sub">Review period: Jan 2024 to Mar 2026 &nbsp;·&nbsp; QuickBooks Online Plus</div>
+
+          <div class="rp__client">
+            <div>
+              <span class="rp__field-label">Business</span>
+              <span class="rp__field-value">Lumina Aesthetics LLC</span>
+            </div>
+            <div>
+              <span class="rp__field-label">Owner</span>
+              <span class="rp__field-value"><span class="rp__redacted">Dr. Sarah ████████</span></span>
+            </div>
+            <div>
+              <span class="rp__field-label">Period</span>
+              <span class="rp__field-value">Jan 2024 to Mar 2026</span>
+            </div>
+          </div>
+
+          <div class="rp__grid">
+            <div class="rp__box">
+              <div class="rp__box-num">9</div>
+              <div class="rp__box-label">Total Findings</div>
+            </div>
+            <div class="rp__box">
+              <div class="rp__box-num">4</div>
+              <div class="rp__box-label">High Priority</div>
+            </div>
+            <div class="rp__box">
+              <div class="rp__box-num">$6,240</div>
+              <div class="rp__box-label">Unreconciled</div>
+            </div>
+            <div class="rp__box gold">
+              <div class="rp__box-num">$4,800+</div>
+              <div class="rp__box-label">Recoverable</div>
+            </div>
+          </div>
+
+          <div class="rp__section-title">Books Health Score</div>
+
+          <div class="rp__score-row">
+            <span class="rp__score-label">Reconciliation</span>
+            <div class="rp__score-bar"><div class="rp__score-fill low" style="width:18%"></div></div>
+            <span class="rp__score-val">18%</span>
+          </div>
+          <div class="rp__score-row">
+            <span class="rp__score-label">Transaction Categorization</span>
+            <div class="rp__score-bar"><div class="rp__score-fill low" style="width:34%"></div></div>
+            <span class="rp__score-val">34%</span>
+          </div>
+          <div class="rp__score-row">
+            <span class="rp__score-label">Accounts Receivable</span>
+            <div class="rp__score-bar"><div class="rp__score-fill mid" style="width:52%"></div></div>
+            <span class="rp__score-val">52%</span>
+          </div>
+          <div class="rp__score-row">
+            <span class="rp__score-label">Expense Separation</span>
+            <div class="rp__score-bar"><div class="rp__score-fill low" style="width:28%"></div></div>
+            <span class="rp__score-val">28%</span>
+          </div>
+          <div class="rp__score-row">
+            <span class="rp__score-label">Chart of Accounts</span>
+            <div class="rp__score-bar"><div class="rp__score-fill mid" style="width:45%"></div></div>
+            <span class="rp__score-val">45%</span>
+          </div>
+          <div class="rp__score-row">
+            <span class="rp__score-label">Vendor Accuracy</span>
+            <div class="rp__score-bar"><div class="rp__score-fill high" style="width:78%"></div></div>
+            <span class="rp__score-val">78%</span>
+          </div>
+
+          <div class="rp__section-title" style="margin-top:14px;">Findings</div>
+
+          <div class="rp__finding">
+            <div class="rp__dot high"></div>
+            <div>
+              <div class="rp__finding-title">Bank reconciliation not completed since September 2024 <span class="rp__badge high">High</span></div>
+              <div class="rp__finding-desc">$6,240 discrepancy between bank statements and QuickBooks. P&amp;L is unreliable until resolved.</div>
+            </div>
+            <div class="rp__finding-impact">$6,240 gap</div>
+          </div>
+
+          <div class="rp__finding">
+            <div class="rp__dot high"></div>
+            <div>
+              <div class="rp__finding-title">63 uncategorized transactions <span class="rp__badge high">High</span></div>
+              <div class="rp__finding-desc">Supply purchases, equipment deposits, and continuing education. None usable for deductions.</div>
+            </div>
+            <div class="rp__finding-impact">Est. $3,800</div>
+          </div>
+
+          <div class="rp__finding">
+            <div class="rp__dot high"></div>
+            <div>
+              <div class="rp__finding-title">Personal expenses mixed into business accounts <span class="rp__badge high">High</span></div>
+              <div class="rp__finding-desc">19 personal transactions recorded as business expenses. Direct audit liability.</div>
+            </div>
+            <div class="rp__finding-impact">$1,340 exposure</div>
+          </div>
+
+          <div class="rp__finding">
+            <div class="rp__dot medium"></div>
+            <div>
+              <div class="rp__finding-title">Duplicate vendor payments detected <span class="rp__badge medium">Medium</span></div>
+              <div class="rp__finding-desc">4 vendors show duplicate entries. $780 at risk pending verification.</div>
+            </div>
+            <div class="rp__finding-impact">$780 at risk</div>
+          </div>
+
+          <div class="rp__finding">
+            <div class="rp__dot medium"></div>
+            <div>
+              <div class="rp__finding-title">Accounts receivable aged over 90 days <span class="rp__badge medium">Medium</span></div>
+              <div class="rp__finding-desc">$1,620 outstanding. Three Q2 2024 invoices appear abandoned.</div>
+            </div>
+            <div class="rp__finding-impact">$1,620</div>
+          </div>
+
+          <div class="rp__next">
+            <div class="rp__next-title">Next Steps</div>
+            <p class="rp__next-text">
+              This diagnostic identified 9 issues including a $6,240 bank discrepancy
+              and an estimated $4,800 in recoverable deductions and overpayments.
+              A full cleanup will reconcile all accounts, categorize all transactions,
+              and hand back a clean P and L ready for your accountant.
+            </p>
+            <div class="rp__next-price">Cleanup Quote: $[X]</div>
+            <div class="rp__next-note">$97 diagnostic credited toward this total. Affirm available.</div>
+          </div>
+        </div>
+
+        <!-- Second copy — creates seamless loop -->
+        <div class="rp" style="margin-top: 32px;">
+          <div class="rp__header">
+            <div class="rp__brand">Fixed<span>Books</span></div>
+            <div class="rp__meta">
+              <div>Report Date: March 14, 2026</div>
+              <div>Diagnostic ID: FBD-0091</div>
+              <div>Delivered within 48 hours</div>
+            </div>
+          </div>
+          <div class="rp__title">Books Diagnostic: Lumina Aesthetics &amp; Wellness</div>
+          <div class="rp__sub">Review period: Jan 2024 to Mar 2026 &nbsp;·&nbsp; QuickBooks Online Plus</div>
+          <div class="rp__client">
+            <div><span class="rp__field-label">Business</span><span class="rp__field-value">Lumina Aesthetics LLC</span></div>
+            <div><span class="rp__field-label">Owner</span><span class="rp__field-value"><span class="rp__redacted">Dr. Sarah ████████</span></span></div>
+            <div><span class="rp__field-label">Period</span><span class="rp__field-value">Jan 2024 to Mar 2026</span></div>
+          </div>
+          <div class="rp__grid">
+            <div class="rp__box"><div class="rp__box-num">9</div><div class="rp__box-label">Total Findings</div></div>
+            <div class="rp__box"><div class="rp__box-num">4</div><div class="rp__box-label">High Priority</div></div>
+            <div class="rp__box"><div class="rp__box-num">$6,240</div><div class="rp__box-label">Unreconciled</div></div>
+            <div class="rp__box gold"><div class="rp__box-num">$4,800+</div><div class="rp__box-label">Recoverable</div></div>
+          </div>
+          <div class="rp__section-title">Books Health Score</div>
+          <div class="rp__score-row"><span class="rp__score-label">Reconciliation</span><div class="rp__score-bar"><div class="rp__score-fill low" style="width:18%"></div></div><span class="rp__score-val">18%</span></div>
+          <div class="rp__score-row"><span class="rp__score-label">Transaction Categorization</span><div class="rp__score-bar"><div class="rp__score-fill low" style="width:34%"></div></div><span class="rp__score-val">34%</span></div>
+          <div class="rp__score-row"><span class="rp__score-label">Accounts Receivable</span><div class="rp__score-bar"><div class="rp__score-fill mid" style="width:52%"></div></div><span class="rp__score-val">52%</span></div>
+          <div class="rp__score-row"><span class="rp__score-label">Expense Separation</span><div class="rp__score-bar"><div class="rp__score-fill low" style="width:28%"></div></div><span class="rp__score-val">28%</span></div>
+          <div class="rp__score-row"><span class="rp__score-label">Chart of Accounts</span><div class="rp__score-bar"><div class="rp__score-fill mid" style="width:45%"></div></div><span class="rp__score-val">45%</span></div>
+          <div class="rp__score-row"><span class="rp__score-label">Vendor Accuracy</span><div class="rp__score-bar"><div class="rp__score-fill high" style="width:78%"></div></div><span class="rp__score-val">78%</span></div>
+          <div class="rp__section-title" style="margin-top:14px;">Findings</div>
+          <div class="rp__finding"><div class="rp__dot high"></div><div><div class="rp__finding-title">Bank reconciliation not completed since September 2024 <span class="rp__badge high">High</span></div><div class="rp__finding-desc">$6,240 discrepancy between bank statements and QuickBooks.</div></div><div class="rp__finding-impact">$6,240 gap</div></div>
+          <div class="rp__finding"><div class="rp__dot high"></div><div><div class="rp__finding-title">63 uncategorized transactions <span class="rp__badge high">High</span></div><div class="rp__finding-desc">Supply purchases, equipment deposits, continuing education.</div></div><div class="rp__finding-impact">Est. $3,800</div></div>
+          <div class="rp__finding"><div class="rp__dot high"></div><div><div class="rp__finding-title">Personal expenses mixed into business accounts <span class="rp__badge high">High</span></div><div class="rp__finding-desc">19 personal transactions recorded as business expenses.</div></div><div class="rp__finding-impact">$1,340 exposure</div></div>
+          <div class="rp__finding"><div class="rp__dot medium"></div><div><div class="rp__finding-title">Duplicate vendor payments <span class="rp__badge medium">Medium</span></div><div class="rp__finding-desc">4 vendors with duplicate entries. $780 at risk.</div></div><div class="rp__finding-impact">$780 at risk</div></div>
+          <div class="rp__next"><div class="rp__next-title">Next Steps</div><p class="rp__next-text">9 issues identified. $4,800 in recoverable deductions and overpayments. Full cleanup will reconcile all accounts and hand back a clean P and L.</p><div class="rp__next-price">Cleanup Quote: $[X]</div><div class="rp__next-note">$97 diagnostic credited toward this total.</div></div>
+        </div>
+
+      </div>
+    </div>
+
   </section>
 
 
@@ -821,22 +1494,10 @@
   <div class="trust-bar reveal">
     <div class="container">
       <div class="trust-bar__inner stagger-children">
-        <div class="trust-item">
-          <span class="trust-item__icon">✓</span>
-          40+ professional service businesses reviewed
-        </div>
-        <div class="trust-item">
-          <span class="trust-item__icon">✓</span>
-          Delivered within 48 hours
-        </div>
-        <div class="trust-item">
-          <span class="trust-item__icon">✓</span>
-          Diagnostic fee credited toward cleanup
-        </div>
-        <div class="trust-item">
-          <span class="trust-item__icon">✓</span>
-          No calls. Fully remote.
-        </div>
+        <div class="trust-item"><span class="trust-item__icon">✓</span>40+ professional service businesses reviewed</div>
+        <div class="trust-item"><span class="trust-item__icon">✓</span>Delivered within 48 hours</div>
+        <div class="trust-item"><span class="trust-item__icon">✓</span>Diagnostic fee credited toward cleanup</div>
+        <div class="trust-item"><span class="trust-item__icon">✓</span>No calls. Fully remote.</div>
       </div>
     </div>
   </div>
@@ -852,57 +1513,122 @@
       </div>
 
       <div class="pain-list stagger-children">
-
-        <div class="pain-item reveal reveal-delay-1">
+        <div class="pain-item">
           <span class="pain-icon">→</span>
-          <p class="pain-text">
-            <strong>You can't see your real profit.</strong>
-            You know what's in your bank account. You don't know if last month
-            was actually good or just lucky.
-          </p>
+          <p class="pain-text"><strong>You can't see your real profit.</strong> You know what's in your bank account. You don't know if last month was actually good or just lucky.</p>
         </div>
-
-        <div class="pain-item reveal reveal-delay-2">
+        <div class="pain-item">
           <span class="pain-icon">→</span>
-          <p class="pain-text">
-            <strong>Tax season is a panic every year.</strong>
-            Scrambling for receipts, your accountant is frustrated, and you're
-            probably overpaying because nothing's clean.
-          </p>
+          <p class="pain-text"><strong>Tax season is a panic every year.</strong> Scrambling for receipts, your accountant is frustrated, and you're probably overpaying because nothing's clean.</p>
         </div>
-
-        <div class="pain-item reveal reveal-delay-3">
+        <div class="pain-item">
           <span class="pain-icon">→</span>
-          <p class="pain-text">
-            <strong>You're making decisions in the dark.</strong>
-            Should you hire? Buy equipment? Expand? You don't know because
-            your numbers don't tell you.
-          </p>
+          <p class="pain-text"><strong>You're making decisions in the dark.</strong> Should you hire? Buy equipment? Expand? You don't know because your numbers don't tell you.</p>
         </div>
-
-        <div class="pain-item reveal">
+        <div class="pain-item">
           <span class="pain-icon">→</span>
-          <p class="pain-text">
-            <strong>43% of business loan applications get rejected</strong> due to
-            poor financial documentation. Not bad credit. Bad books.
-          </p>
+          <p class="pain-text"><strong>43% of business loan applications get rejected</strong> due to poor financial documentation. Not bad credit. Bad books.</p>
         </div>
-
       </div>
 
-      <!-- Research callout -->
-      <div class="research-callout reveal" style="margin-top: 48px;">
-        <div class="research-callout__left">
-          <span class="research-callout__label">From the Research</span>
-          <div class="research-callout__stat">$103,040</div>
-          <p class="research-callout__text">
-            The documented cost of six months of unaddressed bookkeeping errors
-            for one professional service firm — across missed deductions, IRS
-            penalties, and blocked capital access. The cleanup cost $5,000.
+    </div>
+  </section>
+
+
+  <!-- ─── GRID BREAK STAT ───────────────────────────────────── -->
+  <!--
+    The one moment where the grid breaks.
+    $103,040 at massive scale, bleeding off the right edge.
+    Left column holds the context label and copy.
+  -->
+  <div class="break-stat reveal">
+    <div class="break-stat__inner">
+
+      <div class="break-stat__label-col">
+        <span class="break-stat__label">Documented Case Study</span>
+        <p class="break-stat__context">
+          The total cost of six months of unaddressed bookkeeping errors for one
+          professional service firm — across missed deductions, IRS penalties,
+          and blocked capital access.
+        </p>
+        <p class="break-stat__context">
+          The cleanup cost $5,000. The return was 20x.
+        </p>
+        <a href="pages/research.html" class="break-stat__link">
+          Read the full research →
+        </a>
+      </div>
+
+      <div class="break-stat__num-col">
+        <div class="break-stat__num">$103,040</div>
+        <p class="break-stat__sub">
+          Source: BKCProHub documented case study, 2025.
+          Professional service firm, six-month backlog.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ─── RESEARCH AS PRODUCT ───────────────────────────────── -->
+  <section class="research-feature">
+    <div class="research-feature__inner">
+
+      <!-- Paper cover as clickable object -->
+      <a href="pages/research.html" class="research-feature__cover">
+        <span class="cover__label">FixedBooks &nbsp;·&nbsp; Financial Research &nbsp;·&nbsp; 2026</span>
+        <h3 class="cover__title">
+          The Hidden Liability:<br>
+          Bookkeeping Failure Costs<br>
+          in Professional Service Firms
+        </h3>
+        <div class="cover__divider"></div>
+        <div class="cover__meta">
+          <div>Primary Sources: Atidiv, Gartner,</div>
+          <div>Clio, IRS, Federal Reserve, MGMA,</div>
+          <div>BKCProHub, Pyramid Financial</div>
+        </div>
+        <span class="cover__cta">Read the full paper →</span>
+      </a>
+
+      <!-- Stats pulled from the paper -->
+      <div class="research-feature__right reveal">
+        <div class="research-feature__intro">
+          <span class="section-label">From the Research</span>
+          <h2 class="section-title">No bookkeeper has published this.</h2>
+          <p class="section-body">
+            We commissioned a cited analysis of bookkeeping failure costs across
+            professional service businesses. The numbers are sourced.
+            The implications are significant.
           </p>
-          <a href="pages/research.html" class="research-callout__link">
-            Read the full analysis →
-          </a>
+        </div>
+
+        <div class="research-stats">
+          <div class="research-stat">
+            <div class="research-stat__num">40%</div>
+            <div>
+              <div class="research-stat__label">Data Trust Gap</div>
+              <p class="research-stat__text">of professional service owners do not fully trust their own financial data.</p>
+              <div class="research-stat__source">Atidiv / Gartner, 2026</div>
+            </div>
+          </div>
+          <div class="research-stat">
+            <div class="research-stat__num">$60k</div>
+            <div>
+              <div class="research-stat__label">Tax Overpayment</div>
+              <p class="research-stat__text">the average dental practice overpays annually due to missed deductions.</p>
+              <div class="research-stat__source">Pyramid Financial, 2025</div>
+            </div>
+          </div>
+          <div class="research-stat">
+            <div class="research-stat__num">43%</div>
+            <div>
+              <div class="research-stat__label">Loan Rejection</div>
+              <p class="research-stat__text">of small business loan applications rejected due to poor financial documentation.</p>
+              <div class="research-stat__source">Federal Reserve, 2025</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -917,50 +1643,33 @@
       <div class="reveal">
         <span class="section-label">How It Works</span>
         <h2 class="section-title">Three steps. No surprises.</h2>
-        <p class="section-body">
-          No calls. No explaining everything from scratch. Just get started.
-        </p>
+        <p class="section-body">No calls. No explaining everything from scratch. Just get started.</p>
       </div>
 
       <div class="process-steps stagger-children">
-
-        <div class="step reveal">
+        <div class="step">
           <span class="step-num">01</span>
           <div>
             <p class="step-title">Book your diagnostic. $97.</p>
-            <p class="step-body">
-              We get read access to your books and produce a full written report
-              of every finding: errors, missing categories, red flags, and what
-              it is costing you. Delivered within 48 hours.
-            </p>
+            <p class="step-body">We get read access to your books and produce a full written report of every finding: errors, missing categories, red flags, and what it is costing you. Delivered within 48 hours.</p>
           </div>
         </div>
-
-        <div class="step reveal">
+        <div class="step">
           <span class="step-num">02</span>
           <div>
             <p class="step-title">Review the findings</p>
-            <p class="step-body">
-              A clear, plain-English breakdown of the problems. No jargon.
-              If cleanup makes sense, we quote a flat rate.
-              The $97 is credited toward it.
-            </p>
+            <p class="step-body">A clear, plain-English breakdown of the problems. No jargon. If cleanup makes sense, we quote a flat rate. The $97 is credited toward it.</p>
           </div>
         </div>
-
-        <div class="step reveal">
+        <div class="step">
           <span class="step-num">03</span>
           <div>
             <p class="step-title">We clean everything up</p>
-            <p class="step-body">
-              Fully categorized transactions, reconciled accounts, clean P and L.
-              Done remotely and handed back ready for your accountant
-              or your own decisions.
-            </p>
+            <p class="step-body">Fully categorized transactions, reconciled accounts, clean P and L. Done remotely and handed back ready for your accountant or your own decisions.</p>
           </div>
         </div>
-
       </div>
+
     </div>
   </section>
 
@@ -974,62 +1683,41 @@
         <h2 class="section-title">What practitioners recovered.</h2>
       </div>
 
-      <div class="testimonials stagger-children" style="margin-top: 40px;">
+      <div class="testimonials stagger-children" style="margin-top:40px;">
 
         <div class="testimonial">
-          <p class="testimonial__quote">
-            "We had no idea we were sitting on $18,000 in unclaimed deductions.
-            The diagnostic paid for itself thirty times over before we even
-            started the cleanup."
-          </p>
+          <p class="testimonial__quote">"We had no idea we were sitting on $18,000 in unclaimed deductions. The diagnostic paid for itself thirty times over before we even started the cleanup."</p>
           <div class="testimonial__meta">
             <div class="testimonial__avatar">DM</div>
             <div>
               <div class="testimonial__name">Dr. Daniel Marsh</div>
               <div class="testimonial__title">Oral Surgeon, Phoenix AZ</div>
             </div>
-            <div class="testimonial__result">
-              $18,400
-              <span>recovered in deductions</span>
-            </div>
+            <div class="testimonial__result">$18,400<span>recovered in deductions</span></div>
           </div>
         </div>
 
         <div class="testimonial">
-          <p class="testimonial__quote">
-            "My accountant had been telling me my books were fine for two years.
-            FixedBooks found a $6,800 reconciliation gap in the first pass.
-            Night and day difference in how I see my business now."
-          </p>
+          <p class="testimonial__quote">"My accountant had been telling me my books were fine for two years. FixedBooks found a $6,800 reconciliation gap in the first pass."</p>
           <div class="testimonial__meta">
             <div class="testimonial__avatar">SR</div>
             <div>
               <div class="testimonial__name">Sarah Reyes</div>
               <div class="testimonial__title">Owner, Lumina Aesthetics</div>
             </div>
-            <div class="testimonial__result">
-              $6,800
-              <span>reconciliation gap found</span>
-            </div>
+            <div class="testimonial__result">$6,800<span>reconciliation gap found</span></div>
           </div>
         </div>
 
         <div class="testimonial">
-          <p class="testimonial__quote">
-            "I was about to hire a full-time bookkeeper at $52,000 a year.
-            The diagnostic showed me exactly what needed fixing, we cleaned it up,
-            and I got that clarity for a fraction of the cost."
-          </p>
+          <p class="testimonial__quote">"I was about to hire a full-time bookkeeper at $52,000 a year. The diagnostic showed me exactly what needed fixing. We cleaned it up for a fraction of the cost."</p>
           <div class="testimonial__meta">
             <div class="testimonial__avatar">JK</div>
             <div>
               <div class="testimonial__name">James Kowalski</div>
               <div class="testimonial__title">Managing Partner, Kowalski Law</div>
             </div>
-            <div class="testimonial__result">
-              $52k/yr
-              <span>overhead avoided</span>
-            </div>
+            <div class="testimonial__result">$52k/yr<span>overhead avoided</span></div>
           </div>
         </div>
 
@@ -1044,49 +1732,27 @@
 
       <div class="reveal">
         <span class="section-label">The Offer</span>
-        <h2 class="section-title">
-          Start with a $97 diagnostic.<br>
-          Know exactly what you're dealing with.
-        </h2>
+        <h2 class="section-title">Start with a $97 diagnostic.<br>Know exactly what you're dealing with.</h2>
       </div>
 
       <div class="offer-box reveal">
 
         <div class="offer-price">$97</div>
-        <p class="offer-price-note">
-          Paid diagnostic. Credited toward cleanup if you move forward.
-        </p>
+        <p class="offer-price-note">Paid diagnostic. Credited toward cleanup if you move forward.</p>
 
         <div class="offer-bullets">
-          <div class="offer-bullet">
-            <span class="offer-bullet__check">✓</span>
-            Full written diagnostic report of your books
-          </div>
-          <div class="offer-bullet">
-            <span class="offer-bullet__check">✓</span>
-            Clear list of errors, gaps, and missed deductions
-          </div>
-          <div class="offer-bullet">
-            <span class="offer-bullet__check">✓</span>
-            Flat-rate cleanup quote. No hourly surprises.
-          </div>
-          <div class="offer-bullet">
-            <span class="offer-bullet__check">✓</span>
-            Delivered within 48 hours
-          </div>
-          <div class="offer-bullet">
-            <span class="offer-bullet__check">✓</span>
-            Built for professional service businesses. Remote. No calls needed.
-          </div>
+          <div class="offer-bullet"><span class="offer-bullet__check">✓</span>Full written diagnostic report of your books</div>
+          <div class="offer-bullet"><span class="offer-bullet__check">✓</span>Clear list of errors, gaps, and missed deductions</div>
+          <div class="offer-bullet"><span class="offer-bullet__check">✓</span>Flat-rate cleanup quote. No hourly surprises.</div>
+          <div class="offer-bullet"><span class="offer-bullet__check">✓</span>Delivered within 48 hours</div>
+          <div class="offer-bullet"><span class="offer-bullet__check">✓</span>Built for professional service businesses. Remote. No calls needed.</div>
         </div>
 
         <div class="risk-reversal">
           <span class="risk-reversal__icon">◇</span>
           <div class="risk-reversal__text">
             <strong>If we find nothing worth fixing, you wasted $97.</strong>
-            That almost never happens. But if it does, you keep the full
-            diagnostic report and take it to any accountant you choose.
-            No cleanup pressure. No follow-up sales.
+            That almost never happens. But if it does, you keep the full diagnostic report and take it to any accountant you choose. No cleanup pressure. No follow-up sales.
           </div>
         </div>
 
@@ -1100,10 +1766,7 @@
           <p class="form-msg" id="formMsg"></p>
         </form>
 
-        <p class="affirm-note">
-          Financing available for cleanup packages via Affirm.
-          Split into monthly payments at checkout.
-        </p>
+        <p class="affirm-note">Financing available for cleanup packages via Affirm. Split into monthly payments at checkout.</p>
 
       </div>
     </div>
@@ -1122,65 +1785,28 @@
       <div class="faq-list">
 
         <div class="faq-item reveal">
-          <div class="faq-q">
-            What do you actually do in the diagnostic?
-            <span class="faq-arrow">+</span>
-          </div>
-          <p class="faq-a">
-            We review your QuickBooks or bookkeeping software and identify
-            miscategorized transactions, missing accounts, reconciliation errors,
-            and red flags. You get a full written report of every finding in plain
-            English. Not vague suggestions.
-          </p>
+          <div class="faq-q">What do you actually do in the diagnostic?<span class="faq-arrow">+</span></div>
+          <p class="faq-a">We review your QuickBooks or bookkeeping software and identify miscategorized transactions, missing accounts, reconciliation errors, and red flags. You get a full written report of every finding in plain English. Not vague suggestions.</p>
         </div>
 
         <div class="faq-item reveal">
-          <div class="faq-q">
-            What if I don't move forward with the cleanup?
-            <span class="faq-arrow">+</span>
-          </div>
-          <p class="faq-a">
-            You keep the diagnostic. The findings are yours regardless.
-            Take them to any accountant or fix things yourself.
-            The $97 is for the work we do, not a sales tactic.
-          </p>
+          <div class="faq-q">What if I don't move forward with the cleanup?<span class="faq-arrow">+</span></div>
+          <p class="faq-a">You keep the diagnostic. The findings are yours regardless. Take them to any accountant or fix things yourself. The $97 is for the work we do, not a sales tactic.</p>
         </div>
 
         <div class="faq-item reveal">
-          <div class="faq-q">
-            How does Affirm financing work?
-            <span class="faq-arrow">+</span>
-          </div>
-          <p class="faq-a">
-            If you move forward with a cleanup, you can split the cost into
-            monthly payments through Affirm. Sixty seconds to apply at checkout.
-            Flat rate quoted upfront. No hourly billing that grows.
-          </p>
+          <div class="faq-q">How does Affirm financing work?<span class="faq-arrow">+</span></div>
+          <p class="faq-a">If you move forward with a cleanup, you can split the cost into monthly payments through Affirm. Sixty seconds to apply at checkout. Flat rate quoted upfront. No hourly billing that grows.</p>
         </div>
 
         <div class="faq-item reveal">
-          <div class="faq-q">
-            What kinds of businesses do you work with?
-            <span class="faq-arrow">+</span>
-          </div>
-          <p class="faq-a">
-            Law firms, dental practices, med spas, aesthetic clinics, financial
-            advisors, chiropractors, optometrists, and similar professional service
-            providers. If your revenue comes from expertise rather than product
-            sales, we are built for you.
-          </p>
+          <div class="faq-q">What kinds of businesses do you work with?<span class="faq-arrow">+</span></div>
+          <p class="faq-a">Law firms, dental practices, med spas, aesthetic clinics, financial advisors, chiropractors, optometrists, and similar professional service providers. If your revenue comes from expertise rather than product sales, we are built for you.</p>
         </div>
 
         <div class="faq-item reveal">
-          <div class="faq-q">
-            How long does a cleanup take?
-            <span class="faq-arrow">+</span>
-          </div>
-          <p class="faq-a">
-            Depends on how far back things need to go and how messy they are.
-            We are specific in the diagnostic quote. Most cleanups are done
-            within one to two weeks. Everything is remote.
-          </p>
+          <div class="faq-q">How long does a cleanup take?<span class="faq-arrow">+</span></div>
+          <p class="faq-a">Depends on how far back things need to go and how messy they are. We are specific in the diagnostic quote. Most cleanups are done within one to two weeks. Everything is remote.</p>
         </div>
 
       </div>
@@ -1193,16 +1819,10 @@
     <div class="container">
       <div class="reveal">
         <span class="section-label">Ready?</span>
-        <h2 class="section-title">
-          Find out exactly what<br>your books are costing you.
-        </h2>
-        <p class="section-body">
-          $97. 48 hours. No fluff.
-        </p>
+        <h2 class="section-title">Find out exactly what<br>your books are costing you.</h2>
+        <p class="section-body">$97. 48 hours. No fluff.</p>
         <div style="display:flex; justify-content:center;">
-          <a href="#offer" class="btn-primary" style="max-width:260px;">
-            Book My Diagnostic
-          </a>
+          <a href="#offer" class="btn-primary" style="max-width:260px;">Book My Diagnostic</a>
         </div>
       </div>
     </div>
