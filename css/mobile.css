@@ -1,8 +1,13 @@
 /*
  * mobile.css — ALL RESPONSIVE OVERRIDES
  * This is the only file allowed to contain @media queries.
- * Never write breakpoints in any other CSS file.
- * Load order: always last in <head>.
+ * All three pages share this file via their respective relative paths.
+ * Load order: always last.
+ *
+ * Breakpoints:
+ *   900px — tablet
+ *   660px — mobile
+ *   400px — small mobile
  */
 
 /* ─────────────────────────────────────────────────────────
@@ -10,193 +15,376 @@
 ───────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
 
-  /* Layout */
+  /* Nav */
+  #nav {
+    padding: 0 24px;
+  }
+
+  /* Container */
+  .container {
+    padding: 0 24px;
+  }
+
+  /* Paper (research) */
+  .paper {
+    padding: 90px 24px 80px;
+  }
+
+  /* Intro strip (demo) */
+  .intro-strip {
+    padding: 0 24px;
+  }
+
+  /* Research callout */
+  .research-callout {
+    padding: 28px 24px;
+  }
+
+  /* Trust bar */
+  .trust-bar__inner {
+    gap: 24px;
+  }
+
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   MOBILE  max-width: 660px
+───────────────────────────────────────────────────────── */
+@media (max-width: 660px) {
+
+  /* Nav */
+  #nav {
+    padding: 0 16px;
+    height: 50px;
+  }
+
+  /* Hide secondary nav links on small screens */
+  .nav__link:nth-child(1),
+  .nav__link:nth-child(2) {
+    display: none;
+  }
+
+  .nav__wordmark {
+    font-size: 1.1rem;
+  }
+
+  /* Announcement bar */
+  #announcementBar {
+    padding: 7px 20px;
+  }
+
+  .bar__text {
+    font-size: 0.68rem;
+  }
+
+  /* Container */
   .container {
     padding: 0 20px;
   }
 
-  .nav {
-    padding: var(--space-sm) 20px;
-  }
-
   /* Hero */
-  .hero {
-    padding: 100px 0 60px;
-  }
-
-  /* Offer */
-  .offer-box {
-    padding: 40px 32px;
-  }
-
-  /* Steps */
-  .step {
-    grid-template-columns: 42px 1fr;
-    gap: 20px;
-  }
-
-  /* Summary grid */
-  .summary-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* ─────────────────────────────────────────────────────────
-   MOBILE  max-width: 600px
-───────────────────────────────────────────────────────── */
-@media (max-width: 600px) {
-
-  /* Type scale */
   h1 {
-    font-size: 2.4rem;
-    line-height: 1.15;
+    font-size: 2.1rem;
+    line-height: 1.1;
   }
 
-  h2 {
-    font-size: 1.8rem;
+  .hero__sub {
+    font-size: 0.88rem;
+    margin-bottom: 18px;
+  }
+
+  .hero__eyebrow {
+    font-size: 0.62rem;
+    padding: 4px 10px;
+    margin-bottom: 12px;
+  }
+
+  /* Stat bar */
+  .stat-bar {
+    gap: 18px;
+    padding: 14px 0;
+    margin-bottom: 20px;
+  }
+
+  .stat-num {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.68rem;
+  }
+
+  /* CTA button */
+  .btn-primary {
+    font-size: 0.76rem;
+    padding: 12px 28px;
+  }
+
+  /* Sections */
+  .section {
+    padding: 56px 0;
   }
 
   .section-title {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
+  }
+
+  /* Trust bar */
+  .trust-bar__inner {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 0 20px;
+  }
+
+  /* Pain list */
+  .pain-item {
+    padding: 16px 0;
+    gap: 14px;
+  }
+
+  /* Research callout */
+  .research-callout {
+    flex-direction: column;
+    padding: 22px 20px;
+    gap: 16px;
+  }
+
+  .research-callout__stat {
+    font-size: 2.2rem;
+  }
+
+  /* Process steps */
+  .step {
+    grid-template-columns: 36px 1fr;
+    gap: 16px;
+    padding: 24px 0;
+  }
+
+  .step-num {
+    font-size: 1.6rem;
+  }
+
+  /* Offer box */
+  .offer-box {
+    padding: 28px 20px;
   }
 
   .offer-price {
     font-size: 2.4rem;
   }
 
-  /* Layout */
-  .container {
-    padding: 0 16px;
-  }
-
-  .section {
-    padding: 60px 0;
-  }
-
-  .hero {
-    padding: 120px 0 60px;
-    min-height: 100svh;
-  }
-
-  /* Stat bar */
-  .stat-bar {
-    gap: 20px;
-  }
-
-  .stat-num {
-    font-size: 1.6rem;
-  }
-
-  /* Steps */
-  .step {
-    grid-template-columns: 36px 1fr;
-    gap: 16px;
-    padding: 20px 0;
-  }
-
-  .step-num {
-    font-size: 1.8rem;
-  }
-
-  /* Offer */
-  .offer-box {
-    padding: 28px 20px;
-  }
-
-  /* Nav */
-  .nav__cta {
-    display: none;
-  }
-
-  .nav__logo {
-    font-size: 1.3rem;
-  }
-
-  .logo-mark {
-    width: 26px;
-    height: 26px;
-  }
-
-  /* Pain */
-  .pain-item {
-    gap: 14px;
-  }
-
-  /* FAQ */
-  .faq-q {
-    font-size: 0.9rem;
-    padding: 20px 0;
-  }
-
-  /* Announcement */
-  .announcement-bar {
-    font-size: 0.75rem;
-    padding: 10px 40px 10px 16px;
-    text-align: center;
-  }
-
-  /* Summary grid */
-  .summary-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+  /* Risk reversal */
+  .risk-reversal {
+    padding: 14px 16px;
   }
 
   /* Form */
   .form-input {
-    font-size: 16px; /* prevents iOS zoom on focus */
+    font-size: 16px; /* prevents iOS zoom */
+    padding: 12px 14px;
   }
 
-  /* Buttons */
-  .btn-primary {
-    padding: 16px 24px;
-    font-size: 0.85rem;
+  /* Testimonials */
+  .testimonial {
+    padding: 22px 20px;
+  }
+
+  .testimonial__result {
+    display: none;
+  }
+
+  .testimonial__quote {
+    font-size: 1rem;
+  }
+
+  /* FAQ */
+  .faq-q {
+    font-size: 0.88rem;
+    padding: 18px 0;
   }
 
   /* Final CTA */
   .final-cta {
-    padding: 80px 0;
+    padding: 72px 0;
   }
 
-  /* Glow — reduce on mobile for perf */
-  .glow-top::before,
-  .glow-bottom::after {
-    width: 300px;
-    height: 300px;
+  .final-cta .section-title {
+    font-size: 1.7rem;
   }
+
+  /* Paper (research) */
+  .paper {
+    padding: 80px 20px 64px;
+  }
+
+  .paper-title {
+    font-size: 1.8rem;
+  }
+
+  .paper-subtitle {
+    font-size: 1rem;
+  }
+
+  .paper-meta {
+    gap: 20px;
+  }
+
+  .toc {
+    padding: 20px;
+  }
+
+  .toc__link {
+    font-size: 0.82rem;
+  }
+
+  .section__title {
+    font-size: 1.4rem;
+  }
+
+  .finding__stat {
+    font-size: 1.8rem;
+  }
+
+  .case-study {
+    padding: 20px;
+  }
+
+  .case-study__stats {
+    gap: 20px;
+  }
+
+  .case-study__stat-num {
+    font-size: 1.8rem;
+  }
+
+  .paper-cta {
+    padding: 36px 20px;
+  }
+
+  .paper-cta__title {
+    font-size: 1.6rem;
+  }
+
+  /* Demo page */
+  .page-body {
+    padding: 36px 0 60px;
+  }
+
+  .intro-strip {
+    padding: 0 20px;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .intro-strip__btn {
+    align-self: flex-start;
+  }
+
+  .intro-strip__title {
+    font-size: 1.3rem;
+  }
+
+  .report {
+    padding: 28px 18px;
+    box-shadow: none;
+  }
+
+  .report-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .r-meta {
+    text-align: left;
+  }
+
+  .client-box {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .score-label {
+    width: 110px;
+    font-size: 0.72rem;
+  }
+
+  .next-steps {
+    padding: 20px 16px;
+  }
+
+  .demo-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    margin: 20px 0 0;
+  }
+
 }
+
 
 /* ─────────────────────────────────────────────────────────
    SMALL  max-width: 400px
 ───────────────────────────────────────────────────────── */
 @media (max-width: 400px) {
 
+  /* Hero */
   h1 {
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
 
+  /* Stat bar goes vertical */
   .stat-bar {
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
   }
 
   .stat-label {
     max-width: 100%;
   }
 
-  .offer-box {
-    padding: 24px 16px;
+  /* Nav wordmark */
+  .nav__wordmark {
+    font-size: 1rem;
   }
 
-  .offer-price {
-    font-size: 2rem;
+  /* Paper */
+  .paper-title {
+    font-size: 1.6rem;
   }
 
-  .summary-grid {
+  /* Demo report */
+  .client-box {
     grid-template-columns: 1fr;
   }
 
-  .badge {
-    font-size: 0.65rem;
-    padding: 6px 12px;
+  .finding-item {
+    grid-template-columns: 10px 1fr;
   }
+
+  .finding-impact {
+    display: none;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Research callout stat */
+  .research-callout__stat {
+    font-size: 1.8rem;
+  }
+
+  /* Trust bar */
+  .trust-item {
+    font-size: 0.7rem;
+  }
+
 }
